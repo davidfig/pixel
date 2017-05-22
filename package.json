@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/davidfig/pixel/issues"
   },
-  "homepage": "https://github.com/davidfig/pixel#readme"
+  "homepage": "https://github.com/davidfig/pixel#readme",
+  "dependencies": {
+    "yy-random": "^1.2.0"
+  }
 }
