@@ -28,18 +28,27 @@ function measure(c, params)
     return { width: params.width, height: params.height };
 }
 
+/**
+ * @param {object} data imported from .json (from Pixel-Editor)
+ * @param {RenderSheet} sheet - rendersheet for rendering pixel sprite
+ * @param {object} callbacks
+ * @param {function} callbacks.stop - animation finishes and stops
+ * @param {function} callbacks.loop - animation loops
+ * @param {function} callbacks.link - animation link to another animation
+ * @param {function} callbacks.frame - animation changes frame
+ */
 class Pixel extends PIXI.Sprite
 {
-    constructor(data, sheet)
+    constructor(data, sheet, callbacks)
     {
         super();
         this.rendersheet = sheet;
+        this.callbacks = callbacks || {};
         if (data)
         {
             this.name = data.name;
             this.frames = data.frames;
             this.animations = data.animations;
-            this.frame(0);
         }
     }
 
@@ -79,6 +88,10 @@ class Pixel extends PIXI.Sprite
                     this.index = 0;
                     entry = this.animation[0];
                     this.updateFrame(leftover);
+                    if (this.callbacks.loop)
+                    {
+                        this.callbacks.loop(this);
+                    }
                     return;
 
                 case 'unique':
@@ -96,6 +109,10 @@ class Pixel extends PIXI.Sprite
                     this.animation = this.animations[entry[1]];
                     this.index = 0;
                     this.updateFrame(leftover);
+                    if (this.callbacks.link)
+                    {
+                        this.callbacks.link(this);
+                    }
                     return;
             }
         }
@@ -108,6 +125,10 @@ class Pixel extends PIXI.Sprite
             this.next = entry[1] + leftover;
         }
         this.texture = this.rendersheet.getTexture(this.name + '-' + entry[0]);
+        if (this.callbacks.frame)
+        {
+            this.callbacks.frame(this);
+        }
     }
 
     update(elapsed)
@@ -123,6 +144,10 @@ class Pixel extends PIXI.Sprite
             if (this.index === this.animation.length)
             {
                 this.stop = true;
+                if (this.callbacks.stop)
+                {
+                    this.callbacks.stop(this);
+                }
             }
             else
             {
