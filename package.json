@@ -1,0 +1,22 @@
+{
+  "name": "yy-pixel",
+  "version": "1.0.0",
+  "description": "Pixel animation and rendering",
+  "main": "pixel.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidfig/pixel.git"
+  },
+  "keywords": [
+    "pixel"
+  ],
+  "author": "David Figatner (YOPEY YOPEY LLC)",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/davidfig/pixel/issues"
+  },
+  "homepage": "https://github.com/davidfig/pixel#readme"
+}
