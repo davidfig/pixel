@@ -31,7 +31,6 @@ function measure(c, params)
 /**
  * @param {object} data imported from .json (from Pixel-Editor)
  * @param {RenderSheet} sheet - rendersheet for rendering pixel sprite
- * @param {object} callbacks
  * @param {function} callbacks.stop - animation finishes and stops
  * @param {function} callbacks.loop - animation loops
  * @param {function} callbacks.link - animation link to another animation
@@ -42,23 +41,22 @@ class Pixel extends PIXI.Sprite
     constructor(data, sheet, callbacks)
     {
         super();
+        this.name = data.name;
+        this.frames = data.frames;
+        this.animations = data.animations;
         this.rendersheet = sheet;
+        this.sheet();
         this.callbacks = callbacks || {};
-        if (data)
-        {
-            this.name = data.name;
-            this.frames = data.frames;
-            this.animations = data.animations;
-        }
     }
 
-    sheet(sheet)
+    sheet()
     {
-        this.rendersheet = sheet || this.rendersheet;
-        for (let i = 0; i < this.frames.length; i++)
+        if (!this.sheet.get(this.name + '-0'))
         {
-            const frame = this.frames[i];
-            this.rendersheet.add(this.name + '-' + i, draw, measure, frame);
+            for (let i = 0; i < this.frames.length; i++)
+            {
+                this.sheet.add(this.name + '-' + i, draw, measure, this.frames[i]);
+            }
         }
     }
 
