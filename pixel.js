@@ -33,6 +33,7 @@ class Pixel extends PIXI.Sprite
     constructor(data, sheet)
     {
         super();
+        this.rendersheet = sheet;
         if (data)
         {
             this.name = data.name;
@@ -40,7 +41,6 @@ class Pixel extends PIXI.Sprite
             this.animations = data.animations;
             this.frame(0);
         }
-        this.rendersheet = sheet;
     }
 
     sheet(sheet)
