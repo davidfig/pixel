@@ -38,6 +38,7 @@ class Pixel extends PIXI.Sprite
             this.name = data.name;
             this.frames = data.frames;
             this.animations = data.animations;
+            this.frame(0);
         }
         this.rendersheet = sheet;
     }
