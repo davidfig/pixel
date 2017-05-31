@@ -1,11 +1,12 @@
 const Random = require('yy-random');
+const Penner = require('penner');
 
 function draw(c, frame)
 {
     const pixels = frame.data;
     for (let y = 0; y < frame.height; y++)
     {
-        for (let x = 0; x < frame.height; x++)
+        for (let x = 0; x < frame.width; x++)
         {
             const color = pixels[x + y * frame.width];
             if (color !== null)
@@ -41,17 +42,26 @@ class Pixel extends PIXI.Sprite
     constructor(data, sheet, callbacks)
     {
         super();
-        this.name = data.name;
-        this.frames = data.frames;
-        this.animations = data.animations;
-        this.rendersheet = sheet;
-        this.sheet();
-        this.callbacks = callbacks || {};
+        if (data)
+        {
+            this.name = data.name;
+            this.frames = data.frames;
+            this.animations = data.animations;
+            this.sheet = sheet;
+            this.render();
+            this.callbacks = callbacks || {};
+        }
     }
 
-    sheet()
+    size(index)
     {
-        if (!this.sheet.get(this.name + '-0'))
+        index = index || 0;
+        return { width: this.frames[index].width, height: this.frames[index].height };
+    }
+
+    render(force)
+    {
+        if (force || !this.sheet.get(this.name + '-0'))
         {
             for (let i = 0; i < this.frames.length; i++)
             {
@@ -60,8 +70,9 @@ class Pixel extends PIXI.Sprite
         }
     }
 
-    animate(name)
+    animate(name, reverse)
     {
+        this.scale.x = Math.abs(this.scale.x) * (reverse ? -1 : 1);
         this.animation = this.animations[name];
         if (this.animation)
         {
@@ -122,43 +133,88 @@ class Pixel extends PIXI.Sprite
         {
             this.next = entry[1] + leftover;
         }
-        this.texture = this.rendersheet.getTexture(this.name + '-' + entry[0]);
+        this.texture = this.sheet.getTexture(this.name + '-' + entry[0]);
         if (this.callbacks.frame)
         {
             this.callbacks.frame(this);
         }
     }
 
+    move(x, y, duration, ease)
+    {
+        this.to = {x, y, originalX: this.x, originalY: this.y, deltaX: 0, deltaY: 0, current: 0, duration};
+        if (this.x !== x)
+        {
+            this.to.deltaX = x - this.x;
+        }
+        if (this.y !== y)
+        {
+            this.to.deltaY = y - this.y;
+        }
+        if (ease)
+        {
+            this.to.ease = Penner[ease];
+        }
+        if (!this.to.ease)
+        {
+            this.to.ease = Penner['linear'];
+        }
+    }
+
     update(elapsed)
     {
-        if (this.stop)
+        let dirty = false;
+        const to = this.to;
+        if (to)
         {
-            return;
-        }
-        this.next -= elapsed;
-        if (this.next <= 0)
-        {
-            this.index++;
-            if (this.index === this.animation.length)
+            to.current += elapsed;
+            if (to.current > to.duration)
             {
-                this.stop = true;
-                if (this.callbacks.stop)
-                {
-                    this.callbacks.stop(this);
-                }
+                this.position.set(to.x, to.y);
+                this.to = null;
+                dirty = true;
             }
             else
             {
-                this.updateFrame(this.next);
-                return true;
+                if (to.x)
+                {
+                    this.x = to.ease(to.current, to.originalX, to.deltaX, to.duration);
+                }
+                if (to.y)
+                {
+                    this.y = to.ease(to.current, to.originalY, to.deltaY, to.duration);
+                }
+                dirty = true;
             }
         }
+        if (!this.stop)
+        {
+            this.next -= elapsed;
+            if (this.next <= 0)
+            {
+                this.index++;
+                if (this.index === this.animation.length)
+                {
+                    this.stop = true;
+                    if (this.callbacks.stop)
+                    {
+                        this.callbacks.stop(this);
+                    }
+                }
+                else
+                {
+                    this.updateFrame(this.next);
+                    dirty = true;
+                }
+            }
+        }
+        return dirty;
     }
 
     frame(i)
     {
         this.stop = true;
-        this.texture = this.rendersheet.getTexture(this.name + '-' + i);
+        this.texture = this.sheet.getTexture(this.name + '-' + i);
     }
 }
 
