@@ -213,7 +213,6 @@ class Pixel extends PIXI.Sprite
 
     frame(i)
     {
-        this.stop = true;
         this.texture = this.sheet.getTexture(this.name + '-' + i);
     }
 }
