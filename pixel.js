@@ -70,6 +70,14 @@ class Pixel extends PIXI.Sprite
         }
     }
 
+    static add(data, sheet)
+    {
+        for (let i = 0; i < data.frames.length; i++)
+        {
+            sheet.add(data.name + '-' + i, draw, measure, data.frames[i]);
+        }
+    }
+
     animate(name, reverse)
     {
         this.scale.x = Math.abs(this.scale.x) * (reverse ? -1 : 1);
