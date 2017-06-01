@@ -1,4 +1,4 @@
-const Pixel = require('yy-pixel');
+const Pixel = require('./pixel');
 
 class Scene extends PIXI.Container
 {

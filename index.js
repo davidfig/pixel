@@ -1,5 +1,5 @@
 module.exports = {
-    pixel: require('./pixel'),
-    pixelSheet: require('./pixel-sheet'),
-    scene: require('./scene')
+    Pixel: require('./pixel'),
+    PixelSheet: require('./pixel-sheet'),
+    Scene: require('./scene')
 };
