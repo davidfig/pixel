@@ -2,11 +2,12 @@ const Pixel = require('./pixel');
 
 class Scene extends PIXI.Container
 {
-    constructor(data, sprites, sheet)
+    constructor(data, sprites, sheet, callback)
     {
         super();
         this.time = 0;
         this.index = 0;
+        this.callback = callback;
         if (data)
         {
             this.timeline = data.timeline;
@@ -102,20 +103,36 @@ class Scene extends PIXI.Container
                             sprite.placed = true;
                             sprite.position.set(timeline.x, timeline.y);
                             sprite.frame(0);
+                            if (this.callback)
+                            {
+                                this.callback(timeline);
+                            }
                             break;
 
                         case 'unplace':
                             sprite.visible = false;
                             sprite.placed = false;
+                            if (this.callback)
+                            {
+                                this.callback(timeline);
+                            }
                             break;
 
                         case 'animate':
                             sprite.animate(timeline.animate);
                             sprite.scale.x = Math.abs(sprite.scale.x) * (timeline.flip ? -1 : 1);
+                            if (this.callback)
+                            {
+                                this.callback(timeline);
+                            }
                             break;
 
                         case 'move':
                             sprite.move(timeline.x, timeline.y, timeline.duration, timeline.ease);
+                            if (this.callback)
+                            {
+                                this.callback(timeline);
+                            }
                             break;
                     }
                     this.index = index + 1;
