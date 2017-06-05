@@ -111,7 +111,7 @@ class Scene extends PIXI.Container
 
                         case 'animate':
                             sprite.animate(timeline.animate);
-                            sprite.scale.x = Math.abs(sprite.scale.x) * (timeline.reverse ? -1 : 1);
+                            sprite.scale.x = Math.abs(sprite.scale.x) * (timeline.flip ? -1 : 1);
                             break;
 
                         case 'move':
