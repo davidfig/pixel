@@ -1,7 +1,7 @@
 {
   "name": "yy-pixel",
   "version": "1.0.0",
-  "description": "Pixel animation and rendering",
+  "description": "Pixel animation and scene rendering",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

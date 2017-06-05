@@ -15,12 +15,13 @@ function PixelSheet(map, data, sheet)
 {
     for (let pixel of map)
     {
+        pixel.frames = [];
         pixel.frames[0] = { width: pixel.width, height: pixel.height, data: [] };
         for (let y = 0; y < pixel.height; y++)
         {
             for (let x = 0; x < pixel.width; x++)
             {
-                data.frames[0].data[x + y * pixel.width] = data.frames[0].data[x + pixel.x + (y + pixel.y) * data.frames[0].width];
+                pixel.frames[0].data[x + y * pixel.width] = data.frames[0].data[x + pixel.x + (y + pixel.y) * data.frames[0].width];
             }
         }
         Pixel.add(pixel, sheet);

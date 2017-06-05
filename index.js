@@ -1,5 +1,9 @@
+const Pixel = require('./pixel');
+const PixelSheet = require('./pixel-sheet');
+const Scene = require('./scene');
+
 module.exports = {
-    Pixel: require('./pixel'),
-    PixelSheet: require('./pixel-sheet'),
-    Scene: require('./scene')
+    Pixel,
+    PixelSheet,
+    Scene
 };
