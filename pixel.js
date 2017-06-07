@@ -201,7 +201,7 @@ class Pixel extends PIXI.Sprite
         }
         else
         {
-            this.toRotate.duration = delta / options.speed;
+            this.toRotate.duration = Math.abs(delta) / options.speed;
         }
         this.toRotate.ease = Penner[options.ease ? options.ease : 'linear'];
     }
