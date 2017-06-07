@@ -175,6 +175,11 @@ class Pixel extends PIXI.Sprite
         this.to.ease = Penner[options.ease ? options.ease : 'linear'];
     }
 
+    get moving()
+    {
+        return this.to;
+    }
+
     /**
      * animated rotation to a degree
      * @param {number} angle in radian
@@ -186,8 +191,8 @@ class Pixel extends PIXI.Sprite
     rotate(to, options)
     {
         options = options || {};
-        const difference = this.differenceAngles(to, this.rotation);
-        const sign = this.differenceAnglesSign(to, this.rotation);
+        const difference = Angle.differenceAngles(to, this.rotation);
+        const sign = Angle.differenceAnglesSign(to, this.rotation);
         const delta = difference * sign;
         this.toRotate = { rotation: to, original: this.rotation, delta, current: 0 };
         if (options.duration)
