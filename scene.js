@@ -138,7 +138,7 @@ class Scene extends PIXI.Container
                             break;
 
                         case 'move':
-                            sprite.move(timeline.x, timeline.y, timeline.duration, timeline.ease);
+                            sprite.move(timeline.x, timeline.y, { duration: timeline.duration, ease: timeline.ease });
                             if (this.callback)
                             {
                                 this.callback(timeline);

@@ -1,5 +1,6 @@
 const Random = require('yy-random');
 const Penner = require('penner');
+const Angle = require('yy-angle');
 
 function draw(c, frame)
 {
@@ -148,25 +149,56 @@ class Pixel extends PIXI.Sprite
         }
     }
 
-    move(x, y, duration, ease)
+    /**
+     * animated movement to a point
+     * @param {number} x
+     * @param {number} y
+     * @param {options} options
+     * @param {string} options.ease
+     * @param {number} options.duration
+     * @param {number} options.speed (n / millisecond)
+     */
+    move(x, y, options)
     {
-        this.to = {x, y, originalX: this.x, originalY: this.y, deltaX: 0, deltaY: 0, current: 0, duration};
-        if (this.x !== x)
+        options = options || {};
+        this.to = { x, y, originalX: this.x, originalY: this.y, current: 0 };
+        if (options.duration)
         {
-            this.to.deltaX = x - this.x;
+            this.to.duration = options.duration;
         }
-        if (this.y !== y)
+        else
         {
-            this.to.deltaY = y - this.y;
+            this.to.duration = options.speed / Math.max(Math.abs(x - this.x), Math.abs(y - this.y));
         }
-        if (ease)
+        this.to.deltaX = x - this.x;
+        this.to.deltaY = y - this.y;
+        this.to.ease = Penner[options.ease ? options.ease : 'linear'];
+    }
+
+    /**
+     * animated rotation to a degree
+     * @param {number} angle in radian
+     * @param {object} options
+     * @param {string} options.ease
+     * @param {number} options.duration
+     * @param {number} options.speed (n / millisecond)
+     */
+    rotate(to, options)
+    {
+        options = options || {};
+        const difference = this.differenceAngles(to, this.rotation);
+        const sign = this.differenceAnglesSign(to, this.rotation);
+        const delta = difference * sign;
+        this.toRotate = { rotation: to, original: this.rotation, delta, current: 0 };
+        if (options.duration)
         {
-            this.to.ease = Penner[ease];
+            this.toRotate.duration = options.duration;
         }
-        if (!this.to.ease)
+        else
         {
-            this.to.ease = Penner['linear'];
+            this.toRotate.duration = options.speed / delta;
         }
+        this.toRotate.ease = Penner[options.ease ? options.ease : 'linear'];
     }
 
     update(elapsed)
@@ -175,12 +207,12 @@ class Pixel extends PIXI.Sprite
         const to = this.to;
         if (to)
         {
+            dirty = true;
             to.current += elapsed;
-            if (to.current > to.duration)
+            if (to.current >= to.duration)
             {
                 this.position.set(to.x, to.y);
                 this.to = null;
-                dirty = true;
             }
             else
             {
@@ -192,7 +224,24 @@ class Pixel extends PIXI.Sprite
                 {
                     this.y = to.ease(to.current, to.originalY, to.deltaY, to.duration);
                 }
-                dirty = true;
+            }
+        }
+        const toRotate = this.toRotate;
+        if (toRotate)
+        {
+            dirty = true;
+            toRotate.current += elapsed;
+            if (toRotate.current >= toRotate.duration)
+            {
+                this.rotation = toRotate.rotation;
+                this.toRotate = null;
+            }
+            else
+            {
+                if (toRotate.current)
+                {
+                    this.rotation = toRotate.ease(toRotate.current, toRotate.original, toRotate.delta, toRotate.duration);
+                }
             }
         }
         if (!this.stop)
