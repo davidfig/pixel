@@ -118,6 +118,16 @@ class Scene extends PIXI.Container
                             }
                             break;
 
+                        case 'frame':
+                            sprite.frame(timeline.frame);
+                            sprite.stop = true;
+                            sprite.scale.x = Math.abs(sprite.scale.x) * (timeline.flip ? -1 : 1);
+                            if (this.callback)
+                            {
+                                this.callback(timeline);
+                            }
+                            break;
+
                         case 'animate':
                             sprite.animate(timeline.animate);
                             sprite.scale.x = Math.abs(sprite.scale.x) * (timeline.flip ? -1 : 1);
@@ -129,6 +139,13 @@ class Scene extends PIXI.Container
 
                         case 'move':
                             sprite.move(timeline.x, timeline.y, timeline.duration, timeline.ease);
+                            if (this.callback)
+                            {
+                                this.callback(timeline);
+                            }
+                            break;
+
+                        case 'event':
                             if (this.callback)
                             {
                                 this.callback(timeline);
@@ -150,6 +167,10 @@ class Scene extends PIXI.Container
         if (this.options.sortY)
         {
             this.sorted.children.sort((a, b) => { return a.y - b.y; });
+        }
+        if (this.index === this.timeline.length)
+        {
+            return true;
         }
     }
 }
