@@ -354,17 +354,34 @@ const PixelArt = {
         }
     },
 
+    /**
+     * gets data for use with yy-pixel.Pixel file format
+     * @param {number} x0 - starting point in canvas
+     * @param {number} y0
+     * @param {number} width
+     * @param {number} height
+     * @param {HTMLContext} c
+     */
     getPixels: function (x0, y0, width, height, c)
     {
         _c = c || _c;
         const data = _c.getImageData(x0, y0, width, height);
+        const bits =  data.data;
+
         const pixels = [];
         for (let y = 0; y < height; y += _scale)
         {
             for (let x = 0; x < width; x += _scale)
             {
-                const color = data.data[x * 4 + y * width * 4];
-                pixels.push(Color.rgbToHex(color[0], color[1], color[2]));
+                const index = x * 4 + y * width * 4;
+                if (bits[index + 3] === 0)
+                {
+                    pixels.push(null);
+                }
+                else
+                {
+                    pixels.push(Color.rgbToHex(bits[index], bits[index + 1], bits[index + 2]));
+                }
             }
         }
         return pixels;
