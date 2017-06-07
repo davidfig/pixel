@@ -363,7 +363,7 @@ const PixelArt = {
         {
             for (let x = 0; x < width; x += _scale)
             {
-                const color = data[x * 4 + y * width * 4];
+                const color = data.data[x * 4 + y * width * 4];
                 pixels.push(Color.rgbToHex(color[0], color[1], color[2]));
             }
         }
