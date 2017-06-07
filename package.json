@@ -14,13 +14,14 @@
     "pixel"
   ],
   "author": "David Figatner (YOPEY YOPEY LLC)",
-  "license": "Unlicense",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/davidfig/pixel/issues"
   },
   "homepage": "https://github.com/davidfig/pixel#readme",
   "dependencies": {
     "penner": "^0.1.3",
+    "yy-color": "^1.0.7",
     "yy-random": "^1.2.0"
   }
 }

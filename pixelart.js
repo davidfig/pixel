@@ -1,6 +1,8 @@
 // Note: these algorithms are WOEFULLY inefficient. They are designed for low-resolution pixel drawings that are rendered to a spritesheet.
 // Please do NOT use these where you want to render shapes during each frame
 
+const Color = require('yy-color');
+
 let _c, _scale = 1;
 
 function put(x, y)
@@ -350,6 +352,22 @@ const PixelArt = {
                 }
             }
         }
+    },
+
+    getPixels: function (x0, y0, width, height, c)
+    {
+        _c = c || _c;
+        const data = _c.getImageData(x0, y0, width, height);
+        const pixels = [];
+        for (let y = 0; y < height; y += _scale)
+        {
+            for (let x = 0; x < width; x += _scale)
+            {
+                const color = data[x * 4 + y * width * 4];
+                pixels.push(Color.rgbToHex(color[0], color[1], color[2]));
+            }
+        }
+        return pixels;
     }
 };
 
