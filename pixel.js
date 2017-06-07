@@ -168,7 +168,7 @@ class Pixel extends PIXI.Sprite
         }
         else
         {
-            this.to.duration = (Math.max(Math.abs(x - this.x), Math.abs(y - this.y)) / options.speed) * 1000;
+            this.to.duration = Math.max(Math.abs(x - this.x), Math.abs(y - this.y)) / options.speed;
         }
         this.to.deltaX = x - this.x;
         this.to.deltaY = y - this.y;
@@ -186,7 +186,7 @@ class Pixel extends PIXI.Sprite
      * @param {object} options
      * @param {string} options.ease
      * @param {number} options.duration
-     * @param {number} options.speed (n / second)
+     * @param {number} options.speed (n / millisecond)
      */
     rotate(to, options)
     {
@@ -201,7 +201,7 @@ class Pixel extends PIXI.Sprite
         }
         else
         {
-            this.toRotate.duration = (delta / options.speed) * 1000;
+            this.toRotate.duration = delta / options.speed;
         }
         this.toRotate.ease = Penner[options.ease ? options.ease : 'linear'];
     }
