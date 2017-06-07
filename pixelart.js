@@ -380,7 +380,8 @@ const PixelArt = {
                 }
                 else
                 {
-                    pixels.push(Color.rgbToHex(bits[index], bits[index + 1], bits[index + 2]));
+                    const color = Color.rgbToHex(bits[index], bits[index + 1], bits[index + 2]);
+                    pixels.push(parseInt(color, 16));
                 }
             }
         }
