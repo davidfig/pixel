@@ -1,7 +1,5 @@
 const PIXI = require('pixi.js')
 const Random = require('yy-random')
-const Penner = require('penner')
-const Angle = require('yy-angle')
 
 /**
  * @param {object} data imported from .json (from Pixel-Editor)
@@ -13,6 +11,11 @@ const Angle = require('yy-angle')
  */
 module.exports = class Pixel extends PIXI.Sprite
 {
+    /**
+     * create a sprite with the Pixel-Editor data
+     * @param {object} data
+     * @param {RenderSheet} sheet
+     */
     constructor(data, sheet)
     {
         super()
@@ -26,12 +29,20 @@ module.exports = class Pixel extends PIXI.Sprite
         }
     }
 
+    /**
+     * @param {number} index of frame
+     * @return {object} returns {width: n, height: m }
+     */
     size(index)
     {
         index = index || 0
         return { width: this.frames[index].width, height: this.frames[index].height }
     }
 
+    /**
+     * adds the frames to the RenderSheet
+     * @param {boolean} force
+     */
     render(force)
     {
         if (force || !this.sheet.get(this.name + '-0'))
@@ -43,6 +54,11 @@ module.exports = class Pixel extends PIXI.Sprite
         }
     }
 
+    /**
+     * adds the frames to the RenderSheet
+     * @param {object} data from Pixel-Editor
+     * @param {RenderSheet} sheet
+     */
     static add(data, sheet)
     {
         for (let i = 0; i < data.frames.length; i++)
@@ -51,6 +67,11 @@ module.exports = class Pixel extends PIXI.Sprite
         }
     }
 
+    /**
+     * starts a named animation
+     * @param {string} name of animation
+     * @param {boolean} reverse - flip the sprite
+     */
     animate(name, reverse)
     {
         this.scale.x = Math.abs(this.scale.x) * (reverse ? -1 : 1)
@@ -67,6 +88,11 @@ module.exports = class Pixel extends PIXI.Sprite
         }
     }
 
+    /**
+     * updates a frame
+     * @private
+     * @param {number} leftover
+     */
     updateFrame(leftover)
     {
         let entry = this.animation[this.index]
@@ -113,105 +139,12 @@ module.exports = class Pixel extends PIXI.Sprite
     }
 
     /**
-     * animated movement to a point
-     * @param {number} x
-     * @param {number} y
-     * @param {options} options
-     * @param {string} options.ease
-     * @param {number} options.duration
-     * @param {number} options.speed (n / millisecond)
+     * updates the pixel
+     * @param {number} elapsed
+     * @return {boolean} whether the sprite changed
      */
-    move(x, y, options)
-    {
-        options = options || {}
-        this.to = { x, y, originalX: this.x, originalY: this.y, current: 0 }
-        if (options.duration)
-        {
-            this.to.duration = options.duration
-        }
-        else
-        {
-            this.to.duration = Math.max(Math.abs(x - this.x), Math.abs(y - this.y)) / options.speed
-        }
-        this.to.deltaX = x - this.x
-        this.to.deltaY = y - this.y
-        this.to.ease = Penner[options.ease ? options.ease : 'linear']
-    }
-
-    get moving()
-    {
-        return this.to
-    }
-
-    /**
-     * animated rotation to a degree
-     * @param {number} angle in radian
-     * @param {object} options
-     * @param {string} options.ease
-     * @param {number} options.duration
-     * @param {number} options.speed (n / millisecond)
-     */
-    rotate(to, options)
-    {
-        options = options || {}
-        const difference = Angle.differenceAngles(to, this.rotation)
-        const sign = Angle.differenceAnglesSign(to, this.rotation)
-        const delta = difference * sign
-        this.toRotate = { rotation: to, original: this.rotation, delta, current: 0 }
-        if (options.duration)
-        {
-            this.toRotate.duration = options.duration
-        }
-        else
-        {
-            this.toRotate.duration = Math.abs(delta) / options.speed
-        }
-        this.toRotate.ease = Penner[options.ease ? options.ease : 'linear']
-    }
-
     update(elapsed)
     {
-        let dirty = false
-        const to = this.to
-        if (to)
-        {
-            dirty = true
-            to.current += elapsed
-            if (to.current >= to.duration)
-            {
-                this.position.set(to.x, to.y)
-                this.to = null
-            }
-            else
-            {
-                if (to.x)
-                {
-                    this.x = to.ease(to.current, to.originalX, to.deltaX, to.duration)
-                }
-                if (to.y)
-                {
-                    this.y = to.ease(to.current, to.originalY, to.deltaY, to.duration)
-                }
-            }
-        }
-        const toRotate = this.toRotate
-        if (toRotate)
-        {
-            dirty = true
-            toRotate.current += elapsed
-            if (toRotate.current >= toRotate.duration)
-            {
-                this.rotation = toRotate.rotation
-                this.toRotate = null
-            }
-            else
-            {
-                if (toRotate.current)
-                {
-                    this.rotation = toRotate.ease(toRotate.current, toRotate.original, toRotate.delta, toRotate.duration)
-                }
-            }
-        }
         if (!this.stop)
         {
             this.next -= elapsed
@@ -226,16 +159,19 @@ module.exports = class Pixel extends PIXI.Sprite
                 else
                 {
                     this.updateFrame(this.next)
-                    dirty = true
+                    return true
                 }
             }
         }
-        return dirty
     }
 
-    frame(i)
+    /**
+     * change the sprite to a certain frame
+     * @param {number} index of frame
+     */
+    frame(index)
     {
-        this.texture = this.sheet.getTexture(this.name + '-' + i)
+        this.texture = this.sheet.getTexture(this.name + '-' + index)
     }
 }
 
