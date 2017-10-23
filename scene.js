@@ -1,76 +1,76 @@
-const Pixel = require('./pixel');
+const PIXI = require('pixi.js')
+const Pixel = require('./pixel')
 
-class Scene extends PIXI.Container
+module.exports = class Scene extends PIXI.Container
 {
-    constructor(data, sprites, sheet, callback)
+    constructor(data, sprites, sheet)
     {
-        super();
-        this.time = 0;
-        this.index = 0;
-        this.callback = callback;
+        super()
+        this.time = 0
+        this.index = 0
         if (data)
         {
-            this.timeline = data.timeline;
-            this.options = data.options || {};
-            this.pixels = data.pixels;
-            this.spritesData = sprites;
-            this.w = data.width;
-            this.h = data.height;
-            this.sheet = sheet;
-            this.populate();
+            this.timeline = data.timeline
+            this.options = data.options || {}
+            this.pixels = data.pixels
+            this.spritesData = sprites
+            this.w = data.width
+            this.h = data.height
+            this.sheet = sheet
+            this.populate()
         }
     }
 
     rendersheet(sheet)
     {
-        sheet = sheet || this.sheet;
+        sheet = sheet || this.sheet
         for (let sprite of this.sprites)
         {
-            sprite.render(sheet);
+            sprite.render(sheet)
         }
     }
 
     populate()
     {
-        this.removeChildren();
+        this.removeChildren()
         if (this.options.sortY)
         {
-            this.nosort = this.addChild(new PIXI.Container());
-            this.sorted = this.addChild(new PIXI.Container());
+            this.nosort = this.addChild(new PIXI.Container())
+            this.sorted = this.addChild(new PIXI.Container())
         }
-        this.sprites = [];
+        this.sprites = []
         for (let name of this.pixels)
         {
-            let data;
+            let data
             if (this.spritesData)
             {
-                data = this.spritesData[name];
+                data = this.spritesData[name]
             }
             else
             {
-                data = require(name);
+                data = require(name)
             }
-            let sprite;
+            let sprite
             if (this.options.sortY)
             {
                 if (this.options.noSort && this.options.noSort.indexOf(data.name) !== -1)
                 {
-                    sprite = this.nosort.addChild(new Pixel(data, this.sheet));
+                    sprite = this.nosort.addChild(new Pixel(data, this.sheet))
                 }
                 else
                 {
-                    sprite = this.sorted.addChild(new Pixel(data, this.sheet));
+                    sprite = this.sorted.addChild(new Pixel(data, this.sheet))
                 }
             }
             else
             {
-                sprite = this.addChild(new Pixel(data, this.sheet));
+                sprite = this.addChild(new Pixel(data, this.sheet))
             }
-            sprite.file = name;
-            sprite.anchor.set(0.5);
-            sprite.placed = false;
-            sprite.visible = false;
-            this.sprites.push(sprite);
+            sprite.file = name
+            sprite.anchor.set(0.5)
+            sprite.placed = false
+            sprite.visible = false
+            this.sprites.push(sprite)
         }
     }
 
@@ -80,99 +80,91 @@ class Scene extends PIXI.Container
         {
             if (sprite.name === name)
             {
-                return sprite;
+                return sprite
             }
         }
     }
 
     update(elapsed)
     {
-        this.time += elapsed;
+        this.time += elapsed
         if (this.index !== this.timeline.length)
         {
             for (let index = this.index; index < this.timeline.length; index++)
             {
-                const timeline = this.timeline[index];
+                const timeline = this.timeline[index]
                 if (timeline.time <= this.time)
                 {
-                    const sprite = this.get(timeline['sprite']);
+                    const sprite = this.get(timeline['sprite'])
                     switch (timeline['type'])
                     {
                         case 'place':
-                            sprite.visible = true;
-                            sprite.placed = true;
-                            sprite.position.set(timeline.x, timeline.y);
-                            sprite.frame(0);
-                            if (this.callback)
-                            {
-                                this.callback(timeline);
-                            }
-                            break;
+                            sprite.visible = true
+                            sprite.placed = true
+                            sprite.position.set(timeline.x, timeline.y)
+                            sprite.frame(0)
+                            this.emit('callback', timeline)
+                            break
 
                         case 'unplace':
-                            sprite.visible = false;
-                            sprite.placed = false;
-                            if (this.callback)
-                            {
-                                this.callback(timeline);
-                            }
-                            break;
+                            sprite.visible = false
+                            sprite.placed = false
+                            this.emit('callback', timeline)
+                            break
 
                         case 'frame':
-                            sprite.frame(timeline.frame);
-                            sprite.stop = true;
-                            sprite.scale.x = Math.abs(sprite.scale.x) * (timeline.flip ? -1 : 1);
+                            sprite.frame(timeline.frame)
+                            sprite.stop = true
+                            sprite.scale.x = Math.abs(sprite.scale.x) * (timeline.flip ? -1 : 1)
                             if (this.callback)
                             {
-                                this.callback(timeline);
+                                this.callback(timeline)
                             }
-                            break;
+                            break
 
                         case 'animate':
-                            sprite.animate(timeline.animate);
-                            sprite.scale.x = Math.abs(sprite.scale.x) * (timeline.flip ? -1 : 1);
+                            sprite.animate(timeline.animate)
+                            sprite.scale.x = Math.abs(sprite.scale.x) * (timeline.flip ? -1 : 1)
                             if (this.callback)
                             {
-                                this.callback(timeline);
+                                this.callback(timeline)
                             }
-                            break;
+                            break
 
                         case 'move':
-                            sprite.move(timeline.x, timeline.y, { duration: timeline.duration, ease: timeline.ease });
+                            sprite.move(timeline.x, timeline.y, { duration: timeline.duration, ease: timeline.ease })
                             if (this.callback)
                             {
-                                this.callback(timeline);
+                                this.callback(timeline)
                             }
-                            break;
+                            break
 
                         case 'event':
                             if (this.callback)
                             {
-                                this.callback(timeline);
+                                this.callback(timeline)
                             }
-                            break;
+                            break
                     }
-                    this.index = index + 1;
+                    this.index = index + 1
                 }
                 else
                 {
-                    break;
+                    break
                 }
             }
         }
         for (let sprite of this.sprites)
         {
-            sprite.update(elapsed);
+            sprite.update(elapsed)
         }
         if (this.options.sortY)
         {
-            this.sorted.children.sort((a, b) => { return a.y - b.y; });
+            this.sorted.children.sort((a, b) => { return a.y - b.y })
         }
         if (this.index === this.timeline.length)
         {
-            return true;
+            return true
         }
     }
 }
-
-module.exports = Scene;
