@@ -20,7 +20,7 @@ include pixel.js in your project or add to your workflow
  * @event link - animation link to another animation
  * @event frame - animation changes frame
  */
-module.exports = class Pixel extends PIXI.Sprite
+
 
     /**
      * create a sprite with the Pixel-Editor data
@@ -47,6 +47,18 @@ module.exports = class Pixel extends PIXI.Sprite
      * @param {RenderSheet} sheet
      */
     static add(data, sheet)
+
+    /**
+     * move sprite to a different location
+     * @param {number} x
+     * @param {number} y
+     * @param {number} duration
+     * @param {object} [options]
+     * @param {string|function} [options.ease]
+     * @param {number} options.duration
+     * @param {number} options.speed (n / millisecond)
+     */
+    move(x, y, options)
 
     /**
      * starts a named animation

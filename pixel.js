@@ -1,4 +1,5 @@
 const PIXI = require('pixi.js')
+const Ease = require('pixi-ease')
 const Random = require('yy-random')
 
 /**
@@ -9,6 +10,7 @@ const Random = require('yy-random')
  * @event link - animation link to another animation
  * @event frame - animation changes frame
  */
+
 module.exports = class Pixel extends PIXI.Sprite
 {
     /**
@@ -64,6 +66,28 @@ module.exports = class Pixel extends PIXI.Sprite
         for (let i = 0; i < data.frames.length; i++)
         {
             sheet.add(data.name + '-' + i, draw, measure, data.frames[i])
+        }
+    }
+
+    /**
+     * move sprite to a different location
+     * @param {number} x
+     * @param {number} y
+     * @param {number} duration
+     * @param {object} [options]
+     * @param {string|function} [options.ease]
+     * @param {number} options.duration
+     * @param {number} options.speed (n / millisecond)
+     */
+    move(x, y, options)
+    {
+        if (options.duration)
+        {
+            this.moving = new Ease.to(this, { x, y }, options.duration, { ease: options.ease })
+        }
+        else if (options.speed)
+        {
+            this.moving = new Ease.target(this, {x, y}, options.speed)
         }
     }
 
@@ -162,6 +186,10 @@ module.exports = class Pixel extends PIXI.Sprite
                     return true
                 }
             }
+        }
+        if (this.moving && this.moving.update(elapsed))
+        {
+            this.moving = null
         }
     }
 
