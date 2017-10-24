@@ -116,34 +116,22 @@ module.exports = class Scene extends PIXI.Container
                             sprite.frame(timeline.frame)
                             sprite.stop = true
                             sprite.scale.x = Math.abs(sprite.scale.x) * (timeline.flip ? -1 : 1)
-                            if (this.callback)
-                            {
-                                this.callback(timeline)
-                            }
+                            this.emit('callback', timeline)
                             break
 
                         case 'animate':
                             sprite.animate(timeline.animate)
                             sprite.scale.x = Math.abs(sprite.scale.x) * (timeline.flip ? -1 : 1)
-                            if (this.callback)
-                            {
-                                this.callback(timeline)
-                            }
+                            this.emit('callback', timeline)
                             break
 
                         case 'move':
                             sprite.move(timeline.x, timeline.y, { duration: timeline.duration, ease: timeline.ease })
-                            if (this.callback)
-                            {
-                                this.callback(timeline)
-                            }
+                            this.emit('callback', timeline)
                             break
 
                         case 'event':
-                            if (this.callback)
-                            {
-                                this.callback(timeline)
-                            }
+                            this.emit('callback', timeline)
                             break
                     }
                     this.index = index + 1
