@@ -47,7 +47,7 @@ module.exports = class Pixel extends PIXI.Sprite
      */
     render(force)
     {
-        if (force || !this.sheet.get(this.name + '-0'))
+        if (force || !this.sheet.exists(this.name + '-0'))
         {
             for (let i = 0; i < this.frames.length; i++)
             {
