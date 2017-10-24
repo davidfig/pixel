@@ -1,6 +1,6 @@
 {
   "name": "yy-pixel",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Pixel animation and scene rendering",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/davidfig/pixel#readme",
   "dependencies": {
+    "pixi-ease": "^0.13.3",
     "pixi.js": "^4.5.6",
     "yy-color": "^1.0.7",
     "yy-random": "^1.2.0"
