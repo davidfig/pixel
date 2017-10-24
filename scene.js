@@ -3,6 +3,13 @@ const Pixel = require('./pixel')
 
 module.exports = class Scene extends PIXI.Container
 {
+    /**
+     * @param {object} data
+     * @param {object} sprites
+     * @param {RenderSheet} sheet
+     *
+     * @event callback(timeline) emits an event each time a timelime element starts
+     */
     constructor(data, sprites, sheet)
     {
         super()
