@@ -128,7 +128,7 @@ module.exports = class Pixel extends PIXI.Sprite
                     this.index = 0
                     entry = this.animation[0]
                     this.updateFrame(leftover)
-                    this.emit('loop, this')
+                    this.emit('loop', this)
                     return
 
                 case 'unique':
