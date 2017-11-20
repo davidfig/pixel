@@ -1,6 +1,6 @@
 {
   "name": "yy-pixel",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Pixel animation and scene rendering",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,7 @@
   "dependencies": {
     "exists": "^1.0.1",
     "pixi-ease": "^0.13.3",
-    "pixi.js": "^4.5.6",
+    "pixi.js": "^4.6.1",
     "yy-color": "^1.0.7",
     "yy-random": "^1.2.0"
   }
