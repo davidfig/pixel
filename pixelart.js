@@ -59,8 +59,8 @@ const PixelArt = {
 
     /**
      * draw and fill rectangle
-     * @param {number} x1 - x-center
-     * @param {number} y2 - y-center
+     * @param {number} x1 - x
+     * @param {number} y2 - y
      * @param {number} radius - radius
      * @param {string} color
      * @param {CanvasRenderingContext2D} [c]

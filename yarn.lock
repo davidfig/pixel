@@ -14,6 +14,10 @@ eventemitter3@^2.0.0, eventemitter3@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
 
+exists@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/exists/-/exists-1.0.1.tgz#ffcbee29142f24056df01924e73262733db10b49"
+
 ismobilejs@^0.4.0:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/ismobilejs/-/ismobilejs-0.4.1.tgz#1a5f126c70fed39c93da380fa62cbae5723e7dc2"

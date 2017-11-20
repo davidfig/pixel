@@ -1,7 +1,6 @@
 const PIXI = require('pixi.js')
 const Ease = require('pixi-ease')
 const Random = require('yy-random')
-const exists = require('exists')
 
 /**
  * @param {object} data imported from .json (from Pixel-Editor)
@@ -19,14 +18,17 @@ module.exports = class Pixel extends PIXI.Sprite
      * @param {object} data
      * @param {RenderSheet} sheet
      */
-    constructor(data, sheet)
+    constructor(data, sheet, colors)
     {
         super()
         if (data)
         {
             this.name = data.name
-            this.frames = data.frames
-            this.animations = data.animations
+            this.parts = data.parts
+            this.colors = colors || data.colors
+
+            // this.frames = data.frames
+            // this.animations = data.animations
             this.sheet = sheet
             this.render()
         }
@@ -226,22 +228,29 @@ module.exports = class Pixel extends PIXI.Sprite
  */
 function draw(c, frame)
 {
-    const pixels = frame.data
-    for (let y = 0; y < frame.height; y++)
+    if (frame.v === 2)
     {
-        for (let x = 0; x < frame.width; x++)
+
+    }
+    else
+    {
+        const pixels = frame.data
+        for (let y = 0; y < frame.height; y++)
         {
-            const color = pixels[x + y * frame.width]
-            if (exists(color))
+            for (let x = 0; x < frame.width; x++)
             {
-                let hex = color.toString(16)
-                while (hex.length < 6)
+                const color = pixels[x + y * frame.width]
+                if (color !== null)
                 {
-                    hex = '0' + hex
+                    let hex = this.colors[color].toString(16)
+                    while (hex.length < 6)
+                    {
+                        hex = '0' + hex
+                    }
+                    c.fillStyle = '#' + hex
+                    c.beginPath()
+                    c.fillRect(x, y, 1, 1)
                 }
-                c.fillStyle = '#' + hex
-                c.beginPath()
-                c.fillRect(x, y, 1, 1)
             }
         }
     }

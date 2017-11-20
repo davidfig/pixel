@@ -11,7 +11,7 @@ include pixel.js in your project or add to your workflow
 
 ## API
 ### pixel.js
-```
+```js
 /**
  * @param {object} data imported from .json (from Pixel-Editor)
  * @param {RenderSheet} sheet - rendersheet for rendering pixel sprite
@@ -61,6 +61,13 @@ include pixel.js in your project or add to your workflow
     move(x, y, options)
 
     /**
+     * starts a manual animation
+     * @param {array} animation
+     * @param {boolean} reverse
+     */
+    animateManual(animation, reverse)
+
+    /**
      * starts a named animation
      * @param {string} name of animation
      * @param {boolean} reverse - flip the sprite
@@ -88,7 +95,7 @@ include pixel.js in your project or add to your workflow
 function measure(c, params)
 ```
 ### pixel-sheet.js
-```
+```js
 /**
  * sheet of pixels
  * @param {object[]} map
@@ -103,11 +110,11 @@ function measure(c, params)
 module.exports = function PixelSheet(map, data, sheet)
 ```
 ### pixelart.js
-```
+```js
     /**
      * draw and fill rectangle
-     * @param {number} x1 - x-center
-     * @param {number} y2 - y-center
+     * @param {number} x1 - x
+     * @param {number} y2 - y
      * @param {number} radius - radius
      * @param {string} color
      * @param {CanvasRenderingContext2D} [c]
