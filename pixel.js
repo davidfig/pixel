@@ -103,7 +103,7 @@ module.exports = class Pixel extends PIXI.Sprite
         this.animation = animation
         this.index = 0
         this.updateFrame(0)
-        this.stop = false
+        this.playing = true
     }
 
     /**
@@ -114,17 +114,41 @@ module.exports = class Pixel extends PIXI.Sprite
     animate(name, reverse)
     {
         this.scale.x = Math.abs(this.scale.x) * (reverse ? -1 : 1)
-        this.animation = this.animations[name]
+        const source = this.animations[name]
+        const animation = []
+        for (let frame of source)
+        {
+            if (Array.isArray(frame[0]))
+            {
+                for (let item of frame[0])
+                {
+                    animation.push([item, frame[1]])
+                }
+            }
+            else
+            {
+                animation.push(frame)
+            }
+        }
+        this.animation = animation
         if (this.animation)
         {
             this.index = 0
             this.updateFrame(0)
-            this.stop = false
+            this.playing = true
         }
         else
         {
-            this.stop = true
+            this.playing = false
         }
+    }
+
+    /**
+     * stops any animation
+     */
+    stop()
+    {
+        this.playing = false
     }
 
     /**
@@ -184,7 +208,7 @@ module.exports = class Pixel extends PIXI.Sprite
      */
     update(elapsed)
     {
-        if (!this.stop)
+        if (this.playing)
         {
             this.next -= elapsed
             if (this.next <= 0)
@@ -192,7 +216,7 @@ module.exports = class Pixel extends PIXI.Sprite
                 this.index++
                 if (this.index === this.animation.length)
                 {
-                    this.stop = true
+                    this.playing = false
                     this.emit('stop', this)
                 }
                 else
@@ -202,9 +226,13 @@ module.exports = class Pixel extends PIXI.Sprite
                 }
             }
         }
-        if (this.moving && this.moving.update(elapsed))
+        if (this.moving)
         {
-            this.moving = null
+            if (this.moving.update(elapsed))
+            {
+                this.moving = null
+            }
+            return true
         }
     }
 
@@ -215,6 +243,7 @@ module.exports = class Pixel extends PIXI.Sprite
     frame(index)
     {
         this.texture = this.sheet.getTexture(this.name + '-' + index)
+        this.playing = false
     }
 }
 
