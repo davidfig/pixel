@@ -71,6 +71,17 @@ module.exports = class Pixel extends PIXI.Sprite
     }
 
     /**
+     * adds an individual frame to the rendersheet
+     * @param {number} index
+     * @param {object} data
+     * @param {RenderSheet} sheet
+     */
+    static addFrame(index, data, sheet)
+    {
+        sheet.add(data.name + '-' + index, draw, measure, data.frames[index])
+    }
+
+    /**
      * move sprite to a different location
      * @param {number} x
      * @param {number} y
