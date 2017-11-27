@@ -209,6 +209,7 @@ module.exports = class Pixel extends PIXI.Sprite
             this.next = entry[1] + leftover
         }
         this.texture = this.sheet.getTexture(this.name + '-' + entry[0])
+        this.frameNumber = entry[0]
         this.emit('frame', this)
     }
 
@@ -254,6 +255,7 @@ module.exports = class Pixel extends PIXI.Sprite
     frame(index)
     {
         this.texture = this.sheet.getTexture(this.name + '-' + index)
+        this.frameNumber = index
         this.playing = false
     }
 }

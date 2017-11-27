@@ -49,6 +49,14 @@ include pixel.js in your project or add to your workflow
     static add(data, sheet)
 
     /**
+     * adds an individual frame to the rendersheet
+     * @param {number} index
+     * @param {object} data
+     * @param {RenderSheet} sheet
+     */
+    static addFrame(index, data, sheet)
+
+    /**
      * move sprite to a different location
      * @param {number} x
      * @param {number} y
@@ -73,6 +81,11 @@ include pixel.js in your project or add to your workflow
      * @param {boolean} reverse - flip the sprite
      */
     animate(name, reverse)
+
+    /**
+     * stops any animation
+     */
+    stop()
 
     /**
      * updates the pixel
