@@ -18,13 +18,13 @@ include pixel.js in your project or add to your workflow
      * @param {RenderSheet} sheet
      * @param {object} data imported from .json (from Pixel-Editor)
      * @param {RenderSheet} sheet - rendersheet for rendering pixel sprite
-     * @param {number=150} time in milliseconds per frame
+     * @param {number=150} animationTime in milliseconds per frame
      * @event stop - animation finishes and stops
      * @event loop - animation loops
      * @event link - animation link to another animation
      * @event frame - animation changes frame
      */
-    constructor(data, sheet, time)
+    constructor(data, sheet, animationTime)
 
     /**
      * @param {number} index of frame

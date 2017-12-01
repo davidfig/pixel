@@ -11,13 +11,13 @@ module.exports = class Pixel extends PIXI.Sprite
      * @param {RenderSheet} sheet
      * @param {object} data imported from .json (from Pixel-Editor)
      * @param {RenderSheet} sheet - rendersheet for rendering pixel sprite
-     * @param {number=150} time in milliseconds per frame
+     * @param {number=150} animationTime in milliseconds per frame
      * @event stop - animation finishes and stops
      * @event loop - animation loops
      * @event link - animation link to another animation
      * @event frame - animation changes frame
      */
-    constructor(data, sheet, time)
+    constructor(data, sheet, animationTime)
     {
         super()
         if (data)
@@ -26,7 +26,7 @@ module.exports = class Pixel extends PIXI.Sprite
             this.frames = data.frames
             this.animations = data.animations
             this.sheet = sheet
-            this.time = time || 150
+            this.animationTime = animationTime || 150
             this.render()
         }
     }
@@ -215,11 +215,11 @@ module.exports = class Pixel extends PIXI.Sprite
         // calculate time
         if (Array.isArray(entry[1]))
         {
-            this.next = this.time * Random.range(entry[1][0], entry[1][1]) + leftover
+            this.next = this.animationTime * Random.range(entry[1][0], entry[1][1]) + leftover
         }
         else
         {
-            this.next = this.time * entry[1] + leftover
+            this.next = this.animationTime * entry[1] + leftover
         }
         this.texture = this.sheet.getTexture(this.name + '-' + entry[0])
         this.frameNumber = entry[0]
