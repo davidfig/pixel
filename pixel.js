@@ -155,6 +155,7 @@ module.exports = class Pixel extends PIXI.Sprite
         else
         {
             this.playing = false
+            this.currentAnimation = ''
         }
     }
 
@@ -164,6 +165,7 @@ module.exports = class Pixel extends PIXI.Sprite
     stop()
     {
         this.playing = false
+        this.currentAnimation = ''
     }
 
     /**
@@ -247,6 +249,7 @@ module.exports = class Pixel extends PIXI.Sprite
                 if (this.index === this.animation.length)
                 {
                     this.playing = false
+                    this.currentAnimation = ''
                     this.emit('stop', this)
                 }
                 else
@@ -275,6 +278,7 @@ module.exports = class Pixel extends PIXI.Sprite
         this.texture = this.sheet.getTexture(this.name + '-' + index)
         this.frameNumber = index
         this.playing = false
+        this.currentAnimation = ''
     }
 }
 
