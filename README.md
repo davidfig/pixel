@@ -12,22 +12,19 @@ include pixel.js in your project or add to your workflow
 ## API
 ### pixel.js
 ```js
-/**
- * @param {object} data imported from .json (from Pixel-Editor)
- * @param {RenderSheet} sheet - rendersheet for rendering pixel sprite
- * @event stop  - animation finishes and stops
- * @event loop - animation loops
- * @event link - animation link to another animation
- * @event frame - animation changes frame
- */
-
-
     /**
      * create a sprite with the Pixel-Editor data
      * @param {object} data
      * @param {RenderSheet} sheet
+     * @param {object} data imported from .json (from Pixel-Editor)
+     * @param {RenderSheet} sheet - rendersheet for rendering pixel sprite
+     * @param {number=150} time in milliseconds per frame
+     * @event stop - animation finishes and stops
+     * @event loop - animation loops
+     * @event link - animation link to another animation
+     * @event frame - animation changes frame
      */
-    constructor(data, sheet)
+    constructor(data, sheet, time)
 
     /**
      * @param {number} index of frame
@@ -37,7 +34,7 @@ include pixel.js in your project or add to your workflow
 
     /**
      * adds the frames to the RenderSheet
-     * @param {boolean} force
+     * @param {boolean} force the render even if sheet already contains these sprites
      */
     render(force)
 
@@ -57,7 +54,7 @@ include pixel.js in your project or add to your workflow
     static addFrame(index, data, sheet)
 
     /**
-     * move sprite to a different location
+     * move sprite to a different location using easing or speed function
      * @param {number} x
      * @param {number} y
      * @param {number} duration
@@ -106,6 +103,7 @@ include pixel.js in your project or add to your workflow
  * @param {object} params
  */
 function measure(c, params)
+
 ```
 ### pixel-sheet.js
 ```js
@@ -121,6 +119,7 @@ function measure(c, params)
  * @param {RenderSheet} sheet
  */
 module.exports = function PixelSheet(map, data, sheet)
+
 ```
 ### pixelart.js
 ```js
@@ -207,6 +206,7 @@ module.exports = function PixelSheet(map, data, sheet)
      * @param {HTMLContext} c
      */
     getPixels: function (x0, y0, width, height, c)
+
 ```
 ## license  
 MIT License  
