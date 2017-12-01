@@ -106,9 +106,11 @@ module.exports = class Pixel extends PIXI.Sprite
      * starts a manual animation
      * @param {array} animation
      * @param {boolean} reverse
+     * @param {number} time - use this time instead of animationTime
      */
-    animateManual(animation, reverse)
+    animateManual(animation, reverse, time)
     {
+        this.useTime = time || this.animationTime
         this.scale.x = Math.abs(this.scale.x) * (reverse ? -1 : 1)
         this.animation = animation
         this.index = 0
@@ -120,9 +122,11 @@ module.exports = class Pixel extends PIXI.Sprite
      * starts a named animation
      * @param {string} name of animation
      * @param {boolean} reverse - flip the sprite
+     * @param {number} time - use this time instead of animationTime
      */
-    animate(name, reverse)
+    animate(name, reverse, time)
     {
+        this.useTime = time || this.animationTime
         this.scale.x = Math.abs(this.scale.x) * (reverse ? -1 : 1)
         const source = this.animations[name]
         const animation = []
@@ -215,11 +219,11 @@ module.exports = class Pixel extends PIXI.Sprite
         // calculate time
         if (Array.isArray(entry[1]))
         {
-            this.next = this.animationTime * Random.range(entry[1][0], entry[1][1]) + leftover
+            this.next = this.useTime * Random.range(entry[1][0], entry[1][1]) + leftover
         }
         else
         {
-            this.next = this.animationTime * entry[1] + leftover
+            this.next = this.useTime * entry[1] + leftover
         }
         this.texture = this.sheet.getTexture(this.name + '-' + entry[0])
         this.frameNumber = entry[0]
