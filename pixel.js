@@ -3,23 +3,21 @@ const Ease = require('pixi-ease')
 const Random = require('yy-random')
 const exists = require('exists')
 
-/**
- * @param {object} data imported from .json (from Pixel-Editor)
- * @param {RenderSheet} sheet - rendersheet for rendering pixel sprite
- * @event stop  - animation finishes and stops
- * @event loop - animation loops
- * @event link - animation link to another animation
- * @event frame - animation changes frame
- */
-
 module.exports = class Pixel extends PIXI.Sprite
 {
     /**
      * create a sprite with the Pixel-Editor data
      * @param {object} data
      * @param {RenderSheet} sheet
+     * @param {object} data imported from .json (from Pixel-Editor)
+     * @param {RenderSheet} sheet - rendersheet for rendering pixel sprite
+     * @param {number=150} time in milliseconds per frame
+     * @event stop - animation finishes and stops
+     * @event loop - animation loops
+     * @event link - animation link to another animation
+     * @event frame - animation changes frame
      */
-    constructor(data, sheet)
+    constructor(data, sheet, time)
     {
         super()
         if (data)
@@ -28,6 +26,7 @@ module.exports = class Pixel extends PIXI.Sprite
             this.frames = data.frames
             this.animations = data.animations
             this.sheet = sheet
+            this.time = time || 150
             this.render()
         }
     }
@@ -44,7 +43,7 @@ module.exports = class Pixel extends PIXI.Sprite
 
     /**
      * adds the frames to the RenderSheet
-     * @param {boolean} force
+     * @param {boolean} force the render even if sheet already contains these sprites
      */
     render(force)
     {
@@ -82,7 +81,7 @@ module.exports = class Pixel extends PIXI.Sprite
     }
 
     /**
-     * move sprite to a different location
+     * move sprite to a different location using easing or speed function
      * @param {number} x
      * @param {number} y
      * @param {number} duration
@@ -169,44 +168,58 @@ module.exports = class Pixel extends PIXI.Sprite
      */
     updateFrame(leftover)
     {
+        // parse entry
         let entry = this.animation[this.index]
-        if (typeof entry[0] === 'string')
+        if (entry === 'loop')
         {
-            switch (entry[0])
-            {
-                case 'loop':
-                    this.index = 0
-                    entry = this.animation[0]
-                    this.updateFrame(leftover)
-                    this.emit('loop', this)
-                    return
-
-                case 'unique':
-                    let pick
-                    do
-                    {
-                        pick = Random.pick(entry[1])
-                    }
-                    while (this.last === pick)
-                    this.last = pick
-                    entry = [pick, entry[2]]
-                    break
-
-                case 'link':
-                    this.animation = this.animations[entry[1]]
-                    this.index = 0
-                    this.updateFrame(leftover)
-                    this.emit('link', this)
-                    return
-            }
+            this.index = 0
+            entry = this.animation[0]
+            this.updateFrame(leftover)
+            this.emit('loop', this)
+            return
         }
-        if (Array.isArray(entry[1]))
+        else if (Array.isArray(entry))
         {
-            this.next = Random.range(entry[1][0], entry[1][1]) + leftover
+            if (entry[0] === 'unique')
+            {
+                let pick
+                do
+                {
+                    pick = Random.pick(entry[1])
+                }
+                while (this.last === pick)
+                this.last = pick
+                entry = [pick, exists(entry[2]) ? entry[2] : 1]
+            }
+            else if (entry[0] === 'link')
+            {
+                this.animation = this.animations[entry[1]]
+                this.index = 0
+                this.updateFrame(leftover)
+                this.emit('link', this)
+                return
+            }
+            else
+            {
+                if (!exists(entry[1]))
+                {
+                    entry[1] = 1
+                }
+            }
         }
         else
         {
-            this.next = entry[1] + leftover
+            entry = [entry, 1]
+        }
+
+        // calculate time
+        if (Array.isArray(entry[1]))
+        {
+            this.next = this.time * Random.range(entry[1][0], entry[1][1]) + leftover
+        }
+        else
+        {
+            this.next = this.time * entry[1] + leftover
         }
         this.texture = this.sheet.getTexture(this.name + '-' + entry[0])
         this.frameNumber = entry[0]
