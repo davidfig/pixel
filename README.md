@@ -69,15 +69,17 @@ include pixel.js in your project or add to your workflow
      * starts a manual animation
      * @param {array} animation
      * @param {boolean} reverse
+     * @param {number} time - use this time instead of animationTime
      */
-    animateManual(animation, reverse)
+    animateManual(animation, reverse, time)
 
     /**
      * starts a named animation
      * @param {string} name of animation
      * @param {boolean} reverse - flip the sprite
+     * @param {number} time - use this time instead of animationTime
      */
-    animate(name, reverse)
+    animate(name, reverse, time)
 
     /**
      * stops any animation
