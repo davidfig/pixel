@@ -126,6 +126,7 @@ module.exports = class Pixel extends PIXI.Sprite
      */
     animate(name, reverse, time)
     {
+        this.currentAnimation = name
         this.useTime = time || this.animationTime
         this.scale.x = Math.abs(this.scale.x) * (reverse ? -1 : 1)
         const source = this.animations[name]
