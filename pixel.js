@@ -16,6 +16,7 @@ module.exports = class Pixel extends PIXI.Sprite
      * @event loop - animation loops
      * @event link - animation link to another animation
      * @event frame - animation changes frame
+     * @event move-done - move finishes
      */
     constructor(data, sheet, animationTime)
     {
@@ -263,6 +264,7 @@ module.exports = class Pixel extends PIXI.Sprite
         {
             if (this.moving.update(elapsed))
             {
+                this.emit('move-done')
                 this.moving = null
             }
             return true

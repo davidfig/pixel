@@ -23,6 +23,7 @@ include pixel.js in your project or add to your workflow
      * @event loop - animation loops
      * @event link - animation link to another animation
      * @event frame - animation changes frame
+     * @event move-done - move finishes
      */
     constructor(data, sheet, animationTime)
 
