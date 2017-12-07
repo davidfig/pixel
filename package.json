@@ -4,9 +4,10 @@
   "description": "Pixel animation and scene rendering",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "budo docs/code.js:index.js --dir docs --live",
     "docs": "markdown-api README.md pixel.js pixel-sheet.js pixelart.js --header",
-    "prepare": "yarn docs"
+    "build": "browserify docs/code.js -o docs/index.js",
+    "prepare": "npm run docs && npm run build"
   },
   "repository": {
     "type": "git",
@@ -24,10 +25,19 @@
   },
   "homepage": "https://github.com/davidfig/pixel#readme",
   "dependencies": {
+    "canvas": "^1.6.7",
     "exists": "^1.0.1",
+    "fork-me-github": "^1.0.3",
     "pixi-ease": "^0.13.3",
-    "pixi.js": "^4.6.1",
+    "pixi.js": "^4.6.2",
     "yy-color": "^1.0.7",
-    "yy-random": "^1.2.0"
+    "yy-random": "^1.2.0",
+    "yy-rendersheet": "^3.4.0"
+  },
+  "devDependencies": {
+    "glob": "^7.1.2",
+    "highlight.js": "^9.12.0",
+    "jsonfile": "^4.0.0",
+    "yy-renderer": "^2.5.0"
   }
 }
