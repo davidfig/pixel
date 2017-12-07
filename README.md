@@ -4,6 +4,10 @@ pixel drawing and animation libraries
 ## rationale
 I use these libraries as part of my Pixel Editor and Animation suite (not yet released publicly).
 
+## Live Example
+
+https://davidfig.github.io/pixel/
+
 ## Installation
 include pixel.js in your project or add to your workflow
 
