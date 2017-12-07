@@ -1,5 +1,4 @@
 const PIXI = require('pixi.js')
-const Ease = require('pixi-ease')
 const Random = require('yy-random')
 const exists = require('exists')
 
@@ -16,7 +15,6 @@ module.exports = class Pixel extends PIXI.Sprite
      * @event loop - animation loops
      * @event link - animation link to another animation
      * @event frame - animation changes frame
-     * @event move-done - move finishes
      */
     constructor(data, sheet, animationTime)
     {
@@ -79,28 +77,6 @@ module.exports = class Pixel extends PIXI.Sprite
     static addFrame(index, data, sheet)
     {
         sheet.addData(data.name + '-' + index, data.imageData[index][2])
-    }
-
-    /**
-     * move sprite to a different location using easing or speed function
-     * @param {number} x
-     * @param {number} y
-     * @param {number} duration
-     * @param {object} [options]
-     * @param {string|function} [options.ease]
-     * @param {number} options.duration
-     * @param {number} options.speed (n / millisecond)
-     */
-    move(x, y, options)
-    {
-        if (options.duration)
-        {
-            this.moving = new Ease.to(this, { x, y }, options.duration, { ease: options.ease })
-        }
-        else if (options.speed)
-        {
-            this.moving = new Ease.target(this, {x, y}, options.speed)
-        }
     }
 
     /**
@@ -260,15 +236,6 @@ module.exports = class Pixel extends PIXI.Sprite
                 }
             }
         }
-        if (this.moving)
-        {
-            if (this.moving.update(elapsed))
-            {
-                this.emit('move-done')
-                this.moving = null
-            }
-            return true
-        }
     }
 
     /**
@@ -282,43 +249,4 @@ module.exports = class Pixel extends PIXI.Sprite
         this.playing = false
         this.currentAnimation = ''
     }
-}
-
-/**
- * used by RenderSheet to render the frame
- * @private
- * @param {CanvasRenderingContext2D} c
- * @param {object} frame
- */
-function draw(c, frame)
-{
-    const pixels = frame.data
-    for (let y = 0; y < frame.height; y++)
-    {
-        for (let x = 0; x < frame.width; x++)
-        {
-            const color = pixels[x + y * frame.width]
-            if (exists(color))
-            {
-                let hex = color.toString(16)
-                while (hex.length < 6)
-                {
-                    hex = '0' + hex
-                }
-                c.fillStyle = '#' + hex
-                c.beginPath()
-                c.fillRect(x, y, 1, 1)
-            }
-        }
-    }
-}
-
-/**
- * used by RenderSheet to render the frame
- * @param {CanvasRenderingContext2D} c
- * @param {object} params
- */
-function measure(c, params)
-{
-    return { width: params.width, height: params.height }
 }
