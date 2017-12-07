@@ -27,7 +27,6 @@ include pixel.js in your project or add to your workflow
      * @event loop - animation loops
      * @event link - animation link to another animation
      * @event frame - animation changes frame
-     * @event move-done - move finishes
      */
     constructor(data, sheet, animationTime)
 
@@ -57,18 +56,6 @@ include pixel.js in your project or add to your workflow
      * @param {RenderSheet} sheet
      */
     static addFrame(index, data, sheet)
-
-    /**
-     * move sprite to a different location using easing or speed function
-     * @param {number} x
-     * @param {number} y
-     * @param {number} duration
-     * @param {object} [options]
-     * @param {string|function} [options.ease]
-     * @param {number} options.duration
-     * @param {number} options.speed (n / millisecond)
-     */
-    move(x, y, options)
 
     /**
      * starts a manual animation
@@ -103,13 +90,6 @@ include pixel.js in your project or add to your workflow
      * @param {number} index of frame
      */
     frame(index)
-
-/**
- * used by RenderSheet to render the frame
- * @param {CanvasRenderingContext2D} c
- * @param {object} params
- */
-function measure(c, params)
 
 ```
 ### pixel-sheet.js
