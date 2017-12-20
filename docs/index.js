@@ -59703,7 +59703,7 @@ module.exports = class Pixel extends PIXI.Sprite
             this.animations = data.animations
             this.sheet = sheet
             this.animationTime = animationTime || 150
-            this.render(data.imageData)
+            this.render()
         }
     }
 
