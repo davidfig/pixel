@@ -26,7 +26,7 @@ module.exports = class Pixel extends PIXI.Sprite
             this.animations = data.animations
             this.sheet = sheet
             this.animationTime = animationTime || 150
-            this.render()
+            this.render(data.imageData)
         }
     }
 
@@ -64,7 +64,9 @@ module.exports = class Pixel extends PIXI.Sprite
     {
         for (let i = 0; i < data.imageData.length; i++)
         {
-            sheet.addData(data.name + '-' + i, data.imageData[i][2])
+            const texture = sheet.addData(data.name + '-' + i, data.imageData[i][2])
+            texture.width = data.imageData[i][0]
+            texture.height = data.imageData[i][1]
         }
     }
 
@@ -76,7 +78,9 @@ module.exports = class Pixel extends PIXI.Sprite
      */
     static addFrame(index, data, sheet)
     {
-        sheet.addData(data.name + '-' + index, data.imageData[index][2])
+        const texture = sheet.addData(data.name + '-' + index, data.imageData[index][2])
+        texture.width = data.imageData[i][0]
+        texture.height = data.imageData[i][1]
     }
 
     /**
