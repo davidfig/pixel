@@ -7,7 +7,7 @@
     "test": "budo docs/code.js:index.js --dir docs --live",
     "docs": "markdown-api README.md pixel.js pixel-sheet.js pixelart.js --header",
     "build": "browserify docs/code.js -o docs/index.js",
-    "prepare": "npm run docs && npm run build"
+    "setup": "npm run docs && npm run build"
   },
   "repository": {
     "type": "git",

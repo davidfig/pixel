@@ -58,6 +58,34 @@ include pixel.js in your project or add to your workflow
     static addFrame(index, data, sheet)
 
     /**
+     * find the largest width of the frames
+     * @static
+     * @param {object} data
+     * @return {number} largest width
+     */
+    static largestFrameWidth(data)
+
+    /**
+     * find the largest height of the frames
+     * @static
+     * @param {object} data
+     * @return {number} largest height
+     */
+    static largestFrameHeight(data)
+
+    /**
+     * find the largest width of the frames
+     * @returns {number} largest width
+     */
+    largestWidth()
+
+    /**
+     * find the largest width of the frames
+     * @returns {number} largest height
+     */
+    largestHeight()
+
+    /**
      * starts a manual animation
      * @param {array} animation
      * @param {boolean} reverse

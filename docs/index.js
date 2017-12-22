@@ -2,14 +2,15 @@
 const Pixel = require('..').Pixel
 const RenderSheet = require('../../rendersheet')
 const Renderer = require('yy-renderer')
+const assert = require('assert')
 
 const GENERAL = require('./general.json')
 
-let sheet, renderer
+let sheet, renderer, general
 
 function test()
 {
-    const general = renderer.add(new Pixel(GENERAL, sheet))
+    general = renderer.add(new Pixel(GENERAL, sheet))
     general.position.set(10, 10)
     general.scale.set(8)
     general.animate('talk')
@@ -26,6 +27,16 @@ function test()
         general.update(elapsed)
         general2.update(elapsed)
     })
+
+    testLargest()
+}
+
+function testLargest()
+{
+    assert.equal(general.largestWidth(), 12)
+    assert.equal(general.largestHeight(), 16)
+    assert.equal(Pixel.largestFrameWidth(GENERAL), 12)
+    assert.equal(Pixel.largestFrameHeight(GENERAL), 16)
 }
 
 window.onload = function ()
@@ -39,7 +50,7 @@ window.onload = function ()
     require('fork-me-github')('https://github.com/davidfig/pixel')
     require('./highlight')()
 }
-},{"..":4,"../../rendersheet":387,"./general.json":2,"./highlight":3,"fork-me-github":9,"yy-renderer":381}],2:[function(require,module,exports){
+},{"..":4,"../../rendersheet":388,"./general.json":2,"./highlight":3,"assert":571,"fork-me-github":9,"yy-renderer":382}],2:[function(require,module,exports){
 module.exports={"name":"general","animations":{"talk":[["unique",[2,3,4,5,8],[3,5]],"loop"],"walk":[[[10,9,11,9],1],"loop"]},"imageData":[[12,16,"iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAAoklEQVQokWNgoAaYMmXK/ylTpvzHJseCTTBT/SkDAwMDQw6xGr6/uovTdhQNV64w/GdgYGCw23AHha+jw8CIVUP2ZXuGz3c/MzAwMDAsCjjHELfBiIFXmZeBgeEgXA0TLqvjNhhhFcepARdA0bD1nziGAnQxRgwVDAzo4Y+iBiNYjVpQ3X6u5hxuJ5ENjFqM/hu1GGFNGtSxgQHicaw2kBxKAOAxKYV9MnPqAAAAAElFTkSuQmCC"],[12,16,"iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAAnElEQVQokWNgoAaYMmXK/ylTpvzHJseCTTBB8BADAwMDQw4WOSZSbUex4coVhv8MDAwMdhvuoPB1dBgYsWrIvmzP8PnuZwYGBgaGRQHnGOI2GDHwKvMyMDAcJOykuA1GWMVJ9gOKhq3/xDEUoIsxYqhgYEAPfxQ1GPFg1ILq9nM153A7iWxg1GL036jFCGvSoI4NDBCPY7WB5FACAJksJoOW9GLdAAAAAElFTkSuQmCC"],[12,16,"iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAAm0lEQVQokWNgoAaYMmXK/ylTpvzHJsdEqmEka2BB5ly5wvCfgYGBIW7DPBS+jg4DI0wNI7IG++X2/z/f/YxiIq8yL8PByINwdUzIipElYOBg5EFG++X2/zE0EAvgGg5GHmT8sjQMa1Aiy2E4gYGBAV0TihoWNEkGoxYjFP65mnPYnUQRMGox+m/UYkSdpIEL/GfA9DwDAwMZoQQAaJQwQ0f/fjoAAAAASUVORK5CYII="],[12,16,"iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAArElEQVQokWNgoAaYMmXK/ylTpvzHJsfEwMDA8GVpGFZJnBq8mV4SbTsjjGG/3P7/VN2DDAwMDAxxG4wYGBgYGBYFnGNgYGBg0NFBqGNE1m2/3P7/57ufUUzkVeZlOBh5EK6OCVkSWQJZzH65/X+sGogBLIQUfFka9p8nchV2P0ABehCjqMGwwajFCIV/ruYcCp9kP2AFRi1G/41ajHAnDWqA/wyYnmdgYCAjlABqhCxZVei81wAAAABJRU5ErkJggg=="],[12,16,"iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAAlElEQVQokWNgoAaYMmXK/ylTpvzHJscEY3xZGoZVAbocXIM300ucNiLLsSBLXLnC8J+BgYEhbsM8FH72ZYQaRmQN9svt/3+++xnFdF5lXoaDkQfh6piQJZElcIkxoSsgBEjWgOEEBgYG9OBFUcOCJslg1GKEwj9Xc44yJ2EFRi1G/41ajPAnDUrBfwZMzzMwMJARSgDSyiuU0+YrXAAAAABJRU5ErkJggg=="],[12,16,"iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAAkElEQVQokWNgoAaYMmXK/ylTpvzHJsdEqmEka2BB5ly5wvCfgYGBIW7DPBS+jg4DI0wNI7IG++X2/z/f/YxiIq8yL8PByINwdShOQpZAFrNfbv8fqwZiAFEatv4Th7MxnMDAwIAe/ihqWNAkGYxajFD452rOke4kgsCoxei/UYsRdZIGLvCfAdPzDAwMZIQSADWXJlVPIsTJAAAAAElFTkSuQmCC"],[12,16,"iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAAl0lEQVQoka2SsRHCMAxFnznaDMGRMpUGIHPQMAmlR1BNS8sKYYBUKfEUHkBUcLYT4Mzld1+W/vfXCdaAqpqq2tLbplasemCbkmnCAE63S8a7DvfqcelAf+0thpgpNvuG4Ti8+6q/5MpC6lKqzzIAxBC571oADuHx2wEo9//dQbxkfDyPGa8OvQjxYuJlndP4BGMeHvhjS0/iditxTZgNHAAAAABJRU5ErkJggg=="],[12,16,"iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAAkklEQVQokWNgIBEwYhOcMmXKfwYGBoYEwUMMPNGrUNQw4TONJ3oVo/1y+/9Ea2BgYGA4GHkQRRMLsuSVKwz/GRgYGOI2zEPhZ1/G4Qf75fb/P9/9jGLDuZpzxPsBG6BMw9Z/4gQ1YIuH//jUsKBJMhi1GKHwz9Wcw+0ksoFRi9F/oxYjdKdR0QYGiMex2kByKAEACoMoH7ozQm8AAAAASUVORK5CYII="],[12,16,"iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAAhklEQVQokWNgoAaYMmXK/ylTpvzHJsdEqmEka2BB5ly5wvCfgYGBIW7DPBS+jg4DI0wNI7IG++X2/z/f/YxiIq8yL8PByINwdbT3A4qGrf/EMRSgizFiqGBgQA9/FDUsaJIMRi1GKPxzNedwO4lsYNRi9N+oxYg6SQMX+M+A6XkGBgYyQgkAVqsiQ8gRhowAAAAASUVORK5CYII="],[12,16,"iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAAgUlEQVQokWNgoAaYMmXK/ylTpvzHJseES1Om+lOs4jg1fH91l3gnXbnC8P/KFQasTmJBFzBqMfqffZmX4fPdzwwMDOeIdxIugFeDUYsRhrOwatj6TxynIYxYxNBNRVGDzdMo/HM1mB7HAEYtRv+xuZ+BgdqhRAr4z4DpeaJswNAEAM6AJFBJzWO9AAAAAElFTkSuQmCC"],[12,16,"iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAAhklEQVQokWNgoAaYMmXK/ylTpvzHJseES1Om+lOs4jg1fH91l3gnXbnC8P/KFQasTmJBFzBqMfqffZmX4fPdzwwMDOeIdxIugKGBVxlmOsQ2ghq2/hPHawMjFjF0U1HUYPM0Cv9cDarHMZx0ruYcNltxa8BnOl4NSDZhjUB0gFMRPidh1QQA32EpzkMA41UAAAAASUVORK5CYII="],[12,16,"iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAAi0lEQVQokWNgoAaYMmXK/ylTpvzHJseES1Om+lOs4jg1fH91l3gnXbnC8P/KFQasTmJBFzBqMfqffZmX4fPdzwwMDOeIdxIugFXD57ufGXiVeRmMWowwnEWyDdjAfxj+sjQMwwZsnoaz7e7fwTANr5PO1ZxjJEkDNoCu4f+5Gsywxwf+42ATrRlDEwA+CCyyenvP2QAAAABJRU5ErkJggg=="]]}
 
 },{}],3:[function(require,module,exports){
@@ -66,7 +77,7 @@ module.exports = {
     Scene: require('./scene'),
     PixelArt: require('./pixelart')
 }
-},{"./pixel":383,"./pixel-sheet":382,"./pixelart":384,"./scene":385}],5:[function(require,module,exports){
+},{"./pixel":384,"./pixel-sheet":383,"./pixelart":385,"./scene":386}],5:[function(require,module,exports){
 /**
  * Bit twiddling hacks for JavaScript.
  *
@@ -245,13 +256,13 @@ exports.interleave3 = function(x, y, z) {
   y  = (y | (y<<4))  & 3272356035;
   y  = (y | (y<<2))  & 1227133513;
   x |= (y << 1);
-
+  
   z &= 0x3FF;
   z  = (z | (z<<16)) & 4278190335;
   z  = (z | (z<<8))  & 251719695;
   z  = (z | (z<<4))  & 3272356035;
   z  = (z | (z<<2))  & 1227133513;
-
+  
   return x | (z << 2);
 }
 
@@ -2396,7 +2407,7 @@ module.exports = function(hljs){
 
   // общий паттерн для определения идентификаторов
   var UNDERSCORE_IDENT_RE = '[A-Za-zА-Яа-яёЁ_][A-Za-zА-Яа-яёЁ_0-9]+';
-
+  
   // v7 уникальные ключевые слова, отсутствующие в v8 ==> keyword
   var v7_keywords =
   'далее ';
@@ -2408,7 +2419,7 @@ module.exports = function(hljs){
 
   // keyword : ключевые слова
   var KEYWORD = v7_keywords + v8_keywords;
-
+  
   // v7 уникальные директивы, отсутствующие в v8 ==> meta-keyword
   var v7_meta_keywords =
   'загрузитьизфайла ';
@@ -2425,7 +2436,7 @@ module.exports = function(hljs){
   // v7 системные константы ==> built_in
   var v7_system_constants =
   'разделительстраниц разделительстрок символтабуляции ';
-
+  
   // v7 уникальные методы глобального контекста, отсутствующие в v8 ==> built_in
   var v7_global_context_methods =
   'ansitooem oemtoansi ввестивидсубконто ввестиперечисление ввестипериод ввестиплансчетов выбранныйплансчетов ' +
@@ -2439,7 +2450,7 @@ module.exports = function(hljs){
   'префиксавтонумерации пропись пустоезначение разм разобратьпозициюдокумента рассчитатьрегистрына ' +
   'рассчитатьрегистрыпо симв создатьобъект статусвозврата стрколичествострок сформироватьпозициюдокумента ' +
   'счетпокоду текущеевремя типзначения типзначениястр установитьтана установитьтапо фиксшаблон шаблон ';
-
+  
   // v8 методы глобального контекста ==> built_in
   var v8_global_context_methods =
   'acos asin atan base64значение base64строка cos exp log log10 pow sin sqrt tan xmlзначение xmlстрока ' +
@@ -2534,7 +2545,7 @@ module.exports = function(hljs){
   v7_system_constants +
   v7_global_context_methods + v8_global_context_methods +
   v8_global_context_property;
-
+  
   // v8 системные наборы значений ==> class
   var v8_system_sets_of_values =
   'webцвета windowsцвета windowsшрифты библиотекакартинок рамкистиля символы цветастиля шрифтыстиля ';
@@ -2686,7 +2697,7 @@ module.exports = function(hljs){
   'кодировкаименфайловвzipфайле методсжатияzip методшифрованияzip режимвосстановленияпутейфайловzip режимобработкиподкаталоговzip ' +
   'режимсохраненияпутейzip уровеньсжатияzip ';
 
-  // v8 системные перечисления -
+  // v8 системные перечисления - 
   // Блокировка данных, Фоновые задания, Автоматизированное тестирование,
   // Доставляемые уведомления, Встроенные покупки, Интернет, Работа с двоичными данными ==> class
   var v8_system_enums_other =
@@ -2805,7 +2816,7 @@ module.exports = function(hljs){
 
   // literal : примитивные типы
   var LITERAL = 'null истина ложь неопределено';
-
+  
   // number : числа
   var NUMBERS = hljs.inherit(hljs.NUMBER_MODE);
 
@@ -2826,10 +2837,10 @@ module.exports = function(hljs){
       }
     ]
   };
-
+  
   // comment : комментарии
   var COMMENTS = hljs.inherit(hljs.C_LINE_COMMENT_MODE);
-
+  
   // meta : инструкции препроцессора, директивы компиляции
   var META = {
     className: 'meta',
@@ -2840,13 +2851,13 @@ module.exports = function(hljs){
       COMMENTS
     ]
   };
-
+  
   // symbol : метка goto
   var SYMBOL = {
     className: 'symbol',
     begin: '~', end: ';|:', excludeEnd: true
-  };
-
+  };  
+  
   // function : объявление процедур и функций
   var FUNCTION = {
     className: 'function',
@@ -2898,7 +2909,7 @@ module.exports = function(hljs){
       NUMBERS,
       STRINGS,
       DATE
-    ]
+    ]  
   }
 };
 },{}],13:[function(require,module,exports){
@@ -3953,7 +3964,7 @@ module.exports = function(hljs) {
         //I don't really know if this is totally relevant
       },
       {
-        className: 'meta',
+        className: 'meta', 
         begin: '^\\s*#\w+', end:'$',
         relevance: 0
       },
@@ -5802,7 +5813,7 @@ module.exports = function(hljs) {
     keywords: {
       keyword: 'base-uri child-src connect-src default-src font-src form-action' +
         ' frame-ancestors frame-src img-src media-src object-src plugin-types' +
-        ' report-uri sandbox script-src style-src',
+        ' report-uri sandbox script-src style-src', 
     },
     contains: [
     {
@@ -7192,7 +7203,7 @@ module.exports = function(hljs) {
     },
     contains: [
       {
-        /* matches a beginning equal sign found in Excel formula examples */
+        /* matches a beginning equal sign found in Excel formula examples */ 
         begin: /^=/,
         end: /[^=]/, returnEnd: true, illegal: /=/, /* only allow single equal sign at front of line */
         relevance: 10
@@ -13350,7 +13361,7 @@ module.exports = function(hljs) {
   var PS_HELPTAGS = {
     className: 'doctag',
     variants: [
-      /* no paramater help tags */
+      /* no paramater help tags */ 
       { begin: /\.(synopsis|description|example|inputs|outputs|notes|link|component|role|functionality)/ },
       /* one parameter help tags */
       { begin: /\.(parameter|forwardhelptargetname|forwardhelpcategory|remotehelprunspace|externalhelp)\s+\S+/ }
@@ -14262,7 +14273,7 @@ function(hljs) {
   // ToDo: var PARAMETERS_PRINT = 'append as-value brief detail count-only file follow follow-only from interval terse value-list without-paging where info';
   // ToDo: var OPERATORS = '&& and ! not || or in ~ ^ & << >> + - * /';
   // ToDo: var TYPES = 'num number bool boolean str string ip ip6-prefix id time array';
-  // ToDo: The following tokens serve as delimiters in the grammar: ()  []  {}  :   ;   $   /
+  // ToDo: The following tokens serve as delimiters in the grammar: ()  []  {}  :   ;   $   / 
 
   var VAR_PREFIX = 'global local set for foreach';
 
@@ -14273,7 +14284,7 @@ function(hljs) {
       {begin: /\$\{(.*?)}/}
     ]
   };
-
+  
   var QUOTE_STRING = {
     className: 'string',
     begin: /"/, end: /"/,
@@ -14287,12 +14298,12 @@ function(hljs) {
       }
     ]
   };
-
+  
   var APOS_STRING = {
     className: 'string',
     begin: /'/, end: /'/
   };
-
+  
   var IPADDR = '((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\b';
   var IPADDR_wBITMASK =  IPADDR+'/(3[0-2]|[1-2][0-9]|\\d)';
   //////////////////////////////////////////////////////////////////////
@@ -14316,7 +14327,7 @@ function(hljs) {
           { begin: /^\[\</, end: /\>\]$/, },        // F# class declaration?
           { begin: /<\//, end: />/, },              // HTML tags
           { begin: /^facet /, end: /\}/, },         // roboconf - лютый костыль )))
-          { begin: '^1\\.\\.(\\d+)$', end: /$/, },  // tap
+          { begin: '^1\\.\\.(\\d+)$', end: /$/, },  // tap  
         ],
         illegal: /./,
       },
@@ -14325,7 +14336,7 @@ function(hljs) {
       APOS_STRING,
       VAR,
       { // attribute=value
-        begin: /[\w-]+\=([^\s\{\}\[\]\(\)]+)/,
+        begin: /[\w-]+\=([^\s\{\}\[\]\(\)]+)/, 
         relevance: 0,
         returnBegin: true,
         contains: [
@@ -14334,7 +14345,7 @@ function(hljs) {
             begin: /[^=]+/
           },
           {
-            begin: /=/,
+            begin: /=/, 
             endsWithParent:  true,
             relevance: 0,
             contains: [
@@ -14361,7 +14372,7 @@ function(hljs) {
               }, //*/
               {
                 // Не форматировать не классифицированные значения. Необходимо для исключения подсветки значений как built_in.
-                // className: 'number',
+                // className: 'number',  
                 begin: /("[^"]*"|[^\s\{\}\[\]]+)/,
               }, //*/
             ]
@@ -14374,7 +14385,7 @@ function(hljs) {
         begin: /\*[0-9a-fA-F]+/,
       }, //*/
 
-      {
+      { 
         begin: '\\b(' + COMMON_COMMANDS.split(' ').join('|') + ')([\\s\[\(]|\])',
         returnBegin: true,
         contains: [
@@ -14382,10 +14393,10 @@ function(hljs) {
             className: 'builtin-name', //'function',
             begin: /\w+/,
           },
-        ],
+        ],  
       },
-
-      {
+      
+      { 
         className: 'built_in',
         variants: [
           {begin: '(\\.\\./|/|\\s)((' + OBJECTS.split(' ').join('|') + ');?\\s)+',relevance: 10,},
@@ -19073,7 +19084,7 @@ var Shader = function(gl, vertexSrc, fragmentSrc, precision, attributeLocations)
 };
 /**
  * Uses this shader
- *
+ * 
  * @return {PIXI.glCore.GLShader} Returns itself.
  */
 Shader.prototype.bind = function()
@@ -19716,7 +19727,7 @@ VertexArrayObject.prototype.getSize = function()
  */
 var createContext = function(canvas, options)
 {
-    var gl = canvas.getContext('webgl', options) ||
+    var gl = canvas.getContext('webgl', options) || 
          canvas.getContext('experimental-webgl', options);
 
     if (!gl)
@@ -19903,36 +19914,36 @@ module.exports = compileProgram;
  * @param type {String} Type of value
  * @param size {Number}
  */
-var defaultValue = function(type, size)
+var defaultValue = function(type, size) 
 {
     switch (type)
     {
         case 'float':
             return 0;
 
-        case 'vec2':
+        case 'vec2': 
             return new Float32Array(2 * size);
 
         case 'vec3':
             return new Float32Array(3 * size);
 
-        case 'vec4':
+        case 'vec4':     
             return new Float32Array(4 * size);
-
+            
         case 'int':
         case 'sampler2D':
             return 0;
 
-        case 'ivec2':
+        case 'ivec2':   
             return new Int32Array(2 * size);
 
         case 'ivec3':
             return new Int32Array(3 * size);
 
-        case 'ivec4':
+        case 'ivec4': 
             return new Int32Array(4 * size);
 
-        case 'bool':
+        case 'bool':     
             return false;
 
         case 'bvec2':
@@ -19949,7 +19960,7 @@ var defaultValue = function(type, size)
             return new Float32Array([1, 0,
                                      0, 1]);
 
-        case 'mat3':
+        case 'mat3': 
             return new Float32Array([1, 0, 0,
                                      0, 1, 0,
                                      0, 0, 1]);
@@ -19966,7 +19977,7 @@ var booleanArray = function(size)
 {
     var array = new Array(size);
 
-    for (var i = 0; i < array.length; i++)
+    for (var i = 0; i < array.length; i++) 
     {
         array[i] = false;
     }
@@ -20197,8 +20208,8 @@ module.exports = {
  * @param type {String}
  * @return {Number}
  */
-var mapSize = function(type)
-{
+var mapSize = function(type) 
+{ 
     return GLSL_TO_SIZE[type];
 };
 
@@ -20231,15 +20242,15 @@ module.exports = mapSize;
 },{}],207:[function(require,module,exports){
 
 
-var mapType = function(gl, type)
+var mapType = function(gl, type) 
 {
-    if(!GL_TABLE)
+    if(!GL_TABLE) 
     {
         var typeNames = Object.keys(GL_TO_GLSL_TYPES);
 
         GL_TABLE = {};
 
-        for(var i = 0; i < typeNames.length; ++i)
+        for(var i = 0; i < typeNames.length; ++i) 
         {
             var tn = typeNames[i];
             GL_TABLE[ gl[tn] ] = GL_TO_GLSL_TYPES[tn];
@@ -20261,17 +20272,17 @@ var GL_TO_GLSL_TYPES = {
   'INT_VEC2':    'ivec2',
   'INT_VEC3':    'ivec3',
   'INT_VEC4':    'ivec4',
-
+  
   'BOOL':        'bool',
   'BOOL_VEC2':   'bvec2',
   'BOOL_VEC3':   'bvec3',
   'BOOL_VEC4':   'bvec4',
-
+  
   'FLOAT_MAT2':  'mat2',
   'FLOAT_MAT3':  'mat3',
   'FLOAT_MAT4':  'mat4',
-
-  'SAMPLER_2D':  'sampler2D'
+  
+  'SAMPLER_2D':  'sampler2D'  
 };
 
 module.exports = mapType;
@@ -31653,7 +31664,7 @@ var SpriteMaskFilter = function (_Filter) {
 
 exports.default = SpriteMaskFilter;
 
-},{"../../../../math":239,"../../../../textures/TextureMatrix":285,"../Filter":255,"path":571}],259:[function(require,module,exports){
+},{"../../../../math":239,"../../../../textures/TextureMatrix":285,"../Filter":255,"path":573}],259:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -35352,7 +35363,7 @@ function generateSampleSrc(maxTextures) {
     return src;
 }
 
-},{"../../Shader":213,"path":571}],277:[function(require,module,exports){
+},{"../../Shader":213,"path":573}],277:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -40670,7 +40681,7 @@ function determineCrossOrigin(url) {
     return '';
 }
 
-},{"url":577}],294:[function(require,module,exports){
+},{"url":579}],294:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -45116,7 +45127,7 @@ exports.default = TilingSpriteRenderer;
 
 core.WebGLRenderer.registerPlugin('tilingSprite', TilingSpriteRenderer);
 
-},{"../../core":234,"../../core/const":215,"path":571}],312:[function(require,module,exports){
+},{"../../core":234,"../../core/const":215,"path":573}],312:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -45200,7 +45211,7 @@ var AlphaFilter = function (_core$Filter) {
 
 exports.default = AlphaFilter;
 
-},{"../../core":234,"path":571}],313:[function(require,module,exports){
+},{"../../core":234,"path":573}],313:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -46363,7 +46374,7 @@ var ColorMatrixFilter = function (_core$Filter) {
 exports.default = ColorMatrixFilter;
 ColorMatrixFilter.prototype.grayscale = ColorMatrixFilter.prototype.greyscale;
 
-},{"../../core":234,"path":571}],320:[function(require,module,exports){
+},{"../../core":234,"path":573}],320:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -46473,7 +46484,7 @@ var DisplacementFilter = function (_core$Filter) {
 
 exports.default = DisplacementFilter;
 
-},{"../../core":234,"path":571}],321:[function(require,module,exports){
+},{"../../core":234,"path":573}],321:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -46527,7 +46538,7 @@ var FXAAFilter = function (_core$Filter) {
 
 exports.default = FXAAFilter;
 
-},{"../../core":234,"path":571}],322:[function(require,module,exports){
+},{"../../core":234,"path":573}],322:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -46703,7 +46714,7 @@ var NoiseFilter = function (_core$Filter) {
 
 exports.default = NoiseFilter;
 
-},{"../../core":234,"path":571}],324:[function(require,module,exports){
+},{"../../core":234,"path":573}],324:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -49322,7 +49333,7 @@ function parse(resource, texture) {
     resource.bitmapFont = _extras.BitmapText.registerFont(resource.data, texture);
 }
 
-},{"../core":234,"../extras":310,"path":571,"resource-loader":363}],332:[function(require,module,exports){
+},{"../core":234,"../extras":310,"path":573,"resource-loader":363}],332:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -49680,7 +49691,7 @@ function getResourcePath(resource, baseUrl) {
     return _url2.default.resolve(resource.url.replace(baseUrl, ''), resource.data.meta.image);
 }
 
-},{"../core":234,"resource-loader":363,"url":577}],335:[function(require,module,exports){
+},{"../core":234,"resource-loader":363,"url":579}],335:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -51330,7 +51341,7 @@ exports.default = MeshRenderer;
 
 core.WebGLRenderer.registerPlugin('mesh', MeshRenderer);
 
-},{"../../core":234,"../Mesh":336,"path":571,"pixi-gl-core":198}],343:[function(require,module,exports){
+},{"../../core":234,"../Mesh":336,"path":573,"pixi-gl-core":198}],343:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -55802,10 +55813,10 @@ module.exports = sr;
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-//
+// 
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-//
+// 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -56676,7 +56687,7 @@ if ((typeof module) == 'object' && module.exports) {
   Math    // math: package containing random, pow, and seedrandom
 );
 
-},{"crypto":570}],373:[function(require,module,exports){
+},{"crypto":572}],373:[function(require,module,exports){
 // TinyColor v1.4.1
 // https://github.com/bgrins/TinyColor
 // Brian Grinstead, MIT License
@@ -58182,7 +58193,7 @@ class Color
 };
 
 module.exports = new Color();
-},{"yy-random":380}],375:[function(require,module,exports){
+},{"yy-random":381}],375:[function(require,module,exports){
 // yy-counter
 // In-browser counter to watch changeable values like counters or FPS
 // David Figatner
@@ -58533,8 +58544,349 @@ module.exports = class FPS
     }
 }
 },{"tinycolor2":373,"yy-counter":375}],377:[function(require,module,exports){
-module.exports = require('./src/loop')
-},{"./src/loop":379}],378:[function(require,module,exports){
+const Loop = require('./src/loop')
+Loop.entry = require('./src/entry')
+
+module.exports = Loop
+},{"./src/entry":379,"./src/loop":380}],378:[function(require,module,exports){
+'use strict';
+
+var has = Object.prototype.hasOwnProperty
+  , prefix = '~';
+
+/**
+ * Constructor to create a storage for our `EE` objects.
+ * An `Events` instance is a plain object whose properties are event names.
+ *
+ * @constructor
+ * @private
+ */
+function Events() {}
+
+//
+// We try to not inherit from `Object.prototype`. In some engines creating an
+// instance in this way is faster than calling `Object.create(null)` directly.
+// If `Object.create(null)` is not supported we prefix the event names with a
+// character to make sure that the built-in object properties are not
+// overridden or used as an attack vector.
+//
+if (Object.create) {
+  Events.prototype = Object.create(null);
+
+  //
+  // This hack is needed because the `__proto__` property is still inherited in
+  // some old browsers like Android 4, iPhone 5.1, Opera 11 and Safari 5.
+  //
+  if (!new Events().__proto__) prefix = false;
+}
+
+/**
+ * Representation of a single event listener.
+ *
+ * @param {Function} fn The listener function.
+ * @param {*} context The context to invoke the listener with.
+ * @param {Boolean} [once=false] Specify if the listener is a one-time listener.
+ * @constructor
+ * @private
+ */
+function EE(fn, context, once) {
+  this.fn = fn;
+  this.context = context;
+  this.once = once || false;
+}
+
+/**
+ * Add a listener for a given event.
+ *
+ * @param {EventEmitter} emitter Reference to the `EventEmitter` instance.
+ * @param {(String|Symbol)} event The event name.
+ * @param {Function} fn The listener function.
+ * @param {*} context The context to invoke the listener with.
+ * @param {Boolean} once Specify if the listener is a one-time listener.
+ * @returns {EventEmitter}
+ * @private
+ */
+function addListener(emitter, event, fn, context, once) {
+  if (typeof fn !== 'function') {
+    throw new TypeError('The listener must be a function');
+  }
+
+  var listener = new EE(fn, context || emitter, once)
+    , evt = prefix ? prefix + event : event;
+
+  if (!emitter._events[evt]) emitter._events[evt] = listener, emitter._eventsCount++;
+  else if (!emitter._events[evt].fn) emitter._events[evt].push(listener);
+  else emitter._events[evt] = [emitter._events[evt], listener];
+
+  return emitter;
+}
+
+/**
+ * Clear event by name.
+ *
+ * @param {EventEmitter} emitter Reference to the `EventEmitter` instance.
+ * @param {(String|Symbol)} evt The Event name.
+ * @private
+ */
+function clearEvent(emitter, evt) {
+  if (--emitter._eventsCount === 0) emitter._events = new Events();
+  else delete emitter._events[evt];
+}
+
+/**
+ * Minimal `EventEmitter` interface that is molded against the Node.js
+ * `EventEmitter` interface.
+ *
+ * @constructor
+ * @public
+ */
+function EventEmitter() {
+  this._events = new Events();
+  this._eventsCount = 0;
+}
+
+/**
+ * Return an array listing the events for which the emitter has registered
+ * listeners.
+ *
+ * @returns {Array}
+ * @public
+ */
+EventEmitter.prototype.eventNames = function eventNames() {
+  var names = []
+    , events
+    , name;
+
+  if (this._eventsCount === 0) return names;
+
+  for (name in (events = this._events)) {
+    if (has.call(events, name)) names.push(prefix ? name.slice(1) : name);
+  }
+
+  if (Object.getOwnPropertySymbols) {
+    return names.concat(Object.getOwnPropertySymbols(events));
+  }
+
+  return names;
+};
+
+/**
+ * Return the listeners registered for a given event.
+ *
+ * @param {(String|Symbol)} event The event name.
+ * @returns {Array} The registered listeners.
+ * @public
+ */
+EventEmitter.prototype.listeners = function listeners(event) {
+  var evt = prefix ? prefix + event : event
+    , handlers = this._events[evt];
+
+  if (!handlers) return [];
+  if (handlers.fn) return [handlers.fn];
+
+  for (var i = 0, l = handlers.length, ee = new Array(l); i < l; i++) {
+    ee[i] = handlers[i].fn;
+  }
+
+  return ee;
+};
+
+/**
+ * Return the number of listeners listening to a given event.
+ *
+ * @param {(String|Symbol)} event The event name.
+ * @returns {Number} The number of listeners.
+ * @public
+ */
+EventEmitter.prototype.listenerCount = function listenerCount(event) {
+  var evt = prefix ? prefix + event : event
+    , listeners = this._events[evt];
+
+  if (!listeners) return 0;
+  if (listeners.fn) return 1;
+  return listeners.length;
+};
+
+/**
+ * Calls each of the listeners registered for a given event.
+ *
+ * @param {(String|Symbol)} event The event name.
+ * @returns {Boolean} `true` if the event had listeners, else `false`.
+ * @public
+ */
+EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
+  var evt = prefix ? prefix + event : event;
+
+  if (!this._events[evt]) return false;
+
+  var listeners = this._events[evt]
+    , len = arguments.length
+    , args
+    , i;
+
+  if (listeners.fn) {
+    if (listeners.once) this.removeListener(event, listeners.fn, undefined, true);
+
+    switch (len) {
+      case 1: return listeners.fn.call(listeners.context), true;
+      case 2: return listeners.fn.call(listeners.context, a1), true;
+      case 3: return listeners.fn.call(listeners.context, a1, a2), true;
+      case 4: return listeners.fn.call(listeners.context, a1, a2, a3), true;
+      case 5: return listeners.fn.call(listeners.context, a1, a2, a3, a4), true;
+      case 6: return listeners.fn.call(listeners.context, a1, a2, a3, a4, a5), true;
+    }
+
+    for (i = 1, args = new Array(len -1); i < len; i++) {
+      args[i - 1] = arguments[i];
+    }
+
+    listeners.fn.apply(listeners.context, args);
+  } else {
+    var length = listeners.length
+      , j;
+
+    for (i = 0; i < length; i++) {
+      if (listeners[i].once) this.removeListener(event, listeners[i].fn, undefined, true);
+
+      switch (len) {
+        case 1: listeners[i].fn.call(listeners[i].context); break;
+        case 2: listeners[i].fn.call(listeners[i].context, a1); break;
+        case 3: listeners[i].fn.call(listeners[i].context, a1, a2); break;
+        case 4: listeners[i].fn.call(listeners[i].context, a1, a2, a3); break;
+        default:
+          if (!args) for (j = 1, args = new Array(len -1); j < len; j++) {
+            args[j - 1] = arguments[j];
+          }
+
+          listeners[i].fn.apply(listeners[i].context, args);
+      }
+    }
+  }
+
+  return true;
+};
+
+/**
+ * Add a listener for a given event.
+ *
+ * @param {(String|Symbol)} event The event name.
+ * @param {Function} fn The listener function.
+ * @param {*} [context=this] The context to invoke the listener with.
+ * @returns {EventEmitter} `this`.
+ * @public
+ */
+EventEmitter.prototype.on = function on(event, fn, context) {
+  return addListener(this, event, fn, context, false);
+};
+
+/**
+ * Add a one-time listener for a given event.
+ *
+ * @param {(String|Symbol)} event The event name.
+ * @param {Function} fn The listener function.
+ * @param {*} [context=this] The context to invoke the listener with.
+ * @returns {EventEmitter} `this`.
+ * @public
+ */
+EventEmitter.prototype.once = function once(event, fn, context) {
+  return addListener(this, event, fn, context, true);
+};
+
+/**
+ * Remove the listeners of a given event.
+ *
+ * @param {(String|Symbol)} event The event name.
+ * @param {Function} fn Only remove the listeners that match this function.
+ * @param {*} context Only remove the listeners that have this context.
+ * @param {Boolean} once Only remove one-time listeners.
+ * @returns {EventEmitter} `this`.
+ * @public
+ */
+EventEmitter.prototype.removeListener = function removeListener(event, fn, context, once) {
+  var evt = prefix ? prefix + event : event;
+
+  if (!this._events[evt]) return this;
+  if (!fn) {
+    clearEvent(this, evt);
+    return this;
+  }
+
+  var listeners = this._events[evt];
+
+  if (listeners.fn) {
+    if (
+      listeners.fn === fn &&
+      (!once || listeners.once) &&
+      (!context || listeners.context === context)
+    ) {
+      clearEvent(this, evt);
+    }
+  } else {
+    for (var i = 0, events = [], length = listeners.length; i < length; i++) {
+      if (
+        listeners[i].fn !== fn ||
+        (once && !listeners[i].once) ||
+        (context && listeners[i].context !== context)
+      ) {
+        events.push(listeners[i]);
+      }
+    }
+
+    //
+    // Reset the array, or remove it completely if we have no more listeners.
+    //
+    if (events.length) this._events[evt] = events.length === 1 ? events[0] : events;
+    else clearEvent(this, evt);
+  }
+
+  return this;
+};
+
+/**
+ * Remove all listeners, or those of the specified event.
+ *
+ * @param {(String|Symbol)} [event] The event name.
+ * @returns {EventEmitter} `this`.
+ * @public
+ */
+EventEmitter.prototype.removeAllListeners = function removeAllListeners(event) {
+  var evt;
+
+  if (event) {
+    evt = prefix ? prefix + event : event;
+    if (this._events[evt]) clearEvent(this, evt);
+  } else {
+    this._events = new Events();
+    this._eventsCount = 0;
+  }
+
+  return this;
+};
+
+//
+// Alias methods names because people roll like that.
+//
+EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+EventEmitter.prototype.addListener = EventEmitter.prototype.on;
+
+//
+// Expose the prefix.
+//
+EventEmitter.prefixed = prefix;
+
+//
+// Allow `EventEmitter` to be imported as module namespace.
+//
+EventEmitter.EventEmitter = EventEmitter;
+
+//
+// Expose the module.
+//
+if ('undefined' !== typeof module) {
+  module.exports = EventEmitter;
+}
+
+},{}],379:[function(require,module,exports){
 const Events = require('eventemitter3')
 
 /** Entry class for Loop */
@@ -58615,7 +58967,7 @@ class Entry extends Events
 }
 
 module.exports = Entry
-},{"eventemitter3":7}],379:[function(require,module,exports){
+},{"eventemitter3":378}],380:[function(require,module,exports){
 /* Copyright (c) 2017 YOPEY YOPEY LLC */
 
 const Events = require('eventemitter3')
@@ -58628,7 +58980,7 @@ class Loop extends Events
      * @param {number} [options.maxFrameTime=1000/60] maximum time in milliseconds for a frame
      * @param {object} [options.pauseOnBlur] pause loop when app loses focus, start it when app regains focus
      *
-     * @event each(elapsed, Loop, elapsedInLoop)
+     * @event each(elapsed, Loop)
      * @event start(Loop)
      * @event stop(Loop)
      */
@@ -58639,8 +58991,8 @@ class Loop extends Events
         this.maxFrameTime = options.maxFrameTime || 1000 / 60
         if (options.pauseOnBlur)
         {
-            window.addEventListener('blur', this.stopBlur.bind(this))
-            window.addEventListener('focus', this.startBlur.bind(this))
+            window.addEventListener('blur', () => this.stopBlur())
+            window.addEventListener('focus', () => this.startBlur())
         }
         this.list = []
     }
@@ -58654,10 +59006,7 @@ class Loop extends Events
         if (!this.running)
         {
             this.running = true
-            if (!this.waiting)
-            {
-                this.loop()
-            }
+            this.loop(0)
             this.emit('start', this)
         }
         return this
@@ -58695,6 +59044,11 @@ class Loop extends Events
      */
     stop()
     {
+        if (this.handle)
+        {
+            window.cancelAnimationFrame(this.handle)
+            this.handle = null
+        }
         this.running = false
         this.blurred = false
         this.emit('stop', this)
@@ -58703,40 +59057,49 @@ class Loop extends Events
 
     /**
      * loop through updates; can be called manually each frame, or called automatically as part of start()
+     * @param {number} elapsed time since last call (will be clamped to this.maxFrameTime)
      */
-    update()
+    update(elapsed)
     {
-        const now = performance.now()
-        let elapsed = now - this.last ? this.last : 0
-        elapsed = elapsed > this.maxFrameTime ? this.maxFrameTime : elapsed
-        for (let entry of this.list)
+        const maxFrameTime = this.maxFrameTime
+        elapsed = elapsed > maxFrameTime ? maxFrameTime : elapsed
+        for (let i = 0, _i = this.list.length; i < _i; i++)
         {
-            if (entry.update(elapsed))
+            if (this.list[i].update(elapsed))
             {
-                this.remove(entry)
+                this.list.splice(i, 1)
+                i--
+                _i--
             }
         }
-        this.emit('each', elapsed, this, now - performance.now())
-        this.last = now
+        this.emit('each', elapsed, this)
     }
 
     /**
      * internal loop through animations
      * @private
      */
-    loop()
+    loop(elapsed)
     {
         if (this.running)
         {
-            this.waiting = false
-            this.update()
-            requestAnimationFrame(this.loop.bind(this))
-            this.waiting = true
+            this.update(elapsed)
+            this.handle = requestAnimationFrame((elapsed) => this.loop(elapsed))
         }
-        else
-        {
-            this.waiting = false
-        }
+    }
+
+    /**
+     * adds a callback to the loop
+     * @deprecated use add() instead
+     * @param {function} callback
+     * @param {number} [time=0] in milliseconds to call this update (0=every frame)
+     * @param {number} [count=0] number of times to run this update (0=infinite)
+     * @return {object} entry - used to remove or change the parameters of the update
+     */
+    interval(callback, time, count)
+    {
+        console.warn('yy-loop: interval() deprecated. Use add() instead.')
+        this.add(callback, time, count)
     }
 
     /**
@@ -58746,7 +59109,7 @@ class Loop extends Events
      * @param {number} [count=0] number of times to run this update (0=infinite)
      * @return {object} entry - used to remove or change the parameters of the update
      */
-    interval(callback, time, count)
+    add(callback, time, count)
     {
         const entry = new Entry(callback, time, count)
         this.list.push(entry)
@@ -58761,7 +59124,7 @@ class Loop extends Events
      */
     timeout(callback, time)
     {
-        return this.interval(callback, time, 1)
+        return this.add(callback, time, 1)
     }
 
     /**
@@ -58814,7 +59177,7 @@ const Entry = require('./entry')
 
 Loop.entry = Entry
 module.exports = Loop
-},{"./entry":378,"eventemitter3":7}],380:[function(require,module,exports){
+},{"./entry":379,"eventemitter3":378}],381:[function(require,module,exports){
 // yy-random
 // by David Figatner
 // MIT license
@@ -59240,7 +59603,7 @@ class Random
 }
 
 module.exports = new Random()
-},{"seedrandom":365}],381:[function(require,module,exports){
+},{"seedrandom":365}],382:[function(require,module,exports){
 // yy-renderer
 // by David Figatner
 // (c) YOPEY YOPEY LLC 2017
@@ -59252,7 +59615,7 @@ const FPS = require('yy-fps')
 const Loop = require('yy-loop')
 const exists = require('exists')
 
-class Renderer extends Loop
+class Renderer
 {
     /**
      * Wrapper for a pixi.js Renderer
@@ -59268,6 +59631,9 @@ class Renderer extends Loop
      * @param {boolean} [options.autoresize=false] automatically calls resize during resize events
      * @param {number} [options.color=0xffffff] background color in hex
      *
+     * @param {boolean} [options.turnOffTicker] turn off PIXI.shared.ticker
+     * @param {boolean} [options.turnOffInteraction] turn off PIXI.Interaction manager (saves cycles)
+     *
      * @param {boolean} [options.noWebGL=false] use the PIXI.CanvasRenderer instead of PIXI.WebGLRenderer
      * @param {boolean} [options.antialias=true] turn on antialias if native antialias is not used, uses FXAA
      * @param {boolean} [options.forceFXAA=false] forces FXAA antialiasing to be used over native. FXAA is faster, but may not always look as great
@@ -59279,7 +59645,6 @@ class Renderer extends Loop
      * @param {boolean|string} [options.debug] false, true, or some combination of 'fps', 'dirty', and 'count' (e.g., 'count-dirty' or 'dirty')
      * @param {object} [options.fpsOptions] options from yy-fps (https://github.com/davidfig/fps)
      *
-     ** from yy-loop:
      * @param {number} [options.maxFrameTime=1000/60] maximum time in milliseconds for a frame
      * @param {object} [options.pauseOnBlur] pause loop when app loses focus, start it when app regains focus
      *
@@ -59290,7 +59655,8 @@ class Renderer extends Loop
     constructor(options)
     {
         options = options || {}
-        super({ pauseOnBlur: options.pauseOnBlur, maxFrameTime: options.maxFrameTime })
+        this.options = options
+        this.loop = new Loop({ pauseOnBlur: options.pauseOnBlur, maxFrameTime: options.maxFrameTime })
         this.canvas = options.canvas
         this.autoResize = options.autoresize
         this.aspectRatio = options.aspectRatio
@@ -59301,12 +59667,23 @@ class Renderer extends Loop
         if (!this.canvas) this.createCanvas(options)
         options.view = this.canvas
 
+        if (options.turnoffTicker)
+        {
+            const ticker = PIXI.ticker.shared
+            ticker.autoStart = false
+            ticker.stop()
+        }
+
         const noWebGL = options.noWebGL || false
         options.noWebGL = null
         options.autoresize = null
         const Renderer = noWebGL ? PIXI.CanvasRenderer : PIXI.WebGLRenderer
 
         this.renderer = new Renderer(options)
+        if (options.turnOffInteraction)
+        {
+            this.renderer.plugins.interaction.destroy()
+        }
         if (options.color)
         {
             this.canvas.style.backgroundColor = options.color
@@ -59320,12 +59697,11 @@ class Renderer extends Loop
         }
 
         if (options.debug) this.createDebug(options)
-        if (this.autoResize) window.addEventListener('resize', this.resize.bind(this))
+        if (this.autoResize) window.addEventListener('resize', () => this.resize())
         this.time = 0
         this.stage = new PIXI.Container()
         this.dirty = this.alwaysRender = options.alwaysRender || false
         this.resize(true)
-        this.updateRendererID = this.interval(this.updateRenderer.bind(this), this.FPS)
     }
 
     /**
@@ -59397,10 +59773,9 @@ class Renderer extends Loop
     }
 
     /**
-     * render the scene
      * @private
      */
-    updateRenderer()
+    update()
     {
         if (this.fpsMeter)
         {
@@ -59439,7 +59814,7 @@ class Renderer extends Loop
                 return
             }
             total++
-            for (var i = 0; i < object.children.length; i++)
+            for (let i = 0, _i = object.children.length; i < _i; i++)
             {
                 count(object.children[i])
             }
@@ -59569,82 +59944,66 @@ class Renderer extends Loop
     set fps(value)
     {
         this.FPS = 1000 / value
-        this.removeInterval(this.updateRendererID)
-        this.updateRendererID = this.interval(this.updateRenderer.bind(this), this.FPS)
+        if (this.loop)
+        {
+            this.loop.remove(this.loopSave)
+            this.loopSave = this.loop.add(() => this.update(), this.FPS)
+        }
         if (this.fpsMeter)
         {
             this.fpsMeter.fps = value
         }
     }
 
+    /**
+     * Add a listener for a given event to yy-loop
+     * @param {(String|Symbol)} event The event name.
+     * @param {Function} fn The listener function.
+     * @param {*} [context=this] The context to invoke the listener with.
+     * @returns {EventEmitter} `this`.
+     */
+    on()
+    {
+        this.loop.on(...arguments)
+    }
+
+    /**
+     * Add a one-time listener for a given event to yy-loop
+     * @param {(String|Symbol)} event The event name.
+     * @param {Function} fn The listener function.
+     * @param {*} [context=this] The context to invoke the listener with.
+     * @returns {EventEmitter} `this`.
+     * @public
+     */
+    once()
+    {
+        this.loop.once(...arguments)
+    }
 
     /**
      * start the internal loop
-     * @inherited from yy-loop
      * @returns {Renderer} this
      */
-    // start()
+    start()
+    {
+        this.loopSave = this.loop.add(() => this.update(), this.FPS)
+        this.loop.start()
+        return this
+    }
 
     /**
      * stop the internal loop
      * @inherited from yy-loop
      * @returns {Renderer} this
      */
-    // stop()
-
-    /**
-     * loop through updates; can be called manually each frame, or called automatically as part of start()
-     * @inherited from yy-loop
-     */
-    // update()
-
-    /**
-     * adds a callback to the loop
-     * @inherited from yy-loop
-     * @param {function} callback
-     * @param {number} [time=0] in milliseconds to call this update (0=every frame)
-     * @param {number} [count=0] number of times to run this update (0=infinite)
-     * @return {object} entry - used to remove or change the parameters of the update
-     */
-    // interval(callback, time, count)
-
-    /**
-     * adds a one-time callback to the loop
-     * @inherited from yy-loop
-     * @param {function} callback
-     * @param {number} time in milliseconds to call this update
-     * @return {object} entry - used to remove or change the parameters of the update
-     */
-    // timeout(callback, time)
-
-    /**
-     * remove a callback from the loop
-     * @inherited from yy-loop
-     * @param {object} entry - returned by add()
-     */
-    // remove(entry)
-
-    /**
-     * @inherited from yy-loop
-     * removes all callbacks from the loop
-     */
-    // removeAll()
-
-    /**
-     * @inherited from yy-loop
-     * @type {number} count of all animations
-     */
-    // get count()
-
-    /**
-     * @inherited from yy-loop
-     * @type {number} count of running animations
-     */
-    // get countRunning()
+    stop()
+    {
+        this.loop.stop()
+    }
 }
 
 module.exports = Renderer
-},{"exists":8,"pixi.js":324,"yy-fps":376,"yy-loop":377}],382:[function(require,module,exports){
+},{"exists":8,"pixi.js":324,"yy-fps":376,"yy-loop":377}],383:[function(require,module,exports){
 const Pixel = require('./pixel')
 
 /**
@@ -59674,7 +60033,7 @@ module.exports = function PixelSheet(map, data, sheet)
         Pixel.add(pixel, sheet)
     }
 }
-},{"./pixel":383}],383:[function(require,module,exports){
+},{"./pixel":384}],384:[function(require,module,exports){
 const PIXI = require('pixi.js')
 const Random = require('yy-random')
 const exists = require('exists')
@@ -59758,6 +60117,66 @@ module.exports = class Pixel extends PIXI.Sprite
         const texture = sheet.addData(data.name + '-' + index, data.imageData[index][2])
         texture.width = data.imageData[i][0]
         texture.height = data.imageData[i][1]
+    }
+
+    /**
+     * find the largest width of the frames
+     * @static
+     * @param {object} data
+     * @return {number} largest width
+     */
+    static largestFrameWidth(data)
+    {
+        let size = 0
+        for (let frame of data.imageData)
+        {
+            size = frame[0] > size ? frame[0] : size
+        }
+        return size
+    }
+
+    /**
+     * find the largest height of the frames
+     * @static
+     * @param {object} data
+     * @return {number} largest height
+     */
+    static largestFrameHeight(data)
+    {
+        let size = 0
+        for (let frame of data.imageData)
+        {
+            size = frame[1] > size ? frame[1] : size
+        }
+        return size
+    }
+
+    /**
+     * find the largest width of the frames
+     * @returns {number} largest width
+     */
+    largestWidth()
+    {
+        let size = 0
+        for (let frame of this.imageData)
+        {
+            size = frame[0] > size ? frame[0] : size
+        }
+        return size
+    }
+
+    /**
+     * find the largest width of the frames
+     * @returns {number} largest height
+     */
+    largestHeight()
+    {
+        let size = 0
+        for (let frame of this.imageData)
+        {
+            size = frame[1] > size ? frame[1] : size
+        }
+        return size
     }
 
     /**
@@ -59931,7 +60350,7 @@ module.exports = class Pixel extends PIXI.Sprite
         this.currentAnimation = ''
     }
 }
-},{"exists":8,"pixi.js":324,"yy-random":380}],384:[function(require,module,exports){
+},{"exists":8,"pixi.js":324,"yy-random":381}],385:[function(require,module,exports){
 // Note: these algorithms are WOEFULLY inefficient. They are designed for low-resolution pixel drawings that are rendered to a spritesheet.
 // Please do NOT use these where you want to render shapes during each frame
 
@@ -60420,7 +60839,7 @@ const PixelArt = {
 }
 
 module.exports = PixelArt
-},{"yy-color":374}],385:[function(require,module,exports){
+},{"yy-color":374}],386:[function(require,module,exports){
 const PIXI = require('pixi.js')
 const Pixel = require('./pixel')
 
@@ -60586,7 +61005,7 @@ module.exports = class Scene extends PIXI.Container
         }
     }
 }
-},{"./pixel":383,"pixi.js":324}],386:[function(require,module,exports){
+},{"./pixel":384,"pixi.js":324}],387:[function(require,module,exports){
 /**
  * @file growingpacker.js
  * @author David Figatner
@@ -60760,7 +61179,7 @@ class GrowingPacker
 }
 
 module.exports = GrowingPacker
-},{}],387:[function(require,module,exports){
+},{}],388:[function(require,module,exports){
 // yy-rendersheet
 // by David Figatner
 // (c) YOPEY YOPEY LLC 2017
@@ -61272,705 +61691,369 @@ class RenderSheet extends Events
 }
 
 module.exports = RenderSheet
-},{"./growingpacker":386,"./simplepacker":569,"eventemitter3":390,"pixi.js":527}],388:[function(require,module,exports){
+},{"./growingpacker":387,"./simplepacker":570,"eventemitter3":391,"pixi.js":528}],389:[function(require,module,exports){
 arguments[4][5][0].apply(exports,arguments)
-},{"dup":5}],389:[function(require,module,exports){
+},{"dup":5}],390:[function(require,module,exports){
 arguments[4][6][0].apply(exports,arguments)
-},{"dup":6}],390:[function(require,module,exports){
-'use strict';
-
-var has = Object.prototype.hasOwnProperty
-  , prefix = '~';
-
-/**
- * Constructor to create a storage for our `EE` objects.
- * An `Events` instance is a plain object whose properties are event names.
- *
- * @constructor
- * @private
- */
-function Events() {}
-
-//
-// We try to not inherit from `Object.prototype`. In some engines creating an
-// instance in this way is faster than calling `Object.create(null)` directly.
-// If `Object.create(null)` is not supported we prefix the event names with a
-// character to make sure that the built-in object properties are not
-// overridden or used as an attack vector.
-//
-if (Object.create) {
-  Events.prototype = Object.create(null);
-
-  //
-  // This hack is needed because the `__proto__` property is still inherited in
-  // some old browsers like Android 4, iPhone 5.1, Opera 11 and Safari 5.
-  //
-  if (!new Events().__proto__) prefix = false;
-}
-
-/**
- * Representation of a single event listener.
- *
- * @param {Function} fn The listener function.
- * @param {*} context The context to invoke the listener with.
- * @param {Boolean} [once=false] Specify if the listener is a one-time listener.
- * @constructor
- * @private
- */
-function EE(fn, context, once) {
-  this.fn = fn;
-  this.context = context;
-  this.once = once || false;
-}
-
-/**
- * Add a listener for a given event.
- *
- * @param {EventEmitter} emitter Reference to the `EventEmitter` instance.
- * @param {(String|Symbol)} event The event name.
- * @param {Function} fn The listener function.
- * @param {*} context The context to invoke the listener with.
- * @param {Boolean} once Specify if the listener is a one-time listener.
- * @returns {EventEmitter}
- * @private
- */
-function addListener(emitter, event, fn, context, once) {
-  if (typeof fn !== 'function') {
-    throw new TypeError('The listener must be a function');
-  }
-
-  var listener = new EE(fn, context || emitter, once)
-    , evt = prefix ? prefix + event : event;
-
-  if (!emitter._events[evt]) emitter._events[evt] = listener, emitter._eventsCount++;
-  else if (!emitter._events[evt].fn) emitter._events[evt].push(listener);
-  else emitter._events[evt] = [emitter._events[evt], listener];
-
-  return emitter;
-}
-
-/**
- * Clear event by name.
- *
- * @param {EventEmitter} emitter Reference to the `EventEmitter` instance.
- * @param {(String|Symbol)} evt The Event name.
- * @private
- */
-function clearEvent(emitter, evt) {
-  if (--emitter._eventsCount === 0) emitter._events = new Events();
-  else delete emitter._events[evt];
-}
-
-/**
- * Minimal `EventEmitter` interface that is molded against the Node.js
- * `EventEmitter` interface.
- *
- * @constructor
- * @public
- */
-function EventEmitter() {
-  this._events = new Events();
-  this._eventsCount = 0;
-}
-
-/**
- * Return an array listing the events for which the emitter has registered
- * listeners.
- *
- * @returns {Array}
- * @public
- */
-EventEmitter.prototype.eventNames = function eventNames() {
-  var names = []
-    , events
-    , name;
-
-  if (this._eventsCount === 0) return names;
-
-  for (name in (events = this._events)) {
-    if (has.call(events, name)) names.push(prefix ? name.slice(1) : name);
-  }
-
-  if (Object.getOwnPropertySymbols) {
-    return names.concat(Object.getOwnPropertySymbols(events));
-  }
-
-  return names;
-};
-
-/**
- * Return the listeners registered for a given event.
- *
- * @param {(String|Symbol)} event The event name.
- * @returns {Array} The registered listeners.
- * @public
- */
-EventEmitter.prototype.listeners = function listeners(event) {
-  var evt = prefix ? prefix + event : event
-    , handlers = this._events[evt];
-
-  if (!handlers) return [];
-  if (handlers.fn) return [handlers.fn];
-
-  for (var i = 0, l = handlers.length, ee = new Array(l); i < l; i++) {
-    ee[i] = handlers[i].fn;
-  }
-
-  return ee;
-};
-
-/**
- * Return the number of listeners listening to a given event.
- *
- * @param {(String|Symbol)} event The event name.
- * @returns {Number} The number of listeners.
- * @public
- */
-EventEmitter.prototype.listenerCount = function listenerCount(event) {
-  var evt = prefix ? prefix + event : event
-    , listeners = this._events[evt];
-
-  if (!listeners) return 0;
-  if (listeners.fn) return 1;
-  return listeners.length;
-};
-
-/**
- * Calls each of the listeners registered for a given event.
- *
- * @param {(String|Symbol)} event The event name.
- * @returns {Boolean} `true` if the event had listeners, else `false`.
- * @public
- */
-EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
-  var evt = prefix ? prefix + event : event;
-
-  if (!this._events[evt]) return false;
-
-  var listeners = this._events[evt]
-    , len = arguments.length
-    , args
-    , i;
-
-  if (listeners.fn) {
-    if (listeners.once) this.removeListener(event, listeners.fn, undefined, true);
-
-    switch (len) {
-      case 1: return listeners.fn.call(listeners.context), true;
-      case 2: return listeners.fn.call(listeners.context, a1), true;
-      case 3: return listeners.fn.call(listeners.context, a1, a2), true;
-      case 4: return listeners.fn.call(listeners.context, a1, a2, a3), true;
-      case 5: return listeners.fn.call(listeners.context, a1, a2, a3, a4), true;
-      case 6: return listeners.fn.call(listeners.context, a1, a2, a3, a4, a5), true;
-    }
-
-    for (i = 1, args = new Array(len -1); i < len; i++) {
-      args[i - 1] = arguments[i];
-    }
-
-    listeners.fn.apply(listeners.context, args);
-  } else {
-    var length = listeners.length
-      , j;
-
-    for (i = 0; i < length; i++) {
-      if (listeners[i].once) this.removeListener(event, listeners[i].fn, undefined, true);
-
-      switch (len) {
-        case 1: listeners[i].fn.call(listeners[i].context); break;
-        case 2: listeners[i].fn.call(listeners[i].context, a1); break;
-        case 3: listeners[i].fn.call(listeners[i].context, a1, a2); break;
-        case 4: listeners[i].fn.call(listeners[i].context, a1, a2, a3); break;
-        default:
-          if (!args) for (j = 1, args = new Array(len -1); j < len; j++) {
-            args[j - 1] = arguments[j];
-          }
-
-          listeners[i].fn.apply(listeners[i].context, args);
-      }
-    }
-  }
-
-  return true;
-};
-
-/**
- * Add a listener for a given event.
- *
- * @param {(String|Symbol)} event The event name.
- * @param {Function} fn The listener function.
- * @param {*} [context=this] The context to invoke the listener with.
- * @returns {EventEmitter} `this`.
- * @public
- */
-EventEmitter.prototype.on = function on(event, fn, context) {
-  return addListener(this, event, fn, context, false);
-};
-
-/**
- * Add a one-time listener for a given event.
- *
- * @param {(String|Symbol)} event The event name.
- * @param {Function} fn The listener function.
- * @param {*} [context=this] The context to invoke the listener with.
- * @returns {EventEmitter} `this`.
- * @public
- */
-EventEmitter.prototype.once = function once(event, fn, context) {
-  return addListener(this, event, fn, context, true);
-};
-
-/**
- * Remove the listeners of a given event.
- *
- * @param {(String|Symbol)} event The event name.
- * @param {Function} fn Only remove the listeners that match this function.
- * @param {*} context Only remove the listeners that have this context.
- * @param {Boolean} once Only remove one-time listeners.
- * @returns {EventEmitter} `this`.
- * @public
- */
-EventEmitter.prototype.removeListener = function removeListener(event, fn, context, once) {
-  var evt = prefix ? prefix + event : event;
-
-  if (!this._events[evt]) return this;
-  if (!fn) {
-    clearEvent(this, evt);
-    return this;
-  }
-
-  var listeners = this._events[evt];
-
-  if (listeners.fn) {
-    if (
-      listeners.fn === fn &&
-      (!once || listeners.once) &&
-      (!context || listeners.context === context)
-    ) {
-      clearEvent(this, evt);
-    }
-  } else {
-    for (var i = 0, events = [], length = listeners.length; i < length; i++) {
-      if (
-        listeners[i].fn !== fn ||
-        (once && !listeners[i].once) ||
-        (context && listeners[i].context !== context)
-      ) {
-        events.push(listeners[i]);
-      }
-    }
-
-    //
-    // Reset the array, or remove it completely if we have no more listeners.
-    //
-    if (events.length) this._events[evt] = events.length === 1 ? events[0] : events;
-    else clearEvent(this, evt);
-  }
-
-  return this;
-};
-
-/**
- * Remove all listeners, or those of the specified event.
- *
- * @param {(String|Symbol)} [event] The event name.
- * @returns {EventEmitter} `this`.
- * @public
- */
-EventEmitter.prototype.removeAllListeners = function removeAllListeners(event) {
-  var evt;
-
-  if (event) {
-    evt = prefix ? prefix + event : event;
-    if (this._events[evt]) clearEvent(this, evt);
-  } else {
-    this._events = new Events();
-    this._eventsCount = 0;
-  }
-
-  return this;
-};
-
-//
-// Alias methods names because people roll like that.
-//
-EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
-EventEmitter.prototype.addListener = EventEmitter.prototype.on;
-
-//
-// Expose the prefix.
-//
-EventEmitter.prefixed = prefix;
-
-//
-// Allow `EventEmitter` to be imported as module namespace.
-//
-EventEmitter.EventEmitter = EventEmitter;
-
-//
-// Expose the module.
-//
-if ('undefined' !== typeof module) {
-  module.exports = EventEmitter;
-}
-
-},{}],391:[function(require,module,exports){
+},{"dup":6}],391:[function(require,module,exports){
+arguments[4][378][0].apply(exports,arguments)
+},{"dup":378}],392:[function(require,module,exports){
 arguments[4][188][0].apply(exports,arguments)
-},{"dup":188}],392:[function(require,module,exports){
+},{"dup":188}],393:[function(require,module,exports){
 arguments[4][189][0].apply(exports,arguments)
-},{"dup":189}],393:[function(require,module,exports){
+},{"dup":189}],394:[function(require,module,exports){
 arguments[4][190][0].apply(exports,arguments)
-},{"dup":190}],394:[function(require,module,exports){
+},{"dup":190}],395:[function(require,module,exports){
 arguments[4][191][0].apply(exports,arguments)
-},{"dup":191}],395:[function(require,module,exports){
+},{"dup":191}],396:[function(require,module,exports){
 arguments[4][192][0].apply(exports,arguments)
-},{"dup":192}],396:[function(require,module,exports){
+},{"dup":192}],397:[function(require,module,exports){
 arguments[4][193][0].apply(exports,arguments)
-},{"./GLTexture":398,"dup":193}],397:[function(require,module,exports){
+},{"./GLTexture":399,"dup":193}],398:[function(require,module,exports){
 arguments[4][194][0].apply(exports,arguments)
-},{"./shader/compileProgram":403,"./shader/extractAttributes":405,"./shader/extractUniforms":406,"./shader/generateUniformAccessObject":407,"./shader/setPrecision":411,"dup":194}],398:[function(require,module,exports){
+},{"./shader/compileProgram":404,"./shader/extractAttributes":406,"./shader/extractUniforms":407,"./shader/generateUniformAccessObject":408,"./shader/setPrecision":412,"dup":194}],399:[function(require,module,exports){
 arguments[4][195][0].apply(exports,arguments)
-},{"dup":195}],399:[function(require,module,exports){
+},{"dup":195}],400:[function(require,module,exports){
 arguments[4][196][0].apply(exports,arguments)
-},{"./setVertexAttribArrays":402,"dup":196}],400:[function(require,module,exports){
+},{"./setVertexAttribArrays":403,"dup":196}],401:[function(require,module,exports){
 arguments[4][197][0].apply(exports,arguments)
-},{"dup":197}],401:[function(require,module,exports){
+},{"dup":197}],402:[function(require,module,exports){
 arguments[4][198][0].apply(exports,arguments)
-},{"./GLBuffer":395,"./GLFramebuffer":396,"./GLShader":397,"./GLTexture":398,"./VertexArrayObject":399,"./createContext":400,"./setVertexAttribArrays":402,"./shader":408,"dup":198}],402:[function(require,module,exports){
+},{"./GLBuffer":396,"./GLFramebuffer":397,"./GLShader":398,"./GLTexture":399,"./VertexArrayObject":400,"./createContext":401,"./setVertexAttribArrays":403,"./shader":409,"dup":198}],403:[function(require,module,exports){
 arguments[4][199][0].apply(exports,arguments)
-},{"dup":199}],403:[function(require,module,exports){
+},{"dup":199}],404:[function(require,module,exports){
 arguments[4][200][0].apply(exports,arguments)
-},{"dup":200}],404:[function(require,module,exports){
+},{"dup":200}],405:[function(require,module,exports){
 arguments[4][201][0].apply(exports,arguments)
-},{"dup":201}],405:[function(require,module,exports){
+},{"dup":201}],406:[function(require,module,exports){
 arguments[4][202][0].apply(exports,arguments)
-},{"./mapSize":409,"./mapType":410,"dup":202}],406:[function(require,module,exports){
+},{"./mapSize":410,"./mapType":411,"dup":202}],407:[function(require,module,exports){
 arguments[4][203][0].apply(exports,arguments)
-},{"./defaultValue":404,"./mapType":410,"dup":203}],407:[function(require,module,exports){
+},{"./defaultValue":405,"./mapType":411,"dup":203}],408:[function(require,module,exports){
 arguments[4][204][0].apply(exports,arguments)
-},{"dup":204}],408:[function(require,module,exports){
+},{"dup":204}],409:[function(require,module,exports){
 arguments[4][205][0].apply(exports,arguments)
-},{"./compileProgram":403,"./defaultValue":404,"./extractAttributes":405,"./extractUniforms":406,"./generateUniformAccessObject":407,"./mapSize":409,"./mapType":410,"./setPrecision":411,"dup":205}],409:[function(require,module,exports){
+},{"./compileProgram":404,"./defaultValue":405,"./extractAttributes":406,"./extractUniforms":407,"./generateUniformAccessObject":408,"./mapSize":410,"./mapType":411,"./setPrecision":412,"dup":205}],410:[function(require,module,exports){
 arguments[4][206][0].apply(exports,arguments)
-},{"dup":206}],410:[function(require,module,exports){
+},{"dup":206}],411:[function(require,module,exports){
 arguments[4][207][0].apply(exports,arguments)
-},{"dup":207}],411:[function(require,module,exports){
+},{"dup":207}],412:[function(require,module,exports){
 arguments[4][208][0].apply(exports,arguments)
-},{"dup":208}],412:[function(require,module,exports){
+},{"dup":208}],413:[function(require,module,exports){
 arguments[4][209][0].apply(exports,arguments)
-},{"../core":437,"./accessibleTarget":413,"dup":209,"ismobilejs":391}],413:[function(require,module,exports){
+},{"../core":438,"./accessibleTarget":414,"dup":209,"ismobilejs":392}],414:[function(require,module,exports){
 arguments[4][210][0].apply(exports,arguments)
-},{"dup":210}],414:[function(require,module,exports){
+},{"dup":210}],415:[function(require,module,exports){
 arguments[4][211][0].apply(exports,arguments)
-},{"./AccessibilityManager":412,"./accessibleTarget":413,"dup":211}],415:[function(require,module,exports){
+},{"./AccessibilityManager":413,"./accessibleTarget":414,"dup":211}],416:[function(require,module,exports){
 arguments[4][212][0].apply(exports,arguments)
-},{"./autoDetectRenderer":417,"./const":418,"./display/Container":420,"./settings":473,"./ticker":493,"dup":212}],416:[function(require,module,exports){
+},{"./autoDetectRenderer":418,"./const":419,"./display/Container":421,"./settings":474,"./ticker":494,"dup":212}],417:[function(require,module,exports){
 arguments[4][213][0].apply(exports,arguments)
-},{"./settings":473,"dup":213,"pixi-gl-core":401}],417:[function(require,module,exports){
+},{"./settings":474,"dup":213,"pixi-gl-core":402}],418:[function(require,module,exports){
 arguments[4][214][0].apply(exports,arguments)
-},{"./renderers/canvas/CanvasRenderer":449,"./renderers/webgl/WebGLRenderer":456,"./utils":497,"dup":214}],418:[function(require,module,exports){
+},{"./renderers/canvas/CanvasRenderer":450,"./renderers/webgl/WebGLRenderer":457,"./utils":498,"dup":214}],419:[function(require,module,exports){
 arguments[4][215][0].apply(exports,arguments)
-},{"dup":215}],419:[function(require,module,exports){
+},{"dup":215}],420:[function(require,module,exports){
 arguments[4][216][0].apply(exports,arguments)
-},{"../math":442,"dup":216}],420:[function(require,module,exports){
+},{"../math":443,"dup":216}],421:[function(require,module,exports){
 arguments[4][217][0].apply(exports,arguments)
-},{"../utils":497,"./DisplayObject":421,"dup":217}],421:[function(require,module,exports){
+},{"../utils":498,"./DisplayObject":422,"dup":217}],422:[function(require,module,exports){
 arguments[4][218][0].apply(exports,arguments)
-},{"../const":418,"../math":442,"../settings":473,"./Bounds":419,"./Transform":422,"./TransformStatic":424,"dup":218,"eventemitter3":561}],422:[function(require,module,exports){
+},{"../const":419,"../math":443,"../settings":474,"./Bounds":420,"./Transform":423,"./TransformStatic":425,"dup":218,"eventemitter3":562}],423:[function(require,module,exports){
 arguments[4][219][0].apply(exports,arguments)
-},{"../math":442,"./TransformBase":423,"dup":219}],423:[function(require,module,exports){
+},{"../math":443,"./TransformBase":424,"dup":219}],424:[function(require,module,exports){
 arguments[4][220][0].apply(exports,arguments)
-},{"../math":442,"dup":220}],424:[function(require,module,exports){
+},{"../math":443,"dup":220}],425:[function(require,module,exports){
 arguments[4][221][0].apply(exports,arguments)
-},{"../math":442,"./TransformBase":423,"dup":221}],425:[function(require,module,exports){
+},{"../math":443,"./TransformBase":424,"dup":221}],426:[function(require,module,exports){
 arguments[4][222][0].apply(exports,arguments)
-},{"../const":418,"../display/Bounds":419,"../display/Container":420,"../math":442,"../renderers/canvas/CanvasRenderer":449,"../sprites/Sprite":474,"../textures/RenderTexture":485,"../textures/Texture":487,"../utils":497,"./GraphicsData":426,"./utils/bezierCurveTo":428,"dup":222}],426:[function(require,module,exports){
+},{"../const":419,"../display/Bounds":420,"../display/Container":421,"../math":443,"../renderers/canvas/CanvasRenderer":450,"../sprites/Sprite":475,"../textures/RenderTexture":486,"../textures/Texture":488,"../utils":498,"./GraphicsData":427,"./utils/bezierCurveTo":429,"dup":222}],427:[function(require,module,exports){
 arguments[4][223][0].apply(exports,arguments)
-},{"dup":223}],427:[function(require,module,exports){
+},{"dup":223}],428:[function(require,module,exports){
 arguments[4][224][0].apply(exports,arguments)
-},{"../../const":418,"../../renderers/canvas/CanvasRenderer":449,"dup":224}],428:[function(require,module,exports){
+},{"../../const":419,"../../renderers/canvas/CanvasRenderer":450,"dup":224}],429:[function(require,module,exports){
 arguments[4][225][0].apply(exports,arguments)
-},{"dup":225}],429:[function(require,module,exports){
+},{"dup":225}],430:[function(require,module,exports){
 arguments[4][226][0].apply(exports,arguments)
-},{"../../const":418,"../../renderers/webgl/WebGLRenderer":456,"../../renderers/webgl/utils/ObjectRenderer":466,"../../utils":497,"./WebGLGraphicsData":430,"./shaders/PrimitiveShader":431,"./utils/buildCircle":432,"./utils/buildPoly":434,"./utils/buildRectangle":435,"./utils/buildRoundedRectangle":436,"dup":226}],430:[function(require,module,exports){
+},{"../../const":419,"../../renderers/webgl/WebGLRenderer":457,"../../renderers/webgl/utils/ObjectRenderer":467,"../../utils":498,"./WebGLGraphicsData":431,"./shaders/PrimitiveShader":432,"./utils/buildCircle":433,"./utils/buildPoly":435,"./utils/buildRectangle":436,"./utils/buildRoundedRectangle":437,"dup":226}],431:[function(require,module,exports){
 arguments[4][227][0].apply(exports,arguments)
-},{"dup":227,"pixi-gl-core":401}],431:[function(require,module,exports){
+},{"dup":227,"pixi-gl-core":402}],432:[function(require,module,exports){
 arguments[4][228][0].apply(exports,arguments)
-},{"../../../Shader":416,"dup":228}],432:[function(require,module,exports){
+},{"../../../Shader":417,"dup":228}],433:[function(require,module,exports){
 arguments[4][229][0].apply(exports,arguments)
-},{"../../../const":418,"../../../utils":497,"./buildLine":433,"dup":229}],433:[function(require,module,exports){
+},{"../../../const":419,"../../../utils":498,"./buildLine":434,"dup":229}],434:[function(require,module,exports){
 arguments[4][230][0].apply(exports,arguments)
-},{"../../../math":442,"../../../utils":497,"dup":230}],434:[function(require,module,exports){
+},{"../../../math":443,"../../../utils":498,"dup":230}],435:[function(require,module,exports){
 arguments[4][231][0].apply(exports,arguments)
-},{"../../../utils":497,"./buildLine":433,"dup":231,"earcut":389}],435:[function(require,module,exports){
+},{"../../../utils":498,"./buildLine":434,"dup":231,"earcut":390}],436:[function(require,module,exports){
 arguments[4][232][0].apply(exports,arguments)
-},{"../../../utils":497,"./buildLine":433,"dup":232}],436:[function(require,module,exports){
+},{"../../../utils":498,"./buildLine":434,"dup":232}],437:[function(require,module,exports){
 arguments[4][233][0].apply(exports,arguments)
-},{"../../../utils":497,"./buildLine":433,"dup":233,"earcut":389}],437:[function(require,module,exports){
+},{"../../../utils":498,"./buildLine":434,"dup":233,"earcut":390}],438:[function(require,module,exports){
 arguments[4][234][0].apply(exports,arguments)
-},{"./Application":415,"./Shader":416,"./autoDetectRenderer":417,"./const":418,"./display/Bounds":419,"./display/Container":420,"./display/DisplayObject":421,"./display/Transform":422,"./display/TransformBase":423,"./display/TransformStatic":424,"./graphics/Graphics":425,"./graphics/GraphicsData":426,"./graphics/canvas/CanvasGraphicsRenderer":427,"./graphics/webgl/GraphicsRenderer":429,"./math":442,"./renderers/canvas/CanvasRenderer":449,"./renderers/canvas/utils/CanvasRenderTarget":451,"./renderers/webgl/WebGLRenderer":456,"./renderers/webgl/filters/Filter":458,"./renderers/webgl/filters/spriteMask/SpriteMaskFilter":461,"./renderers/webgl/managers/WebGLManager":465,"./renderers/webgl/utils/ObjectRenderer":466,"./renderers/webgl/utils/Quad":467,"./renderers/webgl/utils/RenderTarget":468,"./settings":473,"./sprites/Sprite":474,"./sprites/canvas/CanvasSpriteRenderer":475,"./sprites/canvas/CanvasTinter":476,"./sprites/webgl/SpriteRenderer":478,"./text/Text":480,"./text/TextMetrics":481,"./text/TextStyle":482,"./textures/BaseRenderTexture":483,"./textures/BaseTexture":484,"./textures/RenderTexture":485,"./textures/Spritesheet":486,"./textures/Texture":487,"./textures/TextureMatrix":488,"./textures/TextureUvs":489,"./textures/VideoBaseTexture":490,"./ticker":493,"./utils":497,"dup":234,"pixi-gl-core":401}],438:[function(require,module,exports){
+},{"./Application":416,"./Shader":417,"./autoDetectRenderer":418,"./const":419,"./display/Bounds":420,"./display/Container":421,"./display/DisplayObject":422,"./display/Transform":423,"./display/TransformBase":424,"./display/TransformStatic":425,"./graphics/Graphics":426,"./graphics/GraphicsData":427,"./graphics/canvas/CanvasGraphicsRenderer":428,"./graphics/webgl/GraphicsRenderer":430,"./math":443,"./renderers/canvas/CanvasRenderer":450,"./renderers/canvas/utils/CanvasRenderTarget":452,"./renderers/webgl/WebGLRenderer":457,"./renderers/webgl/filters/Filter":459,"./renderers/webgl/filters/spriteMask/SpriteMaskFilter":462,"./renderers/webgl/managers/WebGLManager":466,"./renderers/webgl/utils/ObjectRenderer":467,"./renderers/webgl/utils/Quad":468,"./renderers/webgl/utils/RenderTarget":469,"./settings":474,"./sprites/Sprite":475,"./sprites/canvas/CanvasSpriteRenderer":476,"./sprites/canvas/CanvasTinter":477,"./sprites/webgl/SpriteRenderer":479,"./text/Text":481,"./text/TextMetrics":482,"./text/TextStyle":483,"./textures/BaseRenderTexture":484,"./textures/BaseTexture":485,"./textures/RenderTexture":486,"./textures/Spritesheet":487,"./textures/Texture":488,"./textures/TextureMatrix":489,"./textures/TextureUvs":490,"./textures/VideoBaseTexture":491,"./ticker":494,"./utils":498,"dup":234,"pixi-gl-core":402}],439:[function(require,module,exports){
 arguments[4][235][0].apply(exports,arguments)
-},{"./Matrix":439,"dup":235}],439:[function(require,module,exports){
+},{"./Matrix":440,"dup":235}],440:[function(require,module,exports){
 arguments[4][236][0].apply(exports,arguments)
-},{"./Point":441,"dup":236}],440:[function(require,module,exports){
+},{"./Point":442,"dup":236}],441:[function(require,module,exports){
 arguments[4][237][0].apply(exports,arguments)
-},{"dup":237}],441:[function(require,module,exports){
+},{"dup":237}],442:[function(require,module,exports){
 arguments[4][238][0].apply(exports,arguments)
-},{"dup":238}],442:[function(require,module,exports){
+},{"dup":238}],443:[function(require,module,exports){
 arguments[4][239][0].apply(exports,arguments)
-},{"./GroupD8":438,"./Matrix":439,"./ObservablePoint":440,"./Point":441,"./shapes/Circle":443,"./shapes/Ellipse":444,"./shapes/Polygon":445,"./shapes/Rectangle":446,"./shapes/RoundedRectangle":447,"dup":239}],443:[function(require,module,exports){
+},{"./GroupD8":439,"./Matrix":440,"./ObservablePoint":441,"./Point":442,"./shapes/Circle":444,"./shapes/Ellipse":445,"./shapes/Polygon":446,"./shapes/Rectangle":447,"./shapes/RoundedRectangle":448,"dup":239}],444:[function(require,module,exports){
 arguments[4][240][0].apply(exports,arguments)
-},{"../../const":418,"./Rectangle":446,"dup":240}],444:[function(require,module,exports){
+},{"../../const":419,"./Rectangle":447,"dup":240}],445:[function(require,module,exports){
 arguments[4][241][0].apply(exports,arguments)
-},{"../../const":418,"./Rectangle":446,"dup":241}],445:[function(require,module,exports){
+},{"../../const":419,"./Rectangle":447,"dup":241}],446:[function(require,module,exports){
 arguments[4][242][0].apply(exports,arguments)
-},{"../../const":418,"../Point":441,"dup":242}],446:[function(require,module,exports){
+},{"../../const":419,"../Point":442,"dup":242}],447:[function(require,module,exports){
 arguments[4][243][0].apply(exports,arguments)
-},{"../../const":418,"dup":243}],447:[function(require,module,exports){
+},{"../../const":419,"dup":243}],448:[function(require,module,exports){
 arguments[4][244][0].apply(exports,arguments)
-},{"../../const":418,"dup":244}],448:[function(require,module,exports){
+},{"../../const":419,"dup":244}],449:[function(require,module,exports){
 arguments[4][245][0].apply(exports,arguments)
-},{"../const":418,"../display/Container":420,"../math":442,"../settings":473,"../textures/RenderTexture":485,"../utils":497,"dup":245,"eventemitter3":561}],449:[function(require,module,exports){
+},{"../const":419,"../display/Container":421,"../math":443,"../settings":474,"../textures/RenderTexture":486,"../utils":498,"dup":245,"eventemitter3":562}],450:[function(require,module,exports){
 arguments[4][246][0].apply(exports,arguments)
-},{"../../const":418,"../../settings":473,"../../utils":497,"../SystemRenderer":448,"./utils/CanvasMaskManager":450,"./utils/CanvasRenderTarget":451,"./utils/mapCanvasBlendModesToPixi":453,"dup":246}],450:[function(require,module,exports){
+},{"../../const":419,"../../settings":474,"../../utils":498,"../SystemRenderer":449,"./utils/CanvasMaskManager":451,"./utils/CanvasRenderTarget":452,"./utils/mapCanvasBlendModesToPixi":454,"dup":246}],451:[function(require,module,exports){
 arguments[4][247][0].apply(exports,arguments)
-},{"../../../const":418,"dup":247}],451:[function(require,module,exports){
+},{"../../../const":419,"dup":247}],452:[function(require,module,exports){
 arguments[4][248][0].apply(exports,arguments)
-},{"../../../settings":473,"dup":248}],452:[function(require,module,exports){
+},{"../../../settings":474,"dup":248}],453:[function(require,module,exports){
 arguments[4][249][0].apply(exports,arguments)
-},{"dup":249}],453:[function(require,module,exports){
+},{"dup":249}],454:[function(require,module,exports){
 arguments[4][250][0].apply(exports,arguments)
-},{"../../../const":418,"./canUseNewCanvasBlendModes":452,"dup":250}],454:[function(require,module,exports){
+},{"../../../const":419,"./canUseNewCanvasBlendModes":453,"dup":250}],455:[function(require,module,exports){
 arguments[4][251][0].apply(exports,arguments)
-},{"../../const":418,"../../settings":473,"dup":251}],455:[function(require,module,exports){
+},{"../../const":419,"../../settings":474,"dup":251}],456:[function(require,module,exports){
 arguments[4][252][0].apply(exports,arguments)
-},{"../../const":418,"../../utils":497,"./utils/RenderTarget":468,"dup":252,"pixi-gl-core":401}],456:[function(require,module,exports){
+},{"../../const":419,"../../utils":498,"./utils/RenderTarget":469,"dup":252,"pixi-gl-core":402}],457:[function(require,module,exports){
 arguments[4][253][0].apply(exports,arguments)
-},{"../../const":418,"../../textures/BaseTexture":484,"../../utils":497,"../SystemRenderer":448,"./TextureGarbageCollector":454,"./TextureManager":455,"./WebGLState":457,"./managers/FilterManager":462,"./managers/MaskManager":463,"./managers/StencilManager":464,"./utils/ObjectRenderer":466,"./utils/RenderTarget":468,"./utils/mapWebGLDrawModesToPixi":471,"./utils/validateContext":472,"dup":253,"pixi-gl-core":401}],457:[function(require,module,exports){
+},{"../../const":419,"../../textures/BaseTexture":485,"../../utils":498,"../SystemRenderer":449,"./TextureGarbageCollector":455,"./TextureManager":456,"./WebGLState":458,"./managers/FilterManager":463,"./managers/MaskManager":464,"./managers/StencilManager":465,"./utils/ObjectRenderer":467,"./utils/RenderTarget":469,"./utils/mapWebGLDrawModesToPixi":472,"./utils/validateContext":473,"dup":253,"pixi-gl-core":402}],458:[function(require,module,exports){
 arguments[4][254][0].apply(exports,arguments)
-},{"./utils/mapWebGLBlendModesToPixi":470,"dup":254}],458:[function(require,module,exports){
+},{"./utils/mapWebGLBlendModesToPixi":471,"dup":254}],459:[function(require,module,exports){
 arguments[4][255][0].apply(exports,arguments)
-},{"../../../const":418,"../../../settings":473,"../../../utils":497,"./extractUniformsFromSrc":459,"dup":255}],459:[function(require,module,exports){
+},{"../../../const":419,"../../../settings":474,"../../../utils":498,"./extractUniformsFromSrc":460,"dup":255}],460:[function(require,module,exports){
 arguments[4][256][0].apply(exports,arguments)
-},{"dup":256,"pixi-gl-core":401}],460:[function(require,module,exports){
+},{"dup":256,"pixi-gl-core":402}],461:[function(require,module,exports){
 arguments[4][257][0].apply(exports,arguments)
-},{"../../../math":442,"dup":257}],461:[function(require,module,exports){
+},{"../../../math":443,"dup":257}],462:[function(require,module,exports){
 arguments[4][258][0].apply(exports,arguments)
-},{"../../../../math":442,"../../../../textures/TextureMatrix":488,"../Filter":458,"dup":258,"path":571}],462:[function(require,module,exports){
+},{"../../../../math":443,"../../../../textures/TextureMatrix":489,"../Filter":459,"dup":258,"path":573}],463:[function(require,module,exports){
 arguments[4][259][0].apply(exports,arguments)
-},{"../../../Shader":416,"../../../math":442,"../filters/filterTransforms":460,"../utils/Quad":467,"../utils/RenderTarget":468,"./WebGLManager":465,"bit-twiddle":388,"dup":259}],463:[function(require,module,exports){
+},{"../../../Shader":417,"../../../math":443,"../filters/filterTransforms":461,"../utils/Quad":468,"../utils/RenderTarget":469,"./WebGLManager":466,"bit-twiddle":389,"dup":259}],464:[function(require,module,exports){
 arguments[4][260][0].apply(exports,arguments)
-},{"../filters/spriteMask/SpriteMaskFilter":461,"./WebGLManager":465,"dup":260}],464:[function(require,module,exports){
+},{"../filters/spriteMask/SpriteMaskFilter":462,"./WebGLManager":466,"dup":260}],465:[function(require,module,exports){
 arguments[4][261][0].apply(exports,arguments)
-},{"./WebGLManager":465,"dup":261}],465:[function(require,module,exports){
+},{"./WebGLManager":466,"dup":261}],466:[function(require,module,exports){
 arguments[4][262][0].apply(exports,arguments)
-},{"dup":262}],466:[function(require,module,exports){
+},{"dup":262}],467:[function(require,module,exports){
 arguments[4][263][0].apply(exports,arguments)
-},{"../managers/WebGLManager":465,"dup":263}],467:[function(require,module,exports){
+},{"../managers/WebGLManager":466,"dup":263}],468:[function(require,module,exports){
 arguments[4][264][0].apply(exports,arguments)
-},{"../../../utils/createIndicesForQuads":495,"dup":264,"pixi-gl-core":401}],468:[function(require,module,exports){
+},{"../../../utils/createIndicesForQuads":496,"dup":264,"pixi-gl-core":402}],469:[function(require,module,exports){
 arguments[4][265][0].apply(exports,arguments)
-},{"../../../const":418,"../../../math":442,"../../../settings":473,"dup":265,"pixi-gl-core":401}],469:[function(require,module,exports){
+},{"../../../const":419,"../../../math":443,"../../../settings":474,"dup":265,"pixi-gl-core":402}],470:[function(require,module,exports){
 arguments[4][266][0].apply(exports,arguments)
-},{"dup":266,"pixi-gl-core":401}],470:[function(require,module,exports){
+},{"dup":266,"pixi-gl-core":402}],471:[function(require,module,exports){
 arguments[4][267][0].apply(exports,arguments)
-},{"../../../const":418,"dup":267}],471:[function(require,module,exports){
+},{"../../../const":419,"dup":267}],472:[function(require,module,exports){
 arguments[4][268][0].apply(exports,arguments)
-},{"../../../const":418,"dup":268}],472:[function(require,module,exports){
+},{"../../../const":419,"dup":268}],473:[function(require,module,exports){
 arguments[4][269][0].apply(exports,arguments)
-},{"dup":269}],473:[function(require,module,exports){
+},{"dup":269}],474:[function(require,module,exports){
 arguments[4][270][0].apply(exports,arguments)
-},{"./utils/canUploadSameBuffer":494,"./utils/maxRecommendedTextures":499,"dup":270}],474:[function(require,module,exports){
+},{"./utils/canUploadSameBuffer":495,"./utils/maxRecommendedTextures":500,"dup":270}],475:[function(require,module,exports){
 arguments[4][271][0].apply(exports,arguments)
-},{"../const":418,"../display/Container":420,"../math":442,"../textures/Texture":487,"../utils":497,"dup":271}],475:[function(require,module,exports){
+},{"../const":419,"../display/Container":421,"../math":443,"../textures/Texture":488,"../utils":498,"dup":271}],476:[function(require,module,exports){
 arguments[4][272][0].apply(exports,arguments)
-},{"../../const":418,"../../math":442,"../../renderers/canvas/CanvasRenderer":449,"./CanvasTinter":476,"dup":272}],476:[function(require,module,exports){
+},{"../../const":419,"../../math":443,"../../renderers/canvas/CanvasRenderer":450,"./CanvasTinter":477,"dup":272}],477:[function(require,module,exports){
 arguments[4][273][0].apply(exports,arguments)
-},{"../../renderers/canvas/utils/canUseNewCanvasBlendModes":452,"../../utils":497,"dup":273}],477:[function(require,module,exports){
+},{"../../renderers/canvas/utils/canUseNewCanvasBlendModes":453,"../../utils":498,"dup":273}],478:[function(require,module,exports){
 arguments[4][274][0].apply(exports,arguments)
-},{"dup":274}],478:[function(require,module,exports){
+},{"dup":274}],479:[function(require,module,exports){
 arguments[4][275][0].apply(exports,arguments)
-},{"../../renderers/webgl/WebGLRenderer":456,"../../renderers/webgl/utils/ObjectRenderer":466,"../../renderers/webgl/utils/checkMaxIfStatmentsInShader":469,"../../settings":473,"../../utils":497,"../../utils/createIndicesForQuads":495,"./BatchBuffer":477,"./generateMultiTextureShader":479,"bit-twiddle":388,"dup":275,"pixi-gl-core":401}],479:[function(require,module,exports){
+},{"../../renderers/webgl/WebGLRenderer":457,"../../renderers/webgl/utils/ObjectRenderer":467,"../../renderers/webgl/utils/checkMaxIfStatmentsInShader":470,"../../settings":474,"../../utils":498,"../../utils/createIndicesForQuads":496,"./BatchBuffer":478,"./generateMultiTextureShader":480,"bit-twiddle":389,"dup":275,"pixi-gl-core":402}],480:[function(require,module,exports){
 arguments[4][276][0].apply(exports,arguments)
-},{"../../Shader":416,"dup":276,"path":571}],480:[function(require,module,exports){
+},{"../../Shader":417,"dup":276,"path":573}],481:[function(require,module,exports){
 arguments[4][277][0].apply(exports,arguments)
-},{"../const":418,"../math":442,"../settings":473,"../sprites/Sprite":474,"../textures/Texture":487,"../utils":497,"../utils/trimCanvas":502,"./TextMetrics":481,"./TextStyle":482,"dup":277}],481:[function(require,module,exports){
+},{"../const":419,"../math":443,"../settings":474,"../sprites/Sprite":475,"../textures/Texture":488,"../utils":498,"../utils/trimCanvas":503,"./TextMetrics":482,"./TextStyle":483,"dup":277}],482:[function(require,module,exports){
 arguments[4][278][0].apply(exports,arguments)
-},{"dup":278}],482:[function(require,module,exports){
+},{"dup":278}],483:[function(require,module,exports){
 arguments[4][279][0].apply(exports,arguments)
-},{"../const":418,"../utils":497,"dup":279}],483:[function(require,module,exports){
+},{"../const":419,"../utils":498,"dup":279}],484:[function(require,module,exports){
 arguments[4][280][0].apply(exports,arguments)
-},{"../settings":473,"./BaseTexture":484,"dup":280}],484:[function(require,module,exports){
+},{"../settings":474,"./BaseTexture":485,"dup":280}],485:[function(require,module,exports){
 arguments[4][281][0].apply(exports,arguments)
-},{"../settings":473,"../utils":497,"../utils/determineCrossOrigin":496,"bit-twiddle":388,"dup":281,"eventemitter3":561}],485:[function(require,module,exports){
+},{"../settings":474,"../utils":498,"../utils/determineCrossOrigin":497,"bit-twiddle":389,"dup":281,"eventemitter3":562}],486:[function(require,module,exports){
 arguments[4][282][0].apply(exports,arguments)
-},{"./BaseRenderTexture":483,"./Texture":487,"dup":282}],486:[function(require,module,exports){
+},{"./BaseRenderTexture":484,"./Texture":488,"dup":282}],487:[function(require,module,exports){
 arguments[4][283][0].apply(exports,arguments)
-},{"../":437,"../utils":497,"dup":283}],487:[function(require,module,exports){
+},{"../":438,"../utils":498,"dup":283}],488:[function(require,module,exports){
 arguments[4][284][0].apply(exports,arguments)
-},{"../math":442,"../settings":473,"../utils":497,"./BaseTexture":484,"./TextureUvs":489,"./VideoBaseTexture":490,"dup":284,"eventemitter3":561}],488:[function(require,module,exports){
+},{"../math":443,"../settings":474,"../utils":498,"./BaseTexture":485,"./TextureUvs":490,"./VideoBaseTexture":491,"dup":284,"eventemitter3":562}],489:[function(require,module,exports){
 arguments[4][285][0].apply(exports,arguments)
-},{"../math/Matrix":439,"dup":285}],489:[function(require,module,exports){
+},{"../math/Matrix":440,"dup":285}],490:[function(require,module,exports){
 arguments[4][286][0].apply(exports,arguments)
-},{"../math/GroupD8":438,"dup":286}],490:[function(require,module,exports){
+},{"../math/GroupD8":439,"dup":286}],491:[function(require,module,exports){
 arguments[4][287][0].apply(exports,arguments)
-},{"../const":418,"../ticker":493,"../utils":497,"../utils/determineCrossOrigin":496,"./BaseTexture":484,"dup":287}],491:[function(require,module,exports){
+},{"../const":419,"../ticker":494,"../utils":498,"../utils/determineCrossOrigin":497,"./BaseTexture":485,"dup":287}],492:[function(require,module,exports){
 arguments[4][288][0].apply(exports,arguments)
-},{"../const":418,"../settings":473,"./TickerListener":492,"dup":288}],492:[function(require,module,exports){
+},{"../const":419,"../settings":474,"./TickerListener":493,"dup":288}],493:[function(require,module,exports){
 arguments[4][289][0].apply(exports,arguments)
-},{"dup":289}],493:[function(require,module,exports){
+},{"dup":289}],494:[function(require,module,exports){
 arguments[4][290][0].apply(exports,arguments)
-},{"./Ticker":491,"dup":290}],494:[function(require,module,exports){
+},{"./Ticker":492,"dup":290}],495:[function(require,module,exports){
 arguments[4][291][0].apply(exports,arguments)
-},{"dup":291}],495:[function(require,module,exports){
+},{"dup":291}],496:[function(require,module,exports){
 arguments[4][292][0].apply(exports,arguments)
-},{"dup":292}],496:[function(require,module,exports){
+},{"dup":292}],497:[function(require,module,exports){
 arguments[4][293][0].apply(exports,arguments)
-},{"dup":293,"url":577}],497:[function(require,module,exports){
+},{"dup":293,"url":579}],498:[function(require,module,exports){
 arguments[4][294][0].apply(exports,arguments)
-},{"../const":418,"../settings":473,"./mapPremultipliedBlendModes":498,"./mixin":500,"./pluginTarget":501,"dup":294,"eventemitter3":561,"ismobilejs":391,"remove-array-items":562}],498:[function(require,module,exports){
+},{"../const":419,"../settings":474,"./mapPremultipliedBlendModes":499,"./mixin":501,"./pluginTarget":502,"dup":294,"eventemitter3":562,"ismobilejs":392,"remove-array-items":563}],499:[function(require,module,exports){
 arguments[4][295][0].apply(exports,arguments)
-},{"../const":418,"dup":295}],499:[function(require,module,exports){
+},{"../const":419,"dup":295}],500:[function(require,module,exports){
 arguments[4][296][0].apply(exports,arguments)
-},{"dup":296,"ismobilejs":391}],500:[function(require,module,exports){
+},{"dup":296,"ismobilejs":392}],501:[function(require,module,exports){
 arguments[4][297][0].apply(exports,arguments)
-},{"dup":297}],501:[function(require,module,exports){
+},{"dup":297}],502:[function(require,module,exports){
 arguments[4][298][0].apply(exports,arguments)
-},{"dup":298}],502:[function(require,module,exports){
+},{"dup":298}],503:[function(require,module,exports){
 arguments[4][299][0].apply(exports,arguments)
-},{"dup":299}],503:[function(require,module,exports){
+},{"dup":299}],504:[function(require,module,exports){
 arguments[4][300][0].apply(exports,arguments)
-},{"dup":300}],504:[function(require,module,exports){
+},{"dup":300}],505:[function(require,module,exports){
 arguments[4][301][0].apply(exports,arguments)
-},{"../../core":437,"dup":301}],505:[function(require,module,exports){
+},{"../../core":438,"dup":301}],506:[function(require,module,exports){
 arguments[4][302][0].apply(exports,arguments)
-},{"./canvas/CanvasExtract":504,"./webgl/WebGLExtract":506,"dup":302}],506:[function(require,module,exports){
+},{"./canvas/CanvasExtract":505,"./webgl/WebGLExtract":507,"dup":302}],507:[function(require,module,exports){
 arguments[4][303][0].apply(exports,arguments)
-},{"../../core":437,"dup":303}],507:[function(require,module,exports){
+},{"../../core":438,"dup":303}],508:[function(require,module,exports){
 arguments[4][304][0].apply(exports,arguments)
-},{"../core":437,"dup":304}],508:[function(require,module,exports){
+},{"../core":438,"dup":304}],509:[function(require,module,exports){
 arguments[4][305][0].apply(exports,arguments)
-},{"../core":437,"../core/math/ObservablePoint":440,"../core/settings":473,"../core/utils":497,"dup":305}],509:[function(require,module,exports){
+},{"../core":438,"../core/math/ObservablePoint":441,"../core/settings":474,"../core/utils":498,"dup":305}],510:[function(require,module,exports){
 arguments[4][306][0].apply(exports,arguments)
-},{"../core":437,"../core/sprites/canvas/CanvasTinter":476,"dup":306}],510:[function(require,module,exports){
+},{"../core":438,"../core/sprites/canvas/CanvasTinter":477,"dup":306}],511:[function(require,module,exports){
 arguments[4][307][0].apply(exports,arguments)
-},{"../core":437,"../core/textures/BaseTexture":484,"../core/textures/Texture":487,"../core/utils":497,"dup":307}],511:[function(require,module,exports){
+},{"../core":438,"../core/textures/BaseTexture":485,"../core/textures/Texture":488,"../core/utils":498,"dup":307}],512:[function(require,module,exports){
 arguments[4][308][0].apply(exports,arguments)
-},{"../core":437,"dup":308}],512:[function(require,module,exports){
+},{"../core":438,"dup":308}],513:[function(require,module,exports){
 arguments[4][309][0].apply(exports,arguments)
-},{"../core":437,"dup":309}],513:[function(require,module,exports){
+},{"../core":438,"dup":309}],514:[function(require,module,exports){
 arguments[4][310][0].apply(exports,arguments)
-},{"./AnimatedSprite":507,"./BitmapText":508,"./TilingSprite":509,"./cacheAsBitmap":510,"./getChildByName":511,"./getGlobalPosition":512,"./webgl/TilingSpriteRenderer":514,"dup":310}],514:[function(require,module,exports){
+},{"./AnimatedSprite":508,"./BitmapText":509,"./TilingSprite":510,"./cacheAsBitmap":511,"./getChildByName":512,"./getGlobalPosition":513,"./webgl/TilingSpriteRenderer":515,"dup":310}],515:[function(require,module,exports){
 arguments[4][311][0].apply(exports,arguments)
-},{"../../core":437,"../../core/const":418,"dup":311,"path":571}],515:[function(require,module,exports){
+},{"../../core":438,"../../core/const":419,"dup":311,"path":573}],516:[function(require,module,exports){
 arguments[4][312][0].apply(exports,arguments)
-},{"../../core":437,"dup":312,"path":571}],516:[function(require,module,exports){
+},{"../../core":438,"dup":312,"path":573}],517:[function(require,module,exports){
 arguments[4][313][0].apply(exports,arguments)
-},{"../../core":437,"./BlurXFilter":517,"./BlurYFilter":518,"dup":313}],517:[function(require,module,exports){
+},{"../../core":438,"./BlurXFilter":518,"./BlurYFilter":519,"dup":313}],518:[function(require,module,exports){
 arguments[4][314][0].apply(exports,arguments)
-},{"../../core":437,"./generateBlurFragSource":519,"./generateBlurVertSource":520,"./getMaxBlurKernelSize":521,"dup":314}],518:[function(require,module,exports){
+},{"../../core":438,"./generateBlurFragSource":520,"./generateBlurVertSource":521,"./getMaxBlurKernelSize":522,"dup":314}],519:[function(require,module,exports){
 arguments[4][315][0].apply(exports,arguments)
-},{"../../core":437,"./generateBlurFragSource":519,"./generateBlurVertSource":520,"./getMaxBlurKernelSize":521,"dup":315}],519:[function(require,module,exports){
+},{"../../core":438,"./generateBlurFragSource":520,"./generateBlurVertSource":521,"./getMaxBlurKernelSize":522,"dup":315}],520:[function(require,module,exports){
 arguments[4][316][0].apply(exports,arguments)
-},{"dup":316}],520:[function(require,module,exports){
+},{"dup":316}],521:[function(require,module,exports){
 arguments[4][317][0].apply(exports,arguments)
-},{"dup":317}],521:[function(require,module,exports){
+},{"dup":317}],522:[function(require,module,exports){
 arguments[4][318][0].apply(exports,arguments)
-},{"dup":318}],522:[function(require,module,exports){
+},{"dup":318}],523:[function(require,module,exports){
 arguments[4][319][0].apply(exports,arguments)
-},{"../../core":437,"dup":319,"path":571}],523:[function(require,module,exports){
+},{"../../core":438,"dup":319,"path":573}],524:[function(require,module,exports){
 arguments[4][320][0].apply(exports,arguments)
-},{"../../core":437,"dup":320,"path":571}],524:[function(require,module,exports){
+},{"../../core":438,"dup":320,"path":573}],525:[function(require,module,exports){
 arguments[4][321][0].apply(exports,arguments)
-},{"../../core":437,"dup":321,"path":571}],525:[function(require,module,exports){
+},{"../../core":438,"dup":321,"path":573}],526:[function(require,module,exports){
 arguments[4][322][0].apply(exports,arguments)
-},{"./alpha/AlphaFilter":515,"./blur/BlurFilter":516,"./blur/BlurXFilter":517,"./blur/BlurYFilter":518,"./colormatrix/ColorMatrixFilter":522,"./displacement/DisplacementFilter":523,"./fxaa/FXAAFilter":524,"./noise/NoiseFilter":526,"dup":322}],526:[function(require,module,exports){
+},{"./alpha/AlphaFilter":516,"./blur/BlurFilter":517,"./blur/BlurXFilter":518,"./blur/BlurYFilter":519,"./colormatrix/ColorMatrixFilter":523,"./displacement/DisplacementFilter":524,"./fxaa/FXAAFilter":525,"./noise/NoiseFilter":527,"dup":322}],527:[function(require,module,exports){
 arguments[4][323][0].apply(exports,arguments)
-},{"../../core":437,"dup":323,"path":571}],527:[function(require,module,exports){
+},{"../../core":438,"dup":323,"path":573}],528:[function(require,module,exports){
 arguments[4][324][0].apply(exports,arguments)
-},{"./accessibility":414,"./core":437,"./deprecation":503,"./extract":505,"./extras":513,"./filters":525,"./interaction":532,"./loaders":535,"./mesh":544,"./particles":547,"./polyfill":553,"./prepare":557,"dup":324}],528:[function(require,module,exports){
+},{"./accessibility":415,"./core":438,"./deprecation":504,"./extract":506,"./extras":514,"./filters":526,"./interaction":533,"./loaders":536,"./mesh":545,"./particles":548,"./polyfill":554,"./prepare":558,"dup":324}],529:[function(require,module,exports){
 arguments[4][325][0].apply(exports,arguments)
-},{"../core":437,"dup":325}],529:[function(require,module,exports){
+},{"../core":438,"dup":325}],530:[function(require,module,exports){
 arguments[4][326][0].apply(exports,arguments)
-},{"dup":326}],530:[function(require,module,exports){
+},{"dup":326}],531:[function(require,module,exports){
 arguments[4][327][0].apply(exports,arguments)
-},{"../core":437,"./InteractionData":528,"./InteractionEvent":529,"./InteractionTrackingData":531,"./interactiveTarget":533,"dup":327,"eventemitter3":561}],531:[function(require,module,exports){
+},{"../core":438,"./InteractionData":529,"./InteractionEvent":530,"./InteractionTrackingData":532,"./interactiveTarget":534,"dup":327,"eventemitter3":562}],532:[function(require,module,exports){
 arguments[4][328][0].apply(exports,arguments)
-},{"dup":328}],532:[function(require,module,exports){
+},{"dup":328}],533:[function(require,module,exports){
 arguments[4][329][0].apply(exports,arguments)
-},{"./InteractionData":528,"./InteractionEvent":529,"./InteractionManager":530,"./InteractionTrackingData":531,"./interactiveTarget":533,"dup":329}],533:[function(require,module,exports){
+},{"./InteractionData":529,"./InteractionEvent":530,"./InteractionManager":531,"./InteractionTrackingData":532,"./interactiveTarget":534,"dup":329}],534:[function(require,module,exports){
 arguments[4][330][0].apply(exports,arguments)
-},{"dup":330}],534:[function(require,module,exports){
+},{"dup":330}],535:[function(require,module,exports){
 arguments[4][331][0].apply(exports,arguments)
-},{"../core":437,"../extras":513,"dup":331,"path":571,"resource-loader":567}],535:[function(require,module,exports){
+},{"../core":438,"../extras":514,"dup":331,"path":573,"resource-loader":568}],536:[function(require,module,exports){
 arguments[4][332][0].apply(exports,arguments)
-},{"../core/Application":415,"./bitmapFontParser":534,"./loader":536,"./spritesheetParser":537,"./textureParser":538,"dup":332,"resource-loader":567}],536:[function(require,module,exports){
+},{"../core/Application":416,"./bitmapFontParser":535,"./loader":537,"./spritesheetParser":538,"./textureParser":539,"dup":332,"resource-loader":568}],537:[function(require,module,exports){
 arguments[4][333][0].apply(exports,arguments)
-},{"./bitmapFontParser":534,"./spritesheetParser":537,"./textureParser":538,"dup":333,"eventemitter3":561,"resource-loader":567,"resource-loader/lib/middlewares/parsing/blob":568}],537:[function(require,module,exports){
+},{"./bitmapFontParser":535,"./spritesheetParser":538,"./textureParser":539,"dup":333,"eventemitter3":562,"resource-loader":568,"resource-loader/lib/middlewares/parsing/blob":569}],538:[function(require,module,exports){
 arguments[4][334][0].apply(exports,arguments)
-},{"../core":437,"dup":334,"resource-loader":567,"url":577}],538:[function(require,module,exports){
+},{"../core":438,"dup":334,"resource-loader":568,"url":579}],539:[function(require,module,exports){
 arguments[4][335][0].apply(exports,arguments)
-},{"../core/textures/Texture":487,"dup":335,"resource-loader":567}],539:[function(require,module,exports){
+},{"../core/textures/Texture":488,"dup":335,"resource-loader":568}],540:[function(require,module,exports){
 arguments[4][336][0].apply(exports,arguments)
-},{"../core":437,"../core/textures/Texture":487,"dup":336}],540:[function(require,module,exports){
+},{"../core":438,"../core/textures/Texture":488,"dup":336}],541:[function(require,module,exports){
 arguments[4][337][0].apply(exports,arguments)
-},{"./Plane":541,"dup":337}],541:[function(require,module,exports){
+},{"./Plane":542,"dup":337}],542:[function(require,module,exports){
 arguments[4][338][0].apply(exports,arguments)
-},{"./Mesh":539,"dup":338}],542:[function(require,module,exports){
+},{"./Mesh":540,"dup":338}],543:[function(require,module,exports){
 arguments[4][339][0].apply(exports,arguments)
-},{"./Mesh":539,"dup":339}],543:[function(require,module,exports){
+},{"./Mesh":540,"dup":339}],544:[function(require,module,exports){
 arguments[4][340][0].apply(exports,arguments)
-},{"../../core":437,"../Mesh":539,"dup":340}],544:[function(require,module,exports){
+},{"../../core":438,"../Mesh":540,"dup":340}],545:[function(require,module,exports){
 arguments[4][341][0].apply(exports,arguments)
-},{"./Mesh":539,"./NineSlicePlane":540,"./Plane":541,"./Rope":542,"./canvas/CanvasMeshRenderer":543,"./webgl/MeshRenderer":545,"dup":341}],545:[function(require,module,exports){
+},{"./Mesh":540,"./NineSlicePlane":541,"./Plane":542,"./Rope":543,"./canvas/CanvasMeshRenderer":544,"./webgl/MeshRenderer":546,"dup":341}],546:[function(require,module,exports){
 arguments[4][342][0].apply(exports,arguments)
-},{"../../core":437,"../Mesh":539,"dup":342,"path":571,"pixi-gl-core":401}],546:[function(require,module,exports){
+},{"../../core":438,"../Mesh":540,"dup":342,"path":573,"pixi-gl-core":402}],547:[function(require,module,exports){
 arguments[4][343][0].apply(exports,arguments)
-},{"../core":437,"../core/utils":497,"dup":343}],547:[function(require,module,exports){
+},{"../core":438,"../core/utils":498,"dup":343}],548:[function(require,module,exports){
 arguments[4][344][0].apply(exports,arguments)
-},{"./ParticleContainer":546,"./webgl/ParticleRenderer":549,"dup":344}],548:[function(require,module,exports){
+},{"./ParticleContainer":547,"./webgl/ParticleRenderer":550,"dup":344}],549:[function(require,module,exports){
 arguments[4][345][0].apply(exports,arguments)
-},{"../../core/utils/createIndicesForQuads":495,"dup":345,"pixi-gl-core":401}],549:[function(require,module,exports){
+},{"../../core/utils/createIndicesForQuads":496,"dup":345,"pixi-gl-core":402}],550:[function(require,module,exports){
 arguments[4][346][0].apply(exports,arguments)
-},{"../../core":437,"../../core/utils":497,"./ParticleBuffer":548,"./ParticleShader":550,"dup":346}],550:[function(require,module,exports){
+},{"../../core":438,"../../core/utils":498,"./ParticleBuffer":549,"./ParticleShader":551,"dup":346}],551:[function(require,module,exports){
 arguments[4][347][0].apply(exports,arguments)
-},{"../../core/Shader":416,"dup":347}],551:[function(require,module,exports){
+},{"../../core/Shader":417,"dup":347}],552:[function(require,module,exports){
 arguments[4][348][0].apply(exports,arguments)
-},{"dup":348}],552:[function(require,module,exports){
+},{"dup":348}],553:[function(require,module,exports){
 arguments[4][349][0].apply(exports,arguments)
-},{"dup":349,"object-assign":393}],553:[function(require,module,exports){
+},{"dup":349,"object-assign":394}],554:[function(require,module,exports){
 arguments[4][350][0].apply(exports,arguments)
-},{"./Math.sign":551,"./Object.assign":552,"./requestAnimationFrame":554,"dup":350}],554:[function(require,module,exports){
+},{"./Math.sign":552,"./Object.assign":553,"./requestAnimationFrame":555,"dup":350}],555:[function(require,module,exports){
 arguments[4][351][0].apply(exports,arguments)
-},{"dup":351}],555:[function(require,module,exports){
+},{"dup":351}],556:[function(require,module,exports){
 arguments[4][352][0].apply(exports,arguments)
-},{"../core":437,"./limiters/CountLimiter":558,"dup":352}],556:[function(require,module,exports){
+},{"../core":438,"./limiters/CountLimiter":559,"dup":352}],557:[function(require,module,exports){
 arguments[4][353][0].apply(exports,arguments)
-},{"../../core":437,"../BasePrepare":555,"dup":353}],557:[function(require,module,exports){
+},{"../../core":438,"../BasePrepare":556,"dup":353}],558:[function(require,module,exports){
 arguments[4][354][0].apply(exports,arguments)
-},{"./BasePrepare":555,"./canvas/CanvasPrepare":556,"./limiters/CountLimiter":558,"./limiters/TimeLimiter":559,"./webgl/WebGLPrepare":560,"dup":354}],558:[function(require,module,exports){
+},{"./BasePrepare":556,"./canvas/CanvasPrepare":557,"./limiters/CountLimiter":559,"./limiters/TimeLimiter":560,"./webgl/WebGLPrepare":561,"dup":354}],559:[function(require,module,exports){
 arguments[4][355][0].apply(exports,arguments)
-},{"dup":355}],559:[function(require,module,exports){
+},{"dup":355}],560:[function(require,module,exports){
 arguments[4][356][0].apply(exports,arguments)
-},{"dup":356}],560:[function(require,module,exports){
+},{"dup":356}],561:[function(require,module,exports){
 arguments[4][357][0].apply(exports,arguments)
-},{"../../core":437,"../BasePrepare":555,"dup":357}],561:[function(require,module,exports){
+},{"../../core":438,"../BasePrepare":556,"dup":357}],562:[function(require,module,exports){
 arguments[4][7][0].apply(exports,arguments)
-},{"dup":7}],562:[function(require,module,exports){
+},{"dup":7}],563:[function(require,module,exports){
 arguments[4][358][0].apply(exports,arguments)
-},{"dup":358}],563:[function(require,module,exports){
+},{"dup":358}],564:[function(require,module,exports){
 arguments[4][359][0].apply(exports,arguments)
-},{"./Resource":564,"./async":565,"dup":359,"mini-signals":392,"parse-uri":394}],564:[function(require,module,exports){
+},{"./Resource":565,"./async":566,"dup":359,"mini-signals":393,"parse-uri":395}],565:[function(require,module,exports){
 arguments[4][360][0].apply(exports,arguments)
-},{"dup":360,"mini-signals":392,"parse-uri":394}],565:[function(require,module,exports){
+},{"dup":360,"mini-signals":393,"parse-uri":395}],566:[function(require,module,exports){
 arguments[4][361][0].apply(exports,arguments)
-},{"dup":361}],566:[function(require,module,exports){
+},{"dup":361}],567:[function(require,module,exports){
 arguments[4][362][0].apply(exports,arguments)
-},{"dup":362}],567:[function(require,module,exports){
+},{"dup":362}],568:[function(require,module,exports){
 arguments[4][363][0].apply(exports,arguments)
-},{"./Loader":563,"./Resource":564,"./async":565,"./b64":566,"dup":363}],568:[function(require,module,exports){
+},{"./Loader":564,"./Resource":565,"./async":566,"./b64":567,"dup":363}],569:[function(require,module,exports){
 arguments[4][364][0].apply(exports,arguments)
-},{"../../Resource":564,"../../b64":566,"dup":364}],569:[function(require,module,exports){
+},{"../../Resource":565,"../../b64":567,"dup":364}],570:[function(require,module,exports){
 /**
  * @file simple-packer.js
  * @author David Figatner
@@ -62049,9 +62132,503 @@ module.exports = class SimplePacker
         }
     }
 }
-},{}],570:[function(require,module,exports){
-
 },{}],571:[function(require,module,exports){
+(function (global){
+'use strict';
+
+// compare and isBuffer taken from https://github.com/feross/buffer/blob/680e9e5e488f22aac27599a57dc844a6315928dd/index.js
+// original notice:
+
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+function compare(a, b) {
+  if (a === b) {
+    return 0;
+  }
+
+  var x = a.length;
+  var y = b.length;
+
+  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
+    if (a[i] !== b[i]) {
+      x = a[i];
+      y = b[i];
+      break;
+    }
+  }
+
+  if (x < y) {
+    return -1;
+  }
+  if (y < x) {
+    return 1;
+  }
+  return 0;
+}
+function isBuffer(b) {
+  if (global.Buffer && typeof global.Buffer.isBuffer === 'function') {
+    return global.Buffer.isBuffer(b);
+  }
+  return !!(b != null && b._isBuffer);
+}
+
+// based on node assert, original notice:
+
+// http://wiki.commonjs.org/wiki/Unit_Testing/1.0
+//
+// THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
+//
+// Originally from narwhal.js (http://narwhaljs.org)
+// Copyright (c) 2009 Thomas Robinson <280north.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the 'Software'), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+// ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var util = require('util/');
+var hasOwn = Object.prototype.hasOwnProperty;
+var pSlice = Array.prototype.slice;
+var functionsHaveNames = (function () {
+  return function foo() {}.name === 'foo';
+}());
+function pToString (obj) {
+  return Object.prototype.toString.call(obj);
+}
+function isView(arrbuf) {
+  if (isBuffer(arrbuf)) {
+    return false;
+  }
+  if (typeof global.ArrayBuffer !== 'function') {
+    return false;
+  }
+  if (typeof ArrayBuffer.isView === 'function') {
+    return ArrayBuffer.isView(arrbuf);
+  }
+  if (!arrbuf) {
+    return false;
+  }
+  if (arrbuf instanceof DataView) {
+    return true;
+  }
+  if (arrbuf.buffer && arrbuf.buffer instanceof ArrayBuffer) {
+    return true;
+  }
+  return false;
+}
+// 1. The assert module provides functions that throw
+// AssertionError's when particular conditions are not met. The
+// assert module must conform to the following interface.
+
+var assert = module.exports = ok;
+
+// 2. The AssertionError is defined in assert.
+// new assert.AssertionError({ message: message,
+//                             actual: actual,
+//                             expected: expected })
+
+var regex = /\s*function\s+([^\(\s]*)\s*/;
+// based on https://github.com/ljharb/function.prototype.name/blob/adeeeec8bfcc6068b187d7d9fb3d5bb1d3a30899/implementation.js
+function getName(func) {
+  if (!util.isFunction(func)) {
+    return;
+  }
+  if (functionsHaveNames) {
+    return func.name;
+  }
+  var str = func.toString();
+  var match = str.match(regex);
+  return match && match[1];
+}
+assert.AssertionError = function AssertionError(options) {
+  this.name = 'AssertionError';
+  this.actual = options.actual;
+  this.expected = options.expected;
+  this.operator = options.operator;
+  if (options.message) {
+    this.message = options.message;
+    this.generatedMessage = false;
+  } else {
+    this.message = getMessage(this);
+    this.generatedMessage = true;
+  }
+  var stackStartFunction = options.stackStartFunction || fail;
+  if (Error.captureStackTrace) {
+    Error.captureStackTrace(this, stackStartFunction);
+  } else {
+    // non v8 browsers so we can have a stacktrace
+    var err = new Error();
+    if (err.stack) {
+      var out = err.stack;
+
+      // try to strip useless frames
+      var fn_name = getName(stackStartFunction);
+      var idx = out.indexOf('\n' + fn_name);
+      if (idx >= 0) {
+        // once we have located the function frame
+        // we need to strip out everything before it (and its line)
+        var next_line = out.indexOf('\n', idx + 1);
+        out = out.substring(next_line + 1);
+      }
+
+      this.stack = out;
+    }
+  }
+};
+
+// assert.AssertionError instanceof Error
+util.inherits(assert.AssertionError, Error);
+
+function truncate(s, n) {
+  if (typeof s === 'string') {
+    return s.length < n ? s : s.slice(0, n);
+  } else {
+    return s;
+  }
+}
+function inspect(something) {
+  if (functionsHaveNames || !util.isFunction(something)) {
+    return util.inspect(something);
+  }
+  var rawname = getName(something);
+  var name = rawname ? ': ' + rawname : '';
+  return '[Function' +  name + ']';
+}
+function getMessage(self) {
+  return truncate(inspect(self.actual), 128) + ' ' +
+         self.operator + ' ' +
+         truncate(inspect(self.expected), 128);
+}
+
+// At present only the three keys mentioned above are used and
+// understood by the spec. Implementations or sub modules can pass
+// other keys to the AssertionError's constructor - they will be
+// ignored.
+
+// 3. All of the following functions must throw an AssertionError
+// when a corresponding condition is not met, with a message that
+// may be undefined if not provided.  All assertion methods provide
+// both the actual and expected values to the assertion error for
+// display purposes.
+
+function fail(actual, expected, message, operator, stackStartFunction) {
+  throw new assert.AssertionError({
+    message: message,
+    actual: actual,
+    expected: expected,
+    operator: operator,
+    stackStartFunction: stackStartFunction
+  });
+}
+
+// EXTENSION! allows for well behaved errors defined elsewhere.
+assert.fail = fail;
+
+// 4. Pure assertion tests whether a value is truthy, as determined
+// by !!guard.
+// assert.ok(guard, message_opt);
+// This statement is equivalent to assert.equal(true, !!guard,
+// message_opt);. To test strictly for the value true, use
+// assert.strictEqual(true, guard, message_opt);.
+
+function ok(value, message) {
+  if (!value) fail(value, true, message, '==', assert.ok);
+}
+assert.ok = ok;
+
+// 5. The equality assertion tests shallow, coercive equality with
+// ==.
+// assert.equal(actual, expected, message_opt);
+
+assert.equal = function equal(actual, expected, message) {
+  if (actual != expected) fail(actual, expected, message, '==', assert.equal);
+};
+
+// 6. The non-equality assertion tests for whether two objects are not equal
+// with != assert.notEqual(actual, expected, message_opt);
+
+assert.notEqual = function notEqual(actual, expected, message) {
+  if (actual == expected) {
+    fail(actual, expected, message, '!=', assert.notEqual);
+  }
+};
+
+// 7. The equivalence assertion tests a deep equality relation.
+// assert.deepEqual(actual, expected, message_opt);
+
+assert.deepEqual = function deepEqual(actual, expected, message) {
+  if (!_deepEqual(actual, expected, false)) {
+    fail(actual, expected, message, 'deepEqual', assert.deepEqual);
+  }
+};
+
+assert.deepStrictEqual = function deepStrictEqual(actual, expected, message) {
+  if (!_deepEqual(actual, expected, true)) {
+    fail(actual, expected, message, 'deepStrictEqual', assert.deepStrictEqual);
+  }
+};
+
+function _deepEqual(actual, expected, strict, memos) {
+  // 7.1. All identical values are equivalent, as determined by ===.
+  if (actual === expected) {
+    return true;
+  } else if (isBuffer(actual) && isBuffer(expected)) {
+    return compare(actual, expected) === 0;
+
+  // 7.2. If the expected value is a Date object, the actual value is
+  // equivalent if it is also a Date object that refers to the same time.
+  } else if (util.isDate(actual) && util.isDate(expected)) {
+    return actual.getTime() === expected.getTime();
+
+  // 7.3 If the expected value is a RegExp object, the actual value is
+  // equivalent if it is also a RegExp object with the same source and
+  // properties (`global`, `multiline`, `lastIndex`, `ignoreCase`).
+  } else if (util.isRegExp(actual) && util.isRegExp(expected)) {
+    return actual.source === expected.source &&
+           actual.global === expected.global &&
+           actual.multiline === expected.multiline &&
+           actual.lastIndex === expected.lastIndex &&
+           actual.ignoreCase === expected.ignoreCase;
+
+  // 7.4. Other pairs that do not both pass typeof value == 'object',
+  // equivalence is determined by ==.
+  } else if ((actual === null || typeof actual !== 'object') &&
+             (expected === null || typeof expected !== 'object')) {
+    return strict ? actual === expected : actual == expected;
+
+  // If both values are instances of typed arrays, wrap their underlying
+  // ArrayBuffers in a Buffer each to increase performance
+  // This optimization requires the arrays to have the same type as checked by
+  // Object.prototype.toString (aka pToString). Never perform binary
+  // comparisons for Float*Arrays, though, since e.g. +0 === -0 but their
+  // bit patterns are not identical.
+  } else if (isView(actual) && isView(expected) &&
+             pToString(actual) === pToString(expected) &&
+             !(actual instanceof Float32Array ||
+               actual instanceof Float64Array)) {
+    return compare(new Uint8Array(actual.buffer),
+                   new Uint8Array(expected.buffer)) === 0;
+
+  // 7.5 For all other Object pairs, including Array objects, equivalence is
+  // determined by having the same number of owned properties (as verified
+  // with Object.prototype.hasOwnProperty.call), the same set of keys
+  // (although not necessarily the same order), equivalent values for every
+  // corresponding key, and an identical 'prototype' property. Note: this
+  // accounts for both named and indexed properties on Arrays.
+  } else if (isBuffer(actual) !== isBuffer(expected)) {
+    return false;
+  } else {
+    memos = memos || {actual: [], expected: []};
+
+    var actualIndex = memos.actual.indexOf(actual);
+    if (actualIndex !== -1) {
+      if (actualIndex === memos.expected.indexOf(expected)) {
+        return true;
+      }
+    }
+
+    memos.actual.push(actual);
+    memos.expected.push(expected);
+
+    return objEquiv(actual, expected, strict, memos);
+  }
+}
+
+function isArguments(object) {
+  return Object.prototype.toString.call(object) == '[object Arguments]';
+}
+
+function objEquiv(a, b, strict, actualVisitedObjects) {
+  if (a === null || a === undefined || b === null || b === undefined)
+    return false;
+  // if one is a primitive, the other must be same
+  if (util.isPrimitive(a) || util.isPrimitive(b))
+    return a === b;
+  if (strict && Object.getPrototypeOf(a) !== Object.getPrototypeOf(b))
+    return false;
+  var aIsArgs = isArguments(a);
+  var bIsArgs = isArguments(b);
+  if ((aIsArgs && !bIsArgs) || (!aIsArgs && bIsArgs))
+    return false;
+  if (aIsArgs) {
+    a = pSlice.call(a);
+    b = pSlice.call(b);
+    return _deepEqual(a, b, strict);
+  }
+  var ka = objectKeys(a);
+  var kb = objectKeys(b);
+  var key, i;
+  // having the same number of owned properties (keys incorporates
+  // hasOwnProperty)
+  if (ka.length !== kb.length)
+    return false;
+  //the same set of keys (although not necessarily the same order),
+  ka.sort();
+  kb.sort();
+  //~~~cheap key test
+  for (i = ka.length - 1; i >= 0; i--) {
+    if (ka[i] !== kb[i])
+      return false;
+  }
+  //equivalent values for every corresponding key, and
+  //~~~possibly expensive deep test
+  for (i = ka.length - 1; i >= 0; i--) {
+    key = ka[i];
+    if (!_deepEqual(a[key], b[key], strict, actualVisitedObjects))
+      return false;
+  }
+  return true;
+}
+
+// 8. The non-equivalence assertion tests for any deep inequality.
+// assert.notDeepEqual(actual, expected, message_opt);
+
+assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
+  if (_deepEqual(actual, expected, false)) {
+    fail(actual, expected, message, 'notDeepEqual', assert.notDeepEqual);
+  }
+};
+
+assert.notDeepStrictEqual = notDeepStrictEqual;
+function notDeepStrictEqual(actual, expected, message) {
+  if (_deepEqual(actual, expected, true)) {
+    fail(actual, expected, message, 'notDeepStrictEqual', notDeepStrictEqual);
+  }
+}
+
+
+// 9. The strict equality assertion tests strict equality, as determined by ===.
+// assert.strictEqual(actual, expected, message_opt);
+
+assert.strictEqual = function strictEqual(actual, expected, message) {
+  if (actual !== expected) {
+    fail(actual, expected, message, '===', assert.strictEqual);
+  }
+};
+
+// 10. The strict non-equality assertion tests for strict inequality, as
+// determined by !==.  assert.notStrictEqual(actual, expected, message_opt);
+
+assert.notStrictEqual = function notStrictEqual(actual, expected, message) {
+  if (actual === expected) {
+    fail(actual, expected, message, '!==', assert.notStrictEqual);
+  }
+};
+
+function expectedException(actual, expected) {
+  if (!actual || !expected) {
+    return false;
+  }
+
+  if (Object.prototype.toString.call(expected) == '[object RegExp]') {
+    return expected.test(actual);
+  }
+
+  try {
+    if (actual instanceof expected) {
+      return true;
+    }
+  } catch (e) {
+    // Ignore.  The instanceof check doesn't work for arrow functions.
+  }
+
+  if (Error.isPrototypeOf(expected)) {
+    return false;
+  }
+
+  return expected.call({}, actual) === true;
+}
+
+function _tryBlock(block) {
+  var error;
+  try {
+    block();
+  } catch (e) {
+    error = e;
+  }
+  return error;
+}
+
+function _throws(shouldThrow, block, expected, message) {
+  var actual;
+
+  if (typeof block !== 'function') {
+    throw new TypeError('"block" argument must be a function');
+  }
+
+  if (typeof expected === 'string') {
+    message = expected;
+    expected = null;
+  }
+
+  actual = _tryBlock(block);
+
+  message = (expected && expected.name ? ' (' + expected.name + ').' : '.') +
+            (message ? ' ' + message : '.');
+
+  if (shouldThrow && !actual) {
+    fail(actual, expected, 'Missing expected exception' + message);
+  }
+
+  var userProvidedMessage = typeof message === 'string';
+  var isUnwantedException = !shouldThrow && util.isError(actual);
+  var isUnexpectedException = !shouldThrow && actual && !expected;
+
+  if ((isUnwantedException &&
+      userProvidedMessage &&
+      expectedException(actual, expected)) ||
+      isUnexpectedException) {
+    fail(actual, expected, 'Got unwanted exception' + message);
+  }
+
+  if ((shouldThrow && actual && expected &&
+      !expectedException(actual, expected)) || (!shouldThrow && actual)) {
+    throw actual;
+  }
+}
+
+// 11. Expected to throw an error:
+// assert.throws(block, Error_opt, message_opt);
+
+assert.throws = function(block, /*optional*/error, /*optional*/message) {
+  _throws(true, block, error, message);
+};
+
+// EXTENSION! This is annoying to write outside this module.
+assert.doesNotThrow = function(block, /*optional*/error, /*optional*/message) {
+  _throws(false, block, error, message);
+};
+
+assert.ifError = function(err) { if (err) throw err; };
+
+var objectKeys = Object.keys || function (obj) {
+  var keys = [];
+  for (var key in obj) {
+    if (hasOwn.call(obj, key)) keys.push(key);
+  }
+  return keys;
+};
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"util/":583}],572:[function(require,module,exports){
+
+},{}],573:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -62279,7 +62856,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":572}],572:[function(require,module,exports){
+},{"_process":574}],574:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -62465,7 +63042,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],573:[function(require,module,exports){
+},{}],575:[function(require,module,exports){
 (function (global){
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 ;(function(root) {
@@ -63002,7 +63579,7 @@ process.umask = function() { return 0; };
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],574:[function(require,module,exports){
+},{}],576:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -63088,7 +63665,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],575:[function(require,module,exports){
+},{}],577:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -63175,13 +63752,13 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],576:[function(require,module,exports){
+},{}],578:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":574,"./encode":575}],577:[function(require,module,exports){
+},{"./decode":576,"./encode":577}],579:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -63915,7 +64492,7 @@ Url.prototype.parseHost = function() {
   if (host) this.hostname = host;
 };
 
-},{"./util":578,"punycode":573,"querystring":576}],578:[function(require,module,exports){
+},{"./util":580,"punycode":575,"querystring":578}],580:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -63933,4 +64510,626 @@ module.exports = {
   }
 };
 
-},{}]},{},[1]);
+},{}],581:[function(require,module,exports){
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+},{}],582:[function(require,module,exports){
+module.exports = function isBuffer(arg) {
+  return arg && typeof arg === 'object'
+    && typeof arg.copy === 'function'
+    && typeof arg.fill === 'function'
+    && typeof arg.readUInt8 === 'function';
+}
+},{}],583:[function(require,module,exports){
+(function (process,global){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var formatRegExp = /%[sdj%]/g;
+exports.format = function(f) {
+  if (!isString(f)) {
+    var objects = [];
+    for (var i = 0; i < arguments.length; i++) {
+      objects.push(inspect(arguments[i]));
+    }
+    return objects.join(' ');
+  }
+
+  var i = 1;
+  var args = arguments;
+  var len = args.length;
+  var str = String(f).replace(formatRegExp, function(x) {
+    if (x === '%%') return '%';
+    if (i >= len) return x;
+    switch (x) {
+      case '%s': return String(args[i++]);
+      case '%d': return Number(args[i++]);
+      case '%j':
+        try {
+          return JSON.stringify(args[i++]);
+        } catch (_) {
+          return '[Circular]';
+        }
+      default:
+        return x;
+    }
+  });
+  for (var x = args[i]; i < len; x = args[++i]) {
+    if (isNull(x) || !isObject(x)) {
+      str += ' ' + x;
+    } else {
+      str += ' ' + inspect(x);
+    }
+  }
+  return str;
+};
+
+
+// Mark that a method should not be used.
+// Returns a modified function which warns once by default.
+// If --no-deprecation is set, then it is a no-op.
+exports.deprecate = function(fn, msg) {
+  // Allow for deprecating things in the process of starting up.
+  if (isUndefined(global.process)) {
+    return function() {
+      return exports.deprecate(fn, msg).apply(this, arguments);
+    };
+  }
+
+  if (process.noDeprecation === true) {
+    return fn;
+  }
+
+  var warned = false;
+  function deprecated() {
+    if (!warned) {
+      if (process.throwDeprecation) {
+        throw new Error(msg);
+      } else if (process.traceDeprecation) {
+        console.trace(msg);
+      } else {
+        console.error(msg);
+      }
+      warned = true;
+    }
+    return fn.apply(this, arguments);
+  }
+
+  return deprecated;
+};
+
+
+var debugs = {};
+var debugEnviron;
+exports.debuglog = function(set) {
+  if (isUndefined(debugEnviron))
+    debugEnviron = process.env.NODE_DEBUG || '';
+  set = set.toUpperCase();
+  if (!debugs[set]) {
+    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
+      var pid = process.pid;
+      debugs[set] = function() {
+        var msg = exports.format.apply(exports, arguments);
+        console.error('%s %d: %s', set, pid, msg);
+      };
+    } else {
+      debugs[set] = function() {};
+    }
+  }
+  return debugs[set];
+};
+
+
+/**
+ * Echos the value of a value. Trys to print the value out
+ * in the best way possible given the different types.
+ *
+ * @param {Object} obj The object to print out.
+ * @param {Object} opts Optional options object that alters the output.
+ */
+/* legacy: obj, showHidden, depth, colors*/
+function inspect(obj, opts) {
+  // default options
+  var ctx = {
+    seen: [],
+    stylize: stylizeNoColor
+  };
+  // legacy...
+  if (arguments.length >= 3) ctx.depth = arguments[2];
+  if (arguments.length >= 4) ctx.colors = arguments[3];
+  if (isBoolean(opts)) {
+    // legacy...
+    ctx.showHidden = opts;
+  } else if (opts) {
+    // got an "options" object
+    exports._extend(ctx, opts);
+  }
+  // set default options
+  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
+  if (isUndefined(ctx.depth)) ctx.depth = 2;
+  if (isUndefined(ctx.colors)) ctx.colors = false;
+  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
+  if (ctx.colors) ctx.stylize = stylizeWithColor;
+  return formatValue(ctx, obj, ctx.depth);
+}
+exports.inspect = inspect;
+
+
+// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
+inspect.colors = {
+  'bold' : [1, 22],
+  'italic' : [3, 23],
+  'underline' : [4, 24],
+  'inverse' : [7, 27],
+  'white' : [37, 39],
+  'grey' : [90, 39],
+  'black' : [30, 39],
+  'blue' : [34, 39],
+  'cyan' : [36, 39],
+  'green' : [32, 39],
+  'magenta' : [35, 39],
+  'red' : [31, 39],
+  'yellow' : [33, 39]
+};
+
+// Don't use 'blue' not visible on cmd.exe
+inspect.styles = {
+  'special': 'cyan',
+  'number': 'yellow',
+  'boolean': 'yellow',
+  'undefined': 'grey',
+  'null': 'bold',
+  'string': 'green',
+  'date': 'magenta',
+  // "name": intentionally not styling
+  'regexp': 'red'
+};
+
+
+function stylizeWithColor(str, styleType) {
+  var style = inspect.styles[styleType];
+
+  if (style) {
+    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
+           '\u001b[' + inspect.colors[style][1] + 'm';
+  } else {
+    return str;
+  }
+}
+
+
+function stylizeNoColor(str, styleType) {
+  return str;
+}
+
+
+function arrayToHash(array) {
+  var hash = {};
+
+  array.forEach(function(val, idx) {
+    hash[val] = true;
+  });
+
+  return hash;
+}
+
+
+function formatValue(ctx, value, recurseTimes) {
+  // Provide a hook for user-specified inspect functions.
+  // Check that value is an object with an inspect function on it
+  if (ctx.customInspect &&
+      value &&
+      isFunction(value.inspect) &&
+      // Filter out the util module, it's inspect function is special
+      value.inspect !== exports.inspect &&
+      // Also filter out any prototype objects using the circular check.
+      !(value.constructor && value.constructor.prototype === value)) {
+    var ret = value.inspect(recurseTimes, ctx);
+    if (!isString(ret)) {
+      ret = formatValue(ctx, ret, recurseTimes);
+    }
+    return ret;
+  }
+
+  // Primitive types cannot have properties
+  var primitive = formatPrimitive(ctx, value);
+  if (primitive) {
+    return primitive;
+  }
+
+  // Look up the keys of the object.
+  var keys = Object.keys(value);
+  var visibleKeys = arrayToHash(keys);
+
+  if (ctx.showHidden) {
+    keys = Object.getOwnPropertyNames(value);
+  }
+
+  // IE doesn't make error fields non-enumerable
+  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
+  if (isError(value)
+      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
+    return formatError(value);
+  }
+
+  // Some type of object without properties can be shortcutted.
+  if (keys.length === 0) {
+    if (isFunction(value)) {
+      var name = value.name ? ': ' + value.name : '';
+      return ctx.stylize('[Function' + name + ']', 'special');
+    }
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    }
+    if (isDate(value)) {
+      return ctx.stylize(Date.prototype.toString.call(value), 'date');
+    }
+    if (isError(value)) {
+      return formatError(value);
+    }
+  }
+
+  var base = '', array = false, braces = ['{', '}'];
+
+  // Make Array say that they are Array
+  if (isArray(value)) {
+    array = true;
+    braces = ['[', ']'];
+  }
+
+  // Make functions say that they are functions
+  if (isFunction(value)) {
+    var n = value.name ? ': ' + value.name : '';
+    base = ' [Function' + n + ']';
+  }
+
+  // Make RegExps say that they are RegExps
+  if (isRegExp(value)) {
+    base = ' ' + RegExp.prototype.toString.call(value);
+  }
+
+  // Make dates with properties first say the date
+  if (isDate(value)) {
+    base = ' ' + Date.prototype.toUTCString.call(value);
+  }
+
+  // Make error with message first say the error
+  if (isError(value)) {
+    base = ' ' + formatError(value);
+  }
+
+  if (keys.length === 0 && (!array || value.length == 0)) {
+    return braces[0] + base + braces[1];
+  }
+
+  if (recurseTimes < 0) {
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    } else {
+      return ctx.stylize('[Object]', 'special');
+    }
+  }
+
+  ctx.seen.push(value);
+
+  var output;
+  if (array) {
+    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
+  } else {
+    output = keys.map(function(key) {
+      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
+    });
+  }
+
+  ctx.seen.pop();
+
+  return reduceToSingleString(output, base, braces);
+}
+
+
+function formatPrimitive(ctx, value) {
+  if (isUndefined(value))
+    return ctx.stylize('undefined', 'undefined');
+  if (isString(value)) {
+    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
+                                             .replace(/'/g, "\\'")
+                                             .replace(/\\"/g, '"') + '\'';
+    return ctx.stylize(simple, 'string');
+  }
+  if (isNumber(value))
+    return ctx.stylize('' + value, 'number');
+  if (isBoolean(value))
+    return ctx.stylize('' + value, 'boolean');
+  // For some reason typeof null is "object", so special case here.
+  if (isNull(value))
+    return ctx.stylize('null', 'null');
+}
+
+
+function formatError(value) {
+  return '[' + Error.prototype.toString.call(value) + ']';
+}
+
+
+function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
+  var output = [];
+  for (var i = 0, l = value.length; i < l; ++i) {
+    if (hasOwnProperty(value, String(i))) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          String(i), true));
+    } else {
+      output.push('');
+    }
+  }
+  keys.forEach(function(key) {
+    if (!key.match(/^\d+$/)) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          key, true));
+    }
+  });
+  return output;
+}
+
+
+function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
+  var name, str, desc;
+  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
+  if (desc.get) {
+    if (desc.set) {
+      str = ctx.stylize('[Getter/Setter]', 'special');
+    } else {
+      str = ctx.stylize('[Getter]', 'special');
+    }
+  } else {
+    if (desc.set) {
+      str = ctx.stylize('[Setter]', 'special');
+    }
+  }
+  if (!hasOwnProperty(visibleKeys, key)) {
+    name = '[' + key + ']';
+  }
+  if (!str) {
+    if (ctx.seen.indexOf(desc.value) < 0) {
+      if (isNull(recurseTimes)) {
+        str = formatValue(ctx, desc.value, null);
+      } else {
+        str = formatValue(ctx, desc.value, recurseTimes - 1);
+      }
+      if (str.indexOf('\n') > -1) {
+        if (array) {
+          str = str.split('\n').map(function(line) {
+            return '  ' + line;
+          }).join('\n').substr(2);
+        } else {
+          str = '\n' + str.split('\n').map(function(line) {
+            return '   ' + line;
+          }).join('\n');
+        }
+      }
+    } else {
+      str = ctx.stylize('[Circular]', 'special');
+    }
+  }
+  if (isUndefined(name)) {
+    if (array && key.match(/^\d+$/)) {
+      return str;
+    }
+    name = JSON.stringify('' + key);
+    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+      name = name.substr(1, name.length - 2);
+      name = ctx.stylize(name, 'name');
+    } else {
+      name = name.replace(/'/g, "\\'")
+                 .replace(/\\"/g, '"')
+                 .replace(/(^"|"$)/g, "'");
+      name = ctx.stylize(name, 'string');
+    }
+  }
+
+  return name + ': ' + str;
+}
+
+
+function reduceToSingleString(output, base, braces) {
+  var numLinesEst = 0;
+  var length = output.reduce(function(prev, cur) {
+    numLinesEst++;
+    if (cur.indexOf('\n') >= 0) numLinesEst++;
+    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
+  }, 0);
+
+  if (length > 60) {
+    return braces[0] +
+           (base === '' ? '' : base + '\n ') +
+           ' ' +
+           output.join(',\n  ') +
+           ' ' +
+           braces[1];
+  }
+
+  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
+}
+
+
+// NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
+function isArray(ar) {
+  return Array.isArray(ar);
+}
+exports.isArray = isArray;
+
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+exports.isBoolean = isBoolean;
+
+function isNull(arg) {
+  return arg === null;
+}
+exports.isNull = isNull;
+
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+exports.isNumber = isNumber;
+
+function isString(arg) {
+  return typeof arg === 'string';
+}
+exports.isString = isString;
+
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+exports.isSymbol = isSymbol;
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+exports.isUndefined = isUndefined;
+
+function isRegExp(re) {
+  return isObject(re) && objectToString(re) === '[object RegExp]';
+}
+exports.isRegExp = isRegExp;
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+exports.isObject = isObject;
+
+function isDate(d) {
+  return isObject(d) && objectToString(d) === '[object Date]';
+}
+exports.isDate = isDate;
+
+function isError(e) {
+  return isObject(e) &&
+      (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null ||
+         typeof arg === 'boolean' ||
+         typeof arg === 'number' ||
+         typeof arg === 'string' ||
+         typeof arg === 'symbol' ||  // ES6 symbol
+         typeof arg === 'undefined';
+}
+exports.isPrimitive = isPrimitive;
+
+exports.isBuffer = require('./support/isBuffer');
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
+}
+
+
+function pad(n) {
+  return n < 10 ? '0' + n.toString(10) : n.toString(10);
+}
+
+
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+              'Oct', 'Nov', 'Dec'];
+
+// 26 Feb 16:19:34
+function timestamp() {
+  var d = new Date();
+  var time = [pad(d.getHours()),
+              pad(d.getMinutes()),
+              pad(d.getSeconds())].join(':');
+  return [d.getDate(), months[d.getMonth()], time].join(' ');
+}
+
+
+// log is just a thin wrapper to console.log that prepends a timestamp
+exports.log = function() {
+  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
+};
+
+
+/**
+ * Inherit the prototype methods from one constructor into another.
+ *
+ * The Function.prototype.inherits from lang.js rewritten as a standalone
+ * function (not on Function.prototype). NOTE: If this file is to be loaded
+ * during bootstrapping this function needs to be rewritten using some native
+ * functions as prototype setup using normal JavaScript does not work as
+ * expected during bootstrapping (see mirror.js in r114903).
+ *
+ * @param {function} ctor Constructor function which needs to inherit the
+ *     prototype.
+ * @param {function} superCtor Constructor function to inherit prototype from.
+ */
+exports.inherits = require('inherits');
+
+exports._extend = function(origin, add) {
+  // Don't do anything if add isn't an object
+  if (!add || !isObject(add)) return origin;
+
+  var keys = Object.keys(add);
+  var i = keys.length;
+  while (i--) {
+    origin[keys[i]] = add[keys[i]];
+  }
+  return origin;
+};
+
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./support/isBuffer":582,"_process":574,"inherits":581}]},{},[1]);
