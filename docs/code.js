@@ -1,14 +1,15 @@
 const Pixel = require('..').Pixel
 const RenderSheet = require('../../rendersheet')
 const Renderer = require('yy-renderer')
+const assert = require('assert')
 
 const GENERAL = require('./general.json')
 
-let sheet, renderer
+let sheet, renderer, general
 
 function test()
 {
-    const general = renderer.add(new Pixel(GENERAL, sheet))
+    general = renderer.add(new Pixel(GENERAL, sheet))
     general.position.set(10, 10)
     general.scale.set(8)
     general.animate('talk')
@@ -20,11 +21,21 @@ function test()
     general2.scale.set(8)
     general2.animate('walk')
 
-    renderer.interval((elapsed) =>
+    renderer.loop.add((elapsed) =>
     {
         general.update(elapsed)
         general2.update(elapsed)
     })
+
+    testLargest()
+}
+
+function testLargest()
+{
+    assert.equal(general.largestWidth(), 12)
+    assert.equal(general.largestHeight(), 16)
+    assert.equal(Pixel.largestFrameWidth(GENERAL), 12)
+    assert.equal(Pixel.largestFrameHeight(GENERAL), 16)
 }
 
 window.onload = function ()

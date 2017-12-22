@@ -84,6 +84,66 @@ module.exports = class Pixel extends PIXI.Sprite
     }
 
     /**
+     * find the largest width of the frames
+     * @static
+     * @param {object} data
+     * @return {number} largest width
+     */
+    static largestFrameWidth(data)
+    {
+        let size = 0
+        for (let frame of data.imageData)
+        {
+            size = frame[0] > size ? frame[0] : size
+        }
+        return size
+    }
+
+    /**
+     * find the largest height of the frames
+     * @static
+     * @param {object} data
+     * @return {number} largest height
+     */
+    static largestFrameHeight(data)
+    {
+        let size = 0
+        for (let frame of data.imageData)
+        {
+            size = frame[1] > size ? frame[1] : size
+        }
+        return size
+    }
+
+    /**
+     * find the largest width of the frames
+     * @returns {number} largest width
+     */
+    largestWidth()
+    {
+        let size = 0
+        for (let frame of this.imageData)
+        {
+            size = frame[0] > size ? frame[0] : size
+        }
+        return size
+    }
+
+    /**
+     * find the largest width of the frames
+     * @returns {number} largest height
+     */
+    largestHeight()
+    {
+        let size = 0
+        for (let frame of this.imageData)
+        {
+            size = frame[1] > size ? frame[1] : size
+        }
+        return size
+    }
+
+    /**
      * starts a manual animation
      * @param {array} animation
      * @param {boolean} reverse
