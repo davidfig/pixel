@@ -221,7 +221,6 @@ module.exports = class Pixel extends PIXI.Sprite
         if (entry === 'loop')
         {
             this.index = 0
-            entry = this.animation[0]
             this.updateFrame(leftover)
             this.emit('loop', this)
             return
@@ -242,6 +241,7 @@ module.exports = class Pixel extends PIXI.Sprite
             else if (entry[0] === 'link')
             {
                 this.animation = this.animations[entry[1]]
+                this.currentAnimation = entry[1]
                 this.index = 0
                 this.updateFrame(leftover)
                 this.emit('link', this)
