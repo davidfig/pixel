@@ -1,6 +1,6 @@
 {
   "name": "yy-pixel",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "description": "Pixel animation and scene rendering",
   "main": "index.js",
   "scripts": {
