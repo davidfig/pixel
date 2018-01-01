@@ -26,9 +26,11 @@
   "homepage": "https://github.com/davidfig/pixel#readme",
   "dependencies": {
     "exists": "^1.0.1",
-    "pixi.js": "^4.6.2",
     "yy-color": "^1.0.7",
     "yy-random": "^1.2.0"
+  },
+  "peerDependencies": {
+    "pixi.js": ">=4.6.0"
   },
   "devDependencies": {
     "assert": "^1.4.1",
