@@ -60115,8 +60115,8 @@ module.exports = class Pixel extends PIXI.Sprite
     static addFrame(index, data, sheet)
     {
         const texture = sheet.addData(data.name + '-' + index, data.imageData[index][2])
-        texture.width = data.imageData[i][0]
-        texture.height = data.imageData[i][1]
+        texture.width = data.imageData[index][0]
+        texture.height = data.imageData[index][1]
     }
 
     /**
@@ -60257,7 +60257,6 @@ module.exports = class Pixel extends PIXI.Sprite
         if (entry === 'loop')
         {
             this.index = 0
-            entry = this.animation[0]
             this.updateFrame(leftover)
             this.emit('loop', this)
             return
@@ -60278,6 +60277,7 @@ module.exports = class Pixel extends PIXI.Sprite
             else if (entry[0] === 'link')
             {
                 this.animation = this.animations[entry[1]]
+                this.currentAnimation = entry[1]
                 this.index = 0
                 this.updateFrame(leftover)
                 this.emit('link', this)
@@ -61455,7 +61455,7 @@ class RenderSheet extends Events
         }
         if (!this.checkLoaded())
         {
-            window.setTimeout(this.render.bind(this), WAIT)
+            window.setTimeout(() => this.render(), WAIT)
             return
         }
         this.canvases = []

@@ -79,8 +79,8 @@ module.exports = class Pixel extends PIXI.Sprite
     static addFrame(index, data, sheet)
     {
         const texture = sheet.addData(data.name + '-' + index, data.imageData[index][2])
-        texture.width = data.imageData[i][0]
-        texture.height = data.imageData[i][1]
+        texture.width = data.imageData[index][0]
+        texture.height = data.imageData[index][1]
     }
 
     /**
