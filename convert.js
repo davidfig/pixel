@@ -1,6 +1,5 @@
 const jsonfile = require('jsonfile')
 const Canvas = require('canvas')
-const exists = require('exists')
 
 for (let i = 2; i < process.argv.length; i++)
 {
@@ -40,7 +39,7 @@ function draw(c, frame)
         for (let x = 0; x < frame.width; x++)
         {
             const color = pixels[x + y * frame.width]
-            if (exists(color))
+            if (typeof color !== 'undefined')
             {
                 let hex = color.toString(16)
                 while (hex.length < 6)

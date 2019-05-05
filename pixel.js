@@ -1,6 +1,5 @@
 const PIXI = require('pixi.js')
 const Random = require('yy-random')
-const exists = require('exists')
 
 module.exports = class Pixel extends PIXI.Sprite
 {
@@ -26,7 +25,7 @@ module.exports = class Pixel extends PIXI.Sprite
             this.animations = data.animations
             this.sheet = sheet
             this.animationTime = animationTime || 150
-            this.render()
+            this.addToSheet()
         }
     }
 
@@ -44,7 +43,7 @@ module.exports = class Pixel extends PIXI.Sprite
      * adds the frames to the RenderSheet
      * @param {boolean} force the render even if sheet already contains these sprites
      */
-    render(force)
+    addToSheet(force)
     {
         if (force || !this.sheet.exists(this.name + '-0'))
         {
@@ -236,7 +235,7 @@ module.exports = class Pixel extends PIXI.Sprite
                 }
                 while (this.last === pick)
                 this.last = pick
-                entry = [pick, exists(entry[2]) ? entry[2] : 1]
+                entry = [pick, typeof entry[2] === 'undefined' ? 1 : entry[2]]
             }
             else if (entry[0] === 'link')
             {
@@ -249,7 +248,7 @@ module.exports = class Pixel extends PIXI.Sprite
             }
             else
             {
-                if (!exists(entry[1]))
+                if (typeof entry[1] === 'undefined')
                 {
                     entry[1] = 1
                 }
