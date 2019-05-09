@@ -1,31 +1,22 @@
 const Pixel = require('..').Pixel
 const RenderSheet = require('../../rendersheet')
-const Renderer = require('yy-renderer')
 const assert = require('assert')
 
 const GENERAL = require('./general.json')
 
-let sheet, renderer, general
+let sheet, app, general, general2
 
 function test()
 {
-    general = renderer.add(new Pixel(GENERAL, sheet))
+    general = app.stage.addChild(new Pixel(GENERAL, sheet))
     general.position.set(10, 10)
     general.scale.set(8)
     general.animate('talk')
-    // sheet.show = true
-    sheet.render()
 
-    const general2 = renderer.add(new Pixel(GENERAL, sheet))
+    general2 = app.stage.addChild(new Pixel(GENERAL, sheet))
     general2.position.set(10, 200)
     general2.scale.set(8)
     general2.animate('walk')
-
-    renderer.loop.add((elapsed) =>
-    {
-        general.update(elapsed)
-        general2.update(elapsed)
-    })
 
     testLargest()
 }
@@ -38,12 +29,21 @@ function testLargest()
     assert.equal(Pixel.largestFrameHeight(GENERAL), 16)
 }
 
-window.onload = function ()
+function update()
 {
-    renderer = new Renderer({ autoresize: true, alwaysRender: true, debug: true })
+    const elapsed = 16.67
+    general.update(elapsed)
+    general2.update(elapsed)
+}
+
+window.onload = async function ()
+{
     sheet = new RenderSheet({ scaleMode: true })
-    renderer.canvas.style.position = 'fixed'
-    renderer.start()
+    Pixel.add(GENERAL, sheet)
+    await sheet.asyncRender()
+    app = new PIXI.Application({ autoresize: true, transparent: true })
+    document.body.appendChild(app.view)
+    PIXI.Ticker.shared.add(update)
 
     test()
     require('fork-me-github')('https://github.com/davidfig/pixel')

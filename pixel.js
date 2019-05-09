@@ -159,6 +159,22 @@ module.exports = class Pixel extends PIXI.Sprite
     }
 
     /**
+     * link two animations together
+     * @param {string} first of first animation
+     * @param {string} second of second animation
+     * @param {number} time - use this instead of animationTime
+     */
+    animateLink(first, second, time)
+    {
+        this.useTime = time || this.animationTime
+        this.animation = this.animations[first].concat()
+        this.animation.push(['link', second])
+        this.index = 0
+        this.updateFrame(0)
+        this.playing = true
+    }
+
+    /**
      * starts a named animation
      * @param {string} name of animation
      * @param {boolean} reverse - flip the sprite
